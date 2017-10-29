@@ -32,7 +32,7 @@ class QuotesSpider(scrapy.Spider):
 
     # 
     name = "quotes"
-    start_urls = arr
+    start_urls = [arr[0]]
     def parse(self, response):
         '''
         page = response.url.split("/")[-1]
