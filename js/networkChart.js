@@ -21,7 +21,7 @@ class networkChart {
         //fetch the svg bounds
         this.svgBounds = divnwChart.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = 1000;
+        this.svgHeight = 2000;
 
         //add the svg to the div
         this.svg = divnwChart.append("svg")
@@ -54,19 +54,25 @@ class networkChart {
 		  d.fy = null;
 		}
 
-    	console.log(this.networkData);
+    	//console.log(this.networkData);
+    	let linksdata = this.networkData.links.filter((d)=>{
+    					return +d['value'] > 10;
+    				})
+    	console.log(linksdata);
+    	console.log(this.networkData.nodes);
 
     	let color = d3.scaleOrdinal(d3.schemeCategory20);
 
 		let simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.tag; }))
-		    .force("charge", d3.forceManyBody())
+		    .force("charge", d3.forceManyBody().strength(-300))
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2));
 
 		let link = this.svg.append("g")
 			      	.attr("class", "links")
 				    .selectAll("line")
-				    .data(this.networkData.links)
+				    .data(linksdata)
+				    //.data(this.networkData.links)
 				    .enter().append("line")
 			      	.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
@@ -90,7 +96,7 @@ class networkChart {
 			      .on("tick", ticked);
 
 			  simulation.force("link")
-			      .links(this.networkData.links);
+			      .links(linksdata);
 
 			  function ticked() {
 			    link

@@ -15,7 +15,7 @@
 	}
 
 	//call fetchJSONFile then build and render 
-	fetchJSONFile('data/network.json', function(data) {
+	fetchJSONFile('data/network_WO_TEDtag_v2.json', function(data) {
 		let nwChart = new networkChart(data);
 		nwChart.update();
 	});

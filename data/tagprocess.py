@@ -11,14 +11,20 @@ if __name__ == '__main__':
 	#with open('TED_Talks_by_ID.csv','rU') as csvfile:
 	#	readCSV = pandas.reader(csvfile, delimiter=',')
 	#	
-	print("check all tags...")	
+	print("check all tags...")
+	removeTag = ["science","technology"]
+
+	MAX = 0	
 	tagset = set()
 	tagmap = dict()
 	nodelist = list();
 	for row in csvfile:
 		s = row['tags'].split(",")
 		for i in range(len(s)):
-			key = s[i]
+			key = s[i].strip().lower()
+
+			if key.startswith('ted') or key=="" or key in removeTag:
+				continue
 
 			if key not in tagset:
 				nodelist.append({'tag':key, 'group':1})
@@ -32,16 +38,28 @@ if __name__ == '__main__':
 			#print (tempmap)
 
 			for j in range(len(s)):
-				if j==i:
+				child = s[j].strip().lower()
+
+				if j==i or child.startswith('ted') or child=="" or child in removeTag:
 					continue
-				child = s[j]
+
 				if child in tempmap:
 					tempmap[child] += 1
+					if tempmap[child] > MAX:
+						MAX = tempmap[child]
 				else:
 					tempmap[child] = 1	
-				
-	#print(tagmap['policy'])
+	
+	#tagmapJSON = json.dumps(tagmap['cars'],indent = 4,separators=(',', ': '))			
+	with open('data_WO_TEDtag_v2.json', 'w') as outfile:
+		json.dump(tagmap, outfile)
+
+	print("MAX",MAX);	
 	print(len(nodelist))
+	
+	#print(tagmapJSON)
+	#
+	
 	#print(nodelist)
 	usedmap = dict()
 	linklist = list();
@@ -58,6 +76,7 @@ if __name__ == '__main__':
 				continue
 			if child in usedmap and key in usedmap[child]:
 				continue
+
 			usedset.add(child)
 			linklist.append(
 				{
@@ -66,19 +85,22 @@ if __name__ == '__main__':
 					"value": value
 				}
 			)
-	
-	#for i in range(len(linklist)):
-	#	print(linklist[i])
+
+	linklist.sort(key = lambda x: x["value"])
+
+	print(len(linklist))
+
 	network = (
 		{
 			"nodes": nodelist,
 			"links": linklist
 		}
 	)
-	with open('network.json', 'w') as outfile:
+	with open('network_WO_TEDtag_v2.json', 'w') as outfile:
 		json.dump(network, outfile)
 
-	#nodelist = list();	
+	#nodelist = list();
+		
 	
 	
 
