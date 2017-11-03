@@ -9,7 +9,7 @@ if __name__ == '__main__':
 	#print("check all tags...")
 	center = 10;
 
-	with open('data_WO_TEDtag.json') as jsonfile:
+	with open('data_WO_TEDtag_v3.json') as jsonfile:
 		print("Load json file...")
 		data = json.load(jsonfile)
 		print('Total amount of tags:',len(data))
@@ -31,20 +31,22 @@ if __name__ == '__main__':
 			if loop != 0:
 				sameElemt = centers & preSet
 				if len(sameElemt)==10 :
+					print('centers are fixed!')
 					break
 				else:
 					preSet = centers
 			"""		
 			#randomly choose ten numbers
 			if loop == 0:		
-				centers = random.sample(data.keys(), 10)
+				centers = random.sample(data.keys(), 8)
 			#print(centers)
 
 			#clustering
 			cluster = dict()
 			cluster_totalD = dict()
 			for c in centers:
-				cluster[c] = set()
+				#cluster[c] = set()
+				cluster[c] = list()
 				cluster_totalD[c] = 0
 				#cluster[c].add("cars")
 			
@@ -66,12 +68,12 @@ if __name__ == '__main__':
 							group = c
 
 				if min_d == float("inf"):
-					min_d = 100
+					min_d = 10
 					group = random.sample(centers, 1)[0]
 
 				#print(group)	
 				#assignGroup = cluster[group]	
-				cluster[group].add(tag)
+				cluster[group].append(tag)
 				cluster_totalD[group] += min_d	
 			#end of tag clustering
 			
@@ -79,7 +81,8 @@ if __name__ == '__main__':
 			for c in centers:
 				Error+=cluster_totalD[c]
 
-			#print(loop,'Error:',Error)
+			print(loop,'Error:',Error)
+			"""
 			if Error < 6300:
 
 				nodeGroup = dict()
@@ -93,6 +96,7 @@ if __name__ == '__main__':
 				with open('group_TEDtag.json', 'w') as outfile:
 					json.dump(nodeGroup, outfile)
 				break
+			"""	
 						
 			loop+=1
 			#update centers
@@ -111,7 +115,7 @@ if __name__ == '__main__':
 						if elmt2 in elmt1_map.keys():
 							temp_d += 1.0/elmt1_map[elmt2]
 						else:
-							temp_d += 100
+							temp_d += 10
 					if temp_d < newCenterD:
 						newCenter = elmt1				
 
@@ -119,7 +123,12 @@ if __name__ == '__main__':
 
 			centers = updateCenter	
 
-		print(centers)	
+		print(centers)
+		"""
+		print("write groups...")
+		with open('data_clusters_v3.json', 'w') as outfile:
+			json.dump(cluster, outfile)
+		"""		
 
 		#break;
 		#nodelist = list();

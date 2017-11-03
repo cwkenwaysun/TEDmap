@@ -5,14 +5,19 @@ import pandas as pd
 import json
 
 if __name__ == '__main__':
+	print("Load json file...")
+	json_data = json.load(open('data_clusters_v3.json'))
+	cluster = dict()
+	g_index = 0
+	for key, g in json_data.items():
+		cluster[g_index] = g
+		g_index+=1
+
 	print("Load csv file...")
-	
 	csvfile = pd.read_csv('TEDTalks_byID.csv').to_dict("records")
-	#with open('TED_Talks_by_ID.csv','rU') as csvfile:
-	#	readCSV = pandas.reader(csvfile, delimiter=',')
-	#	
+
 	print("check all tags...")
-	removeTag = ["science","technology"]
+	removeTag = ["science","technology","global issues"]
 
 	MAX = 0	
 	tagset = set()
@@ -27,7 +32,11 @@ if __name__ == '__main__':
 				continue
 
 			if key not in tagset:
-				nodelist.append({'tag':key, 'group':1})
+				for g, glist in cluster.items():
+					if key in glist:
+						nodelist.append({'tag':key, 'group':g})
+						break
+						
 			tagset.add(key)
 
 			if key in tagmap:
@@ -51,8 +60,8 @@ if __name__ == '__main__':
 					tempmap[child] = 1	
 	
 	#tagmapJSON = json.dumps(tagmap['cars'],indent = 4,separators=(',', ': '))			
-	with open('data_WO_TEDtag_v2.json', 'w') as outfile:
-		json.dump(tagmap, outfile)
+	#with open('data_WO_TEDtag_v3.json', 'w') as outfile:
+	#	json.dump(tagmap, outfile)
 
 	print("MAX",MAX);	
 	print(len(nodelist))
@@ -96,7 +105,7 @@ if __name__ == '__main__':
 			"links": linklist
 		}
 	)
-	with open('network_WO_TEDtag_v2.json', 'w') as outfile:
+	with open('network_WO_TEDtag_v3.json', 'w') as outfile:
 		json.dump(network, outfile)
 
 	#nodelist = list();

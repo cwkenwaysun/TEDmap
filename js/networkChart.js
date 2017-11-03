@@ -37,6 +37,9 @@ class networkChart {
      * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
      */
     update () {
+    	//console.log(this.networkData.nodes);
+    	let threshold = 15;
+    	
     	function dragstarted(d) {
 		  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
 		  d.fx = d.x;
@@ -56,16 +59,29 @@ class networkChart {
 
     	//console.log(this.networkData);
     	let linksdata = this.networkData.links.filter((d)=>{
-    					return +d['value'] > 10;
+    					return +d['value'] > threshold;
     				})
+    	let targets = linksdata.map((d)=>{
+    					return d.target;
+    				})
+    	let sources = linksdata.map((d)=>{
+    					return d.source;
+    				})
+
     	console.log(linksdata);
-    	console.log(this.networkData.nodes);
+
+    	let nodeWithEdge = this.networkData.nodes
+    					.filter((d)=>{
+    						return  targets.includes(d.tag) || sources.includes(d.tag);
+    					});
+
+    	console.log(nodeWithEdge);
 
     	let color = d3.scaleOrdinal(d3.schemeCategory20);
 
 		let simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.tag; }))
-		    .force("charge", d3.forceManyBody().strength(-300))
+		    .force("charge", d3.forceManyBody().strength(-200))
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2));
 
 		let link = this.svg.append("g")
@@ -74,25 +90,26 @@ class networkChart {
 				    .data(linksdata)
 				    //.data(this.networkData.links)
 				    .enter().append("line")
-			      	.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+			      	.attr("stroke-width", function(d) { return Math.sqrt(d.value-threshold); });
 
 		let node = this.svg.append("g")
 			      	.attr("class", "nodes")
 				    .selectAll("circle")
-				    .data(this.networkData.nodes)
+				    .data(nodeWithEdge)
 				    .enter().append("circle")
-				      .attr("r", 5)
+				      .attr("r", 10)
 				      .attr("fill", function(d) { return color(d.group); })
+				      .on('click',(d)=>{console.log(d.tag)})
 				      .call(d3.drag()
 						          .on("start", dragstarted)
 						          .on("drag", dragged)
 						          .on("end", dragended));
-
+			  //tooltip	      
 			  node.append("title")
 			      .text(function(d) { return d.tag; });
 
 			  simulation
-			      .nodes(this.networkData.nodes)
+			      .nodes(nodeWithEdge)
 			      .on("tick", ticked);
 
 			  simulation.force("link")
