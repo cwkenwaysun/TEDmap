@@ -1,13 +1,16 @@
 """Preprocess tags per video and create their node description"""
 
 import csv
-import random #import shuffle
+import random 
 import json
 
 if __name__ == '__main__':
 		
 	#print("check all tags...")
 	center = 10;
+	max_d = 200
+	def calD(d):
+		return 100 -d
 
 	with open('data_WO_TEDtag_v3.json') as jsonfile:
 		print("Load json file...")
@@ -26,20 +29,23 @@ if __name__ == '__main__':
 		centers = set()
 
 		loop = 0
-		while loop < 300 :
-			"""
-			if loop != 0:
+		shuffle = True
+		while loop < 1000:
+			
+			if loop != 0 and shuffle==False:
 				sameElemt = centers & preSet
-				if len(sameElemt)==10 :
+				if len(sameElemt)==center :
 					print('centers are fixed!')
 					break
 				else:
 					preSet = centers
-			"""		
+					#print(preSet)		
 			#randomly choose ten numbers
-			if loop == 0:		
-				centers = random.sample(data.keys(), 8)
-			#print(centers)
+			if shuffle:		
+				centers = random.sample(data.keys(), center)
+			shuffle = False
+			print("before:")
+			print(centers)
 
 			#clustering
 			cluster = dict()
@@ -49,7 +55,8 @@ if __name__ == '__main__':
 				cluster[c] = list()
 				cluster_totalD[c] = 0
 				#cluster[c].add("cars")
-			
+			cluster["other"] = list()
+
 			for tag in data.keys():
 				min_d = float("inf")
 				group = ""
@@ -62,19 +69,20 @@ if __name__ == '__main__':
 					temp_d = 0
 					c_map = data[c]
 					if tag in c_map.keys():
-						temp_d = c_map[tag]
+						temp_d = calD(c_map[tag])
+						#temp_d = 10.0/c_map[tag]
 						if temp_d < min_d:
-							min_d = 1.0/temp_d
+							min_d = temp_d
 							group = c
 
 				if min_d == float("inf"):
-					min_d = 10
-					group = random.sample(centers, 1)[0]
+					#min_d = max_d
+					#group = random.sample(centers, 1)[0]
+					cluster["other"].append(tag)
 
-				#print(group)	
-				#assignGroup = cluster[group]	
-				cluster[group].append(tag)
-				cluster_totalD[group] += min_d	
+				else:	
+					cluster[group].append(tag)
+					cluster_totalD[group] += min_d	
 			#end of tag clustering
 			
 			Error = 0.0
@@ -82,6 +90,10 @@ if __name__ == '__main__':
 				Error+=cluster_totalD[c]
 
 			print(loop,'Error:',Error)
+			print(len(cluster["other"]))
+
+			#if len(cluster["unassigned"]) <13 and Error<200:
+			#	break	
 			"""
 			if Error < 6300:
 
@@ -97,8 +109,14 @@ if __name__ == '__main__':
 					json.dump(nodeGroup, outfile)
 				break
 			"""	
-						
 			loop+=1
+			
+			if len(cluster["other"]) > 25:
+				shuffle = True
+				continue			
+				
+
+			
 			#update centers
 			preSet = set(centers)
 			updateCenter = set()
@@ -113,22 +131,28 @@ if __name__ == '__main__':
 						if elmt2 == elmt1:
 							continue
 						if elmt2 in elmt1_map.keys():
-							temp_d += 1.0/elmt1_map[elmt2]
+							temp_d = calD(elmt1_map[elmt2])
+							#temp_d += 1.0/elmt1_map[elmt2]
 						else:
-							temp_d += 10
+							temp_d += max_d
 					if temp_d < newCenterD:
-						newCenter = elmt1				
+						newCenter = elmt1
+						newCenterD = temp_d				
 
 				updateCenter.add(newCenter)
 
-			centers = updateCenter	
+			centers = updateCenter
+			print("after:")
+			print(centers)
+	
 
-		print(centers)
-		"""
+		#print(centers)
+		
+
 		print("write groups...")
-		with open('data_clusters_v3.json', 'w') as outfile:
+		with open('data_clusters_v5.json', 'w') as outfile:
 			json.dump(cluster, outfile)
-		"""		
+				
 
 		#break;
 		#nodelist = list();

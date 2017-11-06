@@ -6,7 +6,7 @@ import json
 
 if __name__ == '__main__':
 	print("Load json file...")
-	json_data = json.load(open('data_clusters_v3.json'))
+	json_data = json.load(open('data_clusters_v5.json'))
 	cluster = dict()
 	g_index = 0
 	for key, g in json_data.items():
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 			"links": linklist
 		}
 	)
-	with open('network_WO_TEDtag_v3.json', 'w') as outfile:
+	with open('network_WO_TEDtag_v4.json', 'w') as outfile:
 		json.dump(network, outfile)
 
 	#nodelist = list();
