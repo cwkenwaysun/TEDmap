@@ -169,15 +169,13 @@ class networkChart {
         circles.attr("r", 8)
         		//.attr("class", "nodes")
 				.attr("fill", (d)=> { return this.colorScale(d.groupid); })
-				.on('click',(d)=>{console.log(d.tag);
-					this.selectOneNode(d.tag)
-				})
 				.call(d3.drag()
 					.on("start", dragstarted)
 					.on("drag", dragged)
 					.on("end", dragended));	                     
 
 		//tooltip
+				d3.selectAll('.d3-tip').remove();
 				let circletip = d3.tip().attr('class', 'd3-tip')
                 .direction('se')
                 .offset(function() {
@@ -205,7 +203,12 @@ class networkChart {
 			  this.svg.call(circletip);
             
               circles.on('mouseover', circletip.show)
-                .on('mouseout', circletip.hide);
+                .on('mouseout', circletip.hide)
+                .on('dblclick',(d)=>{
+                //.on('click',(d)=>{
+                	console.log(d.tag);
+					this.selectOneNode(d.tag);
+				});
 
 			  simulation
 			      .nodes(this.nodesData)
