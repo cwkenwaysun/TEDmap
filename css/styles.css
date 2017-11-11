@@ -3,12 +3,12 @@
     width: 50%;
 }
 
-.links {
+.links line{
   stroke: #999;
   stroke-opacity: 0.6;
 }
 
-.nodes {
+.nodes circle{
   stroke: #fff;
   stroke-width: 1.5px;
 }

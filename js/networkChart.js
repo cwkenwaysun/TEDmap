@@ -3,13 +3,8 @@
 class networkChart {
 
     /**
-     * Constructor for the Year Chart
-     *
-     * @param electoralVoteChart instance of ElectoralVoteChart
-     * @param tileChart instance of TileChart
-     * @param votePercentageChart instance of Vote Percentage Chart
-     * @param electionInfo instance of ElectionInfo
-     * @param electionWinners data corresponding to the winning parties over mutiple election years
+     * Constructor for network chart
+     * @param   data network data, including links and nodes.
      */
     constructor (data) {
         this.networkData = data;
@@ -27,24 +22,37 @@ class networkChart {
         this.svg = divnwChart.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight);
-
+        this.svg.append("g")
+      		.attr("class", "links");
+      	this.svg.append("g")
+      		.attr("class", "nodes");
+      	
+      	this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);		    
         this.linksData;
         this.nodesData;
-        this.threshold = 15; 
-        this.resetData(); 
+        this.threshold = 15;
+        this.selectedTag = null; 
+        this.forceParam = -50;
+        this.resetData();
 
     };
-
+    /**
+     * Set data to the initial state, display links whose value are bigger than threshold
+     * @return void call update in the end of function
+     */
     resetData(){
-    	this.threshold = 15;
 
     	let linksdata = this.networkData.links.filter((d)=>{
     					return +d['value'] > this.threshold;
     				})
     	let targets = linksdata.map((d)=>{
+    					if(d.target.tag!=undefined)
+    						return d.target.tag;
     					return d.target;
     				})
     	let sources = linksdata.map((d)=>{
+    					if(d.target.tag!=undefined)
+    						return d.source.tag;
     					return d.source;
     				})
 
@@ -59,40 +67,69 @@ class networkChart {
 
     	this.linksData = linksdata;
     	this.nodesData = nodeWithEdge;
+    	this.update();
     }
-   
+    /**
+     * find data which are related to the selected tag.
+     * @param  string tagName selected tag
+     * @return void   
+     */
     selectOneNode(tagName){
+    	if(this.selectedTag == tagName){
+    		this.selectedTag = null;
+    		this.threshold = 15;
+    		this.forceParam = -50;
+	    	this.resetData();
+    	}
+    	else{
+    		this.threshold = 0;
+    		this.selectedTag = tagName;
+    		this.forceParam = -300;
 
-    	let linksdata = this.networkData.links.filter((d)=>{
-    					return +d['value'] > this.threshold;
-    				})
-    	let targets = linksdata.map((d)=>{
-    					return d.target;
-    				})
-    	let sources = linksdata.map((d)=>{
-    					return d.source;
-    				})
+	    	let linksdata = this.networkData.links.filter((d)=>{
+	    					return d.target == tagName || d.source==tagName;
+	    				})
+	    	let targets = linksdata.map((d)=>{
+	    					return d.target;
+	    				})
+	    	let sources = linksdata.map((d)=>{
+	    					return d.source;
+	    				})
 
-    	console.log(linksdata);
+	    	console.log(linksdata);
 
-    	let nodeWithEdge = this.networkData.nodes
-    					.filter((d)=>{
-    						return  targets.includes(d.tag) || sources.includes(d.tag);
-    					});
+	    	let nodeWithEdge = this.networkData.nodes
+	    					.filter((d)=>{
+	    						return  targets.includes(d.tag) || sources.includes(d.tag);
+	    					});
 
-    	console.log(nodeWithEdge);
+	    	console.log(nodeWithEdge);
 
-    	this.linksData = linksdata;
-    	this.nodesData = nodeWithEdge;
+	    	this.linksData = linksdata;
+	    	this.nodesData = nodeWithEdge;
+	    	//this.update();
+    	}
+    	this.update();
 
     }
+    /**
+     * Renders the HTML content for tool tip.
+     *
+     * @param tooltip_data information that needs to be populated in the tool tip
+     * @return text HTML content for tool tip
+     */
+    circle_tooltip_render(tooltip_data) {
+        let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
+        text +=  "Group ID: " + tooltip_data.groupid;
+
+        return text;
+    }
+
     /**
      * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
      */
     update () {
-    	//console.log(this.networkData.nodes);
-    	
-    	
+
     	function dragstarted(d) {
 		  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
 		  d.fx = d.x;
@@ -110,57 +147,68 @@ class networkChart {
 		  d.fy = null;
 		}
 
-    	let color = d3.scaleOrdinal(d3.schemeCategory20);
+    	//let color = d3.scaleOrdinal(d3.schemeCategory20);
 
 		let simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.tag; }))
-		    .force("charge", d3.forceManyBody().strength(-50))
+		    .force("charge", d3.forceManyBody().strength(this.forceParam))
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2));
 
-		let lines = this.svg.selectAll('.links')
+		let lines = this.svg.select('.links').selectAll('line')
                         .data(this.linksData);
         lines.exit().remove();
         lines = lines.enter().append('line').merge(lines);
-        lines.attr("stroke-width", function(d) { return Math.sqrt(d.value-this.threshold); })
-        	 .attr("class", "links");
+        lines.attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
+        	 //.attr("class", "links");
 
-        let circles = this.svg.selectAll('.nodes')
+
+        let circles = this.svg.selectAll('.nodes').selectAll('circle')
                         .data(this.nodesData);
         circles.exit().remove();
         circles = circles.enter().append('circle').merge(circles);
         circles.attr("r", 8)
-        		.attr("class", "nodes")
-				.attr("fill", function(d) { return color(d.group); })
-				.on('click',(d)=>{console.log(d.tag)})
+        		//.attr("class", "nodes")
+				.attr("fill", (d)=> { return this.colorScale(d.groupid); })
 				.call(d3.drag()
 					.on("start", dragstarted)
 					.on("drag", dragged)
 					.on("end", dragended));	                     
-		/*    
-		let link = this.svg.append("g")
-			      	.attr("class", "links")
-				    .selectAll("line")
-				    .data(this.linksData)
-				    //.data(this.networkData.links)
-				    .enter().append("line")
-			      	.attr("stroke-width", function(d) { return Math.sqrt(d.value-this.threshold); });
 
-		let node = this.svg.append("g")
-			      	.attr("class", "nodes")
-				    .selectAll("circle")
-				    .data(this.nodesData)
-				    .enter().append("circle")
-				      .attr("r", 8)
-				      .attr("fill", function(d) { return color(d.group); })
-				      .on('click',(d)=>{console.log(d.tag)})
-				      .call(d3.drag()
-						          .on("start", dragstarted)
-						          .on("drag", dragged)
-						          .on("end", dragended));
-		*/
-		//tooltip	      
-			  circles.append("title")
-			      .text(function(d) { return d.tag; });
+		//tooltip
+				d3.selectAll('.d3-tip').remove();
+				let circletip = d3.tip().attr('class', 'd3-tip')
+                .direction('se')
+                .offset(function() {
+                    return [0,0];
+                })
+                .html((d)=>{
+                    let tooltip_data = {
+                        "tag": d.tag,
+                        "groupid":d.groupid,
+                        "color":this.colorScale(d.groupid)
+                        /*
+                        "result":[
+                          {"nominee": d.D_Nominee_prop,"votecount": d.D_Votes,"percentage": d.D_Percentage,"party":"D"} ,
+                          {"nominee": d.R_Nominee_prop,"votecount": d.R_Votes,"percentage": d.R_Percentage,"party":"R"} ,
+                          {"nominee": d.I_Nominee_prop,"votecount": d.I_Votes,"percentage": d.I_Percentage,"party":"I"}
+                         ]
+                         */
+                      };
+                    return this.circle_tooltip_render(tooltip_data);
+
+                });	
+			  //circles.selectAll('title').remove();		      
+			  //circles.append("title")
+			  //    .text(function(d) { return d.tag; });
+			  this.svg.call(circletip);
+            
+              circles.on('mouseover', circletip.show)
+                .on('mouseout', circletip.hide)
+                .on('dblclick',(d)=>{
+                //.on('click',(d)=>{
+                	console.log(d.tag);
+					this.selectOneNode(d.tag);
+				});
 
 			  simulation
 			      .nodes(this.nodesData)
