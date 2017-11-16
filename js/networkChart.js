@@ -8,7 +8,28 @@ class networkChart {
      */
     constructor (data) {
         this.networkData = data;
-        
+        this.threshold = 15;
+
+        this.initlinksData = this.networkData.links.filter((d)=>{
+              return +d['value'] > this.threshold;
+            })
+        let targets = this.initlinksData.map((d)=>{
+                return d.target;
+              })
+        let sources = this.initlinksData.map((d)=>{
+                return d.source;
+              })
+
+        this.tagMap = new Map();
+
+        this.initnodesData = this.networkData.nodes
+                .filter((d)=>{
+                  this.tagMap.set(d.tag,d.groupid);
+                  return  targets.includes(d.tag) || sources.includes(d.tag);
+                });
+
+        //console.log(this.initlinksData);  //583
+        //console.log(this.initnodesData ); //151       
         // Initializes the svg elements required for this chart
         this.margin = {top: 10, right: 20, bottom: 30, left: 50};
         let divnwChart = d3.select("#networkChart").classed("content", true);
@@ -42,31 +63,8 @@ class networkChart {
      */
     resetData(){
 
-    	let linksdata = this.networkData.links.filter((d)=>{
-    					return +d['value'] > this.threshold;
-    				})
-    	let targets = linksdata.map((d)=>{
-    					if(d.target.tag!=undefined)
-    						return d.target.tag;
-    					return d.target;
-    				})
-    	let sources = linksdata.map((d)=>{
-    					if(d.target.tag!=undefined)
-    						return d.source.tag;
-    					return d.source;
-    				})
-
-    	console.log(linksdata);
-
-    	let nodeWithEdge = this.networkData.nodes
-    					.filter((d)=>{
-    						return  targets.includes(d.tag) || sources.includes(d.tag);
-    					});
-
-    	console.log(nodeWithEdge);
-
-    	this.linksData = linksdata;
-    	this.nodesData = nodeWithEdge;
+    	this.linksData = this.initlinksData;
+    	this.nodesData = this.initnodesData;
     	this.update();
     }
     /**
@@ -74,7 +72,7 @@ class networkChart {
      * @param  string tagName selected tag
      * @return void   
      */
-    selectOneNode(tagName){
+    selectOneNode(tagName,x,y){
     	if(this.selectedTag == tagName){
     		this.selectedTag = null;
     		this.threshold = 15;
@@ -82,32 +80,163 @@ class networkChart {
 	    	this.resetData();
     	}
     	else{
+
+        /*
+        d3.event.stopPropagation();
+        let dcx = (this.svgWidth/2-x*1);
+        let dcy = (this.svgHeight/2-y*1);
+        //zoom.translate([dcx,dcy]);
+        this.svg.selectAll('g')
+        .transition()
+        .duration(1500).attr("transform", "translate("+ dcx + "," + dcy  + ")");
+        */
+        //tagName = "cars";
     		this.threshold = 0;
     		this.selectedTag = tagName;
-    		this.forceParam = -300;
+    		this.forceParam = -15;
 
+        let newlinksdata = this.networkData.links.reduce((filtered,d)=>{
+                let v;
+                if(d.target.tag==tagName){
+                  v= {
+                    "source":tagName,
+                    "target":d.source.tag,
+                    "value":d.value,
+                    "t_groupid":this.tagMap.get(d.source.tag),
+                  }
+                }
+                else if(d.source.tag==tagName){
+                  v= {
+                    "source":tagName,
+                    "target":d.target.tag,
+                    "value":d.value,
+                    "t_groupid":this.tagMap.get(d.target.tag),
+                  }
+                }
+                else if(d.target==tagName){
+                  v= {
+                    "source":tagName,
+                    "target":d.source,
+                    "value":d.value,
+                    "t_groupid":this.tagMap.get(d.source),
+                  }
+                }
+                else if(d.source==tagName){
+                  v = {
+                    "source":tagName,
+                    "target":d.target,
+                    "value":d.value,
+                    "t_groupid":this.tagMap.get(d.target),
+                  }
+
+                }
+                if(v!=undefined)
+                  filtered.push(v);
+                return filtered;
+              },[])
+
+        newlinksdata.sort((a,b)=>{
+          if(a.t_groupid!=b.t_groupid)
+           return a.t_groupid - b.t_groupid;
+          else
+                  if (a.target < b.target) {
+                    return -1;
+                  }
+                  if (a.target > b.target) {
+                    return 1;
+                  }
+
+        })
+
+        /*
 	    	let linksdata = this.networkData.links.filter((d)=>{
-	    					return d.target == tagName || d.source==tagName;
-	    				})
-	    	let targets = linksdata.map((d)=>{
-	    					return d.target;
-	    				})
-	    	let sources = linksdata.map((d)=>{
-	    					return d.source;
-	    				})
+                //if(d.target!=undefined)
+                  return d.target == tagName || d.source==tagName || d.source.tag==tagName || d.target.tag==tagName;
+                //return  d.source.tag==tagName || d.target.tag==tagName;
 
-	    	console.log(linksdata);
+	    				})
+        //*/
+        //console.log(linksdata);
+        console.log(newlinksdata);
+
+        let usedTags = newlinksdata.map((d)=>{
+             if(d.target.tag!=undefined)
+                  return d.target.tag;
+              return d.target;
+        })
+
+        usedTags.push(tagName);
 
 	    	let nodeWithEdge = this.networkData.nodes
 	    					.filter((d)=>{
-	    						return  targets.includes(d.tag) || sources.includes(d.tag);
+                  //if(d.tag!=undefined)
+	    						//return  targets.includes(d.tag) || sources.includes(d.tag);
+                  return  usedTags.includes(d.tag);
 	    					});
 
+        nodeWithEdge.sort((a,b)=>{
+            return a.groupid - b.groupid;
+        });        
 	    	console.log(nodeWithEdge);
 
-	    	this.linksData = linksdata;
-	    	this.nodesData = nodeWithEdge;
+        let groups = d3.nest()
+            .key(function(d) { return d.t_groupid; })
+            .rollup(function(v) {
+              let sum = d3.sum(v,function(l){return l.value});
+              let member = v.map((t)=>{
+                return t.tag;
+              }).sort();
+              
+
+              return {
+                "valueToGroup":sum,
+                "data":v,
+              }
+
+            })
+            .entries(newlinksdata);
+
+        console.log(groups);
+            
+        let zoominGroup = [];
+        groups.forEach( (d)=> {
+          let groupid = "Group"+d.key;
+          nodeWithEdge.push(
+            {
+              "tag":groupid,
+              "groupid":d.key,
+            }
+          )
+          zoominGroup.push(
+            {
+              "source":tagName,
+              "target":groupid,
+              "value":d.value.valueToGroup,
+            }
+          );
+          let groupNode = d.value.data;
+          groupNode.forEach( (e)=> {
+              zoominGroup.push(
+                {
+                  "source":groupid,
+                  "target":e.target,
+                  "value":e.value,
+                }
+              );
+          });
+
+        });
+        
+        console.log(zoominGroup);
+
+            
+        this.linksData = zoominGroup;
+        this.nodesData = nodeWithEdge;
+	    	//this.linksData = linksdata;
+	    	//this.nodesData = nodeWithEdge;
 	    	//this.update();
+        
+        //this.svg.selectAll('g').attr("transform", "translate("+ 0 + "," + 0  + ")");//
     	}
     	this.update();
 
@@ -150,25 +279,65 @@ class networkChart {
     	//let color = d3.scaleOrdinal(d3.schemeCategory20);
 
 		let simulation = d3.forceSimulation()
-		    .force("link", d3.forceLink().id(function(d) { return d.tag; }))
-		    .force("charge", d3.forceManyBody().strength(this.forceParam))
+		    .force("link", d3.forceLink()
+                        .id(function(d) { 
+                        return d.tag; })
+                        /*
+                        .distance(()=>{
+                          //if(this.forceParam == -15)
+                          //  return 10
+                          return 20
+                        })
+                        */
+          )
+		    .force("charge", d3.forceManyBody()
+                            .strength(this.forceParam)
+                            .distanceMax(300)
+
+          )
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2));
 
 		let lines = this.svg.select('.links').selectAll('line')
                         .data(this.linksData);
-        lines.exit().remove();
-        lines = lines.enter().append('line').merge(lines);
-        lines.attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
+    let newlines = lines.enter().append('line').style("opacity", 0);                    
+
+        lines.exit()
+              .style("opacity", 1)
+              .transition()
+              .duration(1500)
+              .style("opacity", 0)
+              .remove();
+
+        lines = newlines.merge(lines);
+        lines
+        .transition().duration(1500)
+        .style("opacity", 1)
+        .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
         	 //.attr("class", "links");
 
 
         let circles = this.svg.selectAll('.nodes').selectAll('circle')
                         .data(this.nodesData);
-        circles.exit().remove();
-        circles = circles.enter().append('circle').merge(circles);
-        circles.attr("r", 8)
-        		//.attr("class", "nodes")
+        let newcircles = circles.enter().append('circle')
+                                  .style("opacity", 0)
+                                  .attr("r", 8);
+                        
+        circles.exit()
+              .style("opacity", 1)
+              .transition()
+              .duration(1500)
+              .style("opacity", 0)
+              .remove();
+
+        circles =  newcircles.merge(circles); 
+        //circles = circles.enter().append('circle').merge(circles);
+        
+        circles
+        .transition().duration(1500)
 				.attr("fill", (d)=> { return this.colorScale(d.groupid); })
+        .style("opacity", 1);
+
+        circles
 				.call(d3.drag()
 					.on("start", dragstarted)
 					.on("drag", dragged)
@@ -197,9 +366,7 @@ class networkChart {
                     return this.circle_tooltip_render(tooltip_data);
 
                 });	
-			  //circles.selectAll('title').remove();		      
-			  //circles.append("title")
-			  //    .text(function(d) { return d.tag; });
+
 			  this.svg.call(circletip);
             
               circles.on('mouseover', circletip.show)
@@ -207,15 +374,29 @@ class networkChart {
                 .on('dblclick',(d)=>{
                 //.on('click',(d)=>{
                 	console.log(d.tag);
-					this.selectOneNode(d.tag);
+					this.selectOneNode(d.tag,d.x,d.y);
 				});
 
+                
 			  simulation
 			      .nodes(this.nodesData)
 			      .on("tick", ticked);
 
 			  simulation.force("link")
 			      .links(this.linksData);
+            /*
+            .linkDistance((d)=>{
+                if(this.forceParam == -15)
+                  return 10
+                return 200
+            });
+          /*  
+        if(this.forceParam == -15){
+            simulation.force.linkDistance((d)=>{
+                return 100;
+            })
+        }  
+        */  
 
 			  function ticked() {
 			    lines
