@@ -43,9 +43,12 @@ class networkChart {
         this.svg = divnwChart.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight);
-        this.svg.append("g")
+        this.gAll = this.svg.append("g");
+        this.gAll.attr("class", "everything");   
+
+        this.gAll.append("g")
       		.attr("class", "links");
-      	this.svg.append("g")
+      	this.gAll.append("g")
       		.attr("class", "nodes");
       	
       	this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);		    
@@ -297,7 +300,7 @@ class networkChart {
           )
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2));
 
-		let lines = this.svg.select('.links').selectAll('line')
+		let lines = this.gAll.select('.links').selectAll('line')
                         .data(this.linksData);
     let newlines = lines.enter().append('line').style("opacity", 0);                    
 
@@ -316,7 +319,7 @@ class networkChart {
         	 //.attr("class", "links");
 
 
-        let circles = this.svg.selectAll('.nodes').selectAll('circle')
+        let circles = this.gAll.selectAll('.nodes').selectAll('circle')
                         .data(this.nodesData);
         let newcircles = circles.enter().append('circle')
                                   .style("opacity", 0)
@@ -365,16 +368,15 @@ class networkChart {
                       };
                     return this.circle_tooltip_render(tooltip_data);
 
-                });	
+        });	
 
 			  this.svg.call(circletip);
             
-              circles.on('mouseover', circletip.show)
+        circles.on('mouseover', circletip.show)
                 .on('mouseout', circletip.hide)
                 .on('dblclick',(d)=>{
-                //.on('click',(d)=>{
                 	console.log(d.tag);
-					this.selectOneNode(d.tag,d.x,d.y);
+					     this.selectOneNode(d.tag,d.x,d.y);
 				});
 
                 
@@ -384,19 +386,7 @@ class networkChart {
 
 			  simulation.force("link")
 			      .links(this.linksData);
-            /*
-            .linkDistance((d)=>{
-                if(this.forceParam == -15)
-                  return 10
-                return 200
-            });
-          /*  
-        if(this.forceParam == -15){
-            simulation.force.linkDistance((d)=>{
-                return 100;
-            })
-        }  
-        */  
+ 
 
 			  function ticked() {
 			    lines
@@ -408,8 +398,25 @@ class networkChart {
 			    circles
 			        .attr("cx", function(d) { return d.x; })
 			        .attr("cy", function(d) { return d.y; });
-			  }    
+			  }
 
-    };
+        //zoom capabilities 
+        let min_zoom = 0.5;
+        let max_zoom = 7;
+        let zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom])
+                                    .on("zoom", zoom_actions);
+        
+        //let zoom_handler = d3.zoom()
+        //    .on("zoom", zoom_actions);
+
+        zoom_handler(this.svg);
+
+        function zoom_actions(){
+            this.gAll
+              .attr("transform", d3.event.transform)
+        }
+
+  }     
+
 
 };
