@@ -62,7 +62,7 @@ class LineChart {
         let data = this.processData();
         console.log(data);
 
-        let svg = d3.select("svg");
+        let svg = d3.select("#lineChart");
         let width = svg.attr("width") - this.margin.left - this.margin.right;
         let height = svg.attr("height") - this.margin.top - this.margin.bottom;
         let g = svg.select("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");

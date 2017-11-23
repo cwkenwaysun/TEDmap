@@ -1,10 +1,26 @@
-
 let tagsInfo;
 let allData;
 var groupSet = new Set();
 
 let lineChart;
 let table;
+
+
+function addButton(tag) {
+    console.log("add button: " + tag);
+    groupSet.add(tag);
+    lineChart.update();
+    table.update();
+
+    $("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + "<span class='badge'>4</span></button>");
+
+    $("#buttons > button").click(function () {
+        groupSet.delete(this.childNodes[0].textContent);
+        $(this).remove();
+        lineChart.update();
+        table.update();
+    });
+}
 
 // read tags information data
 d3.json("tags_info.json", function (data) {
@@ -109,22 +125,22 @@ function sortTable(n) {
     }
 }
 
-    function fetchJSONFile(path, callback) {
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function() {
-			if (httpRequest.readyState === 4) {
-				if (httpRequest.status === 200) {
-					let data = JSON.parse(httpRequest.responseText);
-					if (callback) callback(data);
-				}
-			}
-		};
-		httpRequest.open('GET', path);
-		httpRequest.send();
-	}
+function fetchJSONFile(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let data = JSON.parse(httpRequest.responseText);
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send();
+}
 
-	//call fetchJSONFile then build and render 
-	fetchJSONFile('data/network_WO_TEDtag_v4.json', function(data) {
-		let nwChart = new networkChart(data);
-		nwChart.update();
-	});
+//call fetchJSONFile then build and render 
+fetchJSONFile('data/network_WO_TEDtag_v4.json', function (data) {
+    let nwChart = new networkChart(data);
+    nwChart.update();
+});
