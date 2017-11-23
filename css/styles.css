@@ -25,6 +25,10 @@ g rect {
     fill:transparent;
 }
 
+svg circle {
+    cursor:pointer;
+}
+
 .table_header {
     font-size: 150%;
 }
