@@ -30,12 +30,12 @@ function addButton(tag) {
 }
 
 // read tags information data
-d3.json("tags_info.json", function (data) {
+d3.json("data/tags_info.json", function (data) {
     tagsInfo = data;
     //console.log(data);
 })
 
-d3.json("TED_Talks.json", function (data) {
+d3.json("data/TED_Talks.json", function (data) {
     allData = data;
     //console.log(data);
     lineChart = new LineChart(tagsInfo, allData, groupSet);
