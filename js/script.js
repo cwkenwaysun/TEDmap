@@ -1,4 +1,3 @@
-
 let tagsInfo;
 let allData;
 var groupSet = new Set();
@@ -6,20 +5,45 @@ var groupSet = new Set();
 let lineChart;
 let table;
 
+
+function addButton(tag) {
+    let number_tag;
+
+    //TODO: change tagsInfo to a hash map instead of an array.
+    tagsInfo.forEach(function(element) {
+        if (element.tagName == tag) {
+            number_tag = element.idList.length;
+        }
+    }, this);
+    groupSet.add(tag);
+    lineChart.update();
+    table.update();
+    
+    $("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + "<span class='badge'>" + number_tag + "</span></button>");
+
+    $("#buttons > button").click(function () {
+        groupSet.delete(this.childNodes[0].textContent);
+        $(this).remove();
+        lineChart.update();
+        table.update();
+    });
+}
+
 // read tags information data
-d3.json("tags_info.json", function (data) {
+d3.json("data/tags_info.json", function (data) {
     tagsInfo = data;
-    console.log(data);
+    //console.log(data);
 })
 
-d3.json("TED_Talks.json", function (data) {
+d3.json("data/TED_Talks.json", function (data) {
     allData = data;
-    console.log(data);
+    //console.log(data);
     lineChart = new LineChart(tagsInfo, allData, groupSet);
     table = new Table(tagsInfo, allData, groupSet);
 })
 
-$.getJSON("all_tags.json", function (json) {
+// dropdown
+/*$.getJSON("all_tags.json", function (json) {
     console.log(json["all_tags"]);
     for (let i = 0; i < json["all_tags"].length; i++) {
         if (json["all_tags"][i] == "alzheimer's") continue;
@@ -38,7 +62,7 @@ $.getJSON("all_tags.json", function (json) {
             });
         });
     }
-});
+});*/
 
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -109,22 +133,22 @@ function sortTable(n) {
     }
 }
 
-    function fetchJSONFile(path, callback) {
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function() {
-			if (httpRequest.readyState === 4) {
-				if (httpRequest.status === 200) {
-					let data = JSON.parse(httpRequest.responseText);
-					if (callback) callback(data);
-				}
-			}
-		};
-		httpRequest.open('GET', path);
-		httpRequest.send();
-	}
+function fetchJSONFile(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let data = JSON.parse(httpRequest.responseText);
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send();
+}
 
-	//call fetchJSONFile then build and render 
-	fetchJSONFile('data/network_WO_TEDtag_v4.json', function(data) {
-		let nwChart = new networkChart(data);
-		nwChart.update();
-	});
+//call fetchJSONFile then build and render 
+fetchJSONFile('data/network_WO_TEDtag_v4.json', function (data) {
+    let nwChart = new networkChart(data);
+    nwChart.update();
+});

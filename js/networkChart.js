@@ -205,10 +205,15 @@ class networkChart {
               circles.on('mouseover', circletip.show)
                 .on('mouseout', circletip.hide)
                 .on('dblclick',(d)=>{
-                //.on('click',(d)=>{
                 	console.log(d.tag);
 					this.selectOneNode(d.tag);
-				});
+				})
+				.on('click',(d)=>{
+					// when click, add tag in to buttons
+					console.log(d.tag);
+					addButton(d.tag);
+				}
+				);
 
 			  simulation
 			      .nodes(this.nodesData)
