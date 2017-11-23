@@ -3,72 +3,30 @@ class LineChart {
     /**
      * Constructor for the Year Chart
      *
-     * @param electoralVoteChart instance of ElectoralVoteChart
-     * @param tileChart instance of TileChart
-     * @param votePercentageChart instance of Vote Percentage Chart
-     * @param electionInfo instance of ElectionInfo
-     * @param electionWinners data corresponding to the winning parties over mutiple election years
-     * 
-     * @param tagsInfo data corresponding to the winning parties over mutiple election years
-     * @param allData data corresponding to the winning parties over mutiple election years
-     * @param groupSet data corresponding to the winning parties over mutiple election years
+     * @param tagsInfo tag data corresponding to the videos, from tags_info.json
+     * @param allData all of data in TED_Talks.json
+     * @param groupSet data corresponding to the tag buttons
      */
     constructor(tagsInfo, allData, groupSet) {
 
         this.tagsInfo = tagsInfo;
         this.allData = allData;
         this.groupSet = groupSet;
-        console.log(this.allData);
-        /*//Creating YearChart instance
-        this.electoralVoteChart = electoralVoteChart;
-        this.tileChart = tileChart;
-        this.votePercentageChart = votePercentageChart;
-        // the data
-        this.electionWinners = electionWinners;
 
-        // Initializes the svg elements required for this chart
         this.margin = {
-            top: 10,
+            top: 20,
             right: 20,
             bottom: 30,
             left: 50
         };
-        let divyearChart = d3.select("#year-chart").classed("fullView", true);
-
-        //fetch the svg bounds
-        this.svgBounds = divyearChart.node().getBoundingClientRect();
-        this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = 100;
-
-        //add the svg to the div
-        this.svg = divyearChart.append("svg")
-            .attr("width", this.svgWidth)
-            .attr("height", this.svgHeight)*/
     };
 
 
     /**
-     * Returns the class that needs to be assigned to an element.
-     *
-     * @param party an ID for the party that is being referred to.
+     * Returns the d3 map data from the group set.
      */
-    chooseClass(data) {
-        if (data == "R") {
-            return "yearChart republican";
-        } else if (data == "D") {
-            return "yearChart democrat";
-        } else if (data == "I") {
-            return "yearChart independent";
-        }
-    }
-
-    /**
-     * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
-     */
-    update() {
+    processData() {
         let lines = [];
-        console.log(this.allData);
-        console.log(groupSet);
         for (let target of groupSet) {
             let tmp = {}
             for (let tag of tagsInfo) {
@@ -92,86 +50,65 @@ class LineChart {
                     }
                 }
             }
-            //console.log(tmp);
             lines.push(tmp);
         }
-        console.log(lines);
-        //var data = lines;
-        var data = d3.map(lines);
+        return lines;
+    }
+
+    /**
+     * Remove old line charts and generate new ones.
+     */
+    update() {
+        let data = this.processData();
         console.log(data);
-        /*.map(function(d) {
-                    console.log(d);
-                    return {
-                        tagName: d.tagName,
-                        values: lines.map(function(e) {
-                            return {"year": e.year, "video": e.video};
-                        })
-                    };
-                });*/
 
-        var svg = d3.select("svg"),
-            margin = {
-                top: 20,
-                right: 20,
-                bottom: 30,
-                left: 50
-            },
-            width = +svg.attr("width") - margin.left - margin.right,
-            height = +svg.attr("height") - margin.top - margin.bottom,
-            g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        let svg = d3.select("svg");
+        let width = svg.attr("width") - this.margin.left - this.margin.right;
+        let height = svg.attr("height") - this.margin.top - this.margin.bottom;
+        let g = svg.select("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
-        var parseTime = d3.timeParse("%Y");
+        let parseTime = d3.timeParse("%Y");
 
-
-        /*data.sort(function (a, b) {
-            return parseTime(a.year) - parseTime(b.year);
-        });*/
-
-        var x = d3.scaleTime()
+        // create multi-line line chart
+        let xScale = d3.scaleTime()
             .rangeRound([0, width])
             .domain([parseTime("2001"), parseTime("2017")]);
 
-        var y = d3.scaleLinear()
+        let yScale = d3.scaleLinear()
             .rangeRound([height, 0])
-            .domain([0, d3.max(lines, function (d) {
+            .domain([0, d3.max(data, function (d) {
                 return d3.max(d.values, function (e) {
                     return e.video;
                 });
             })]);
-        /*var y = d3.scaleLinear()
-            .rangeRound([height, 0])
-            .domain([0, d3.max(data, function (d) {
-                console.log(d.video);
-                return d.video;
-            })]);*/
 
-        //var z = d3.scaleOrdinal(d3.schemeCategory10);
+        let xAxis = d3.axisBottom()
+            .scale(xScale);
 
-        g.append("g")
+        let yAxis = d3.axisLeft()
+            .scale(yScale);
+
+        let xAxisGroup = d3.select("#xAxis")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .select(".domain")
-            .remove();
+            .call(xAxis);
 
-        g.append("g")
-            .call(d3.axisLeft(y))
+        let yAxisGroup = d3.select("#yAxis")
+            .call(yAxis)
             .append("text")
             .attr("fill", "#000")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
+            .attr("x", 15)
+            .attr("y", -16)
             .attr("dy", "0.71em")
             .attr("text-anchor", "end")
             .text("video");
 
-        /*let line = g.selectAll(".lineChart")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "lineChart");*/
 
-        for (var i = 0; i < lines.length; i++) {
-            console.log(lines[i].values);
+        let line = d3.selectAll("#lines > path")
+        line.remove();
+
+        for (var i = 0; i < data.length; i++) {
             g.append("path")
-                .datum(lines[i].values)
+                .datum(data[i].values)
                 .attr("fill", "none")
                 .attr("stroke", "steelblue")
                 .attr("stroke-linejoin", "round")
@@ -180,51 +117,47 @@ class LineChart {
                 .attr("d", d3.line()
                     //.curve(d3.curveBasis)
                     .x(function (d) {
-                        return x(parseTime(d.years));
+                        return xScale(parseTime(d.years));
                     })
                     .y(function (d) {
-                        return y(d.video);
+                        return yScale(d.video);
                     }));
         }
-        /*d3.tsv("./data.tsv", function (d) {
-            //console.log(d);
-            d.date = parseTime(d.date);
-            d.close = +d.close;
-            return d;
-        }, function (error, data) {
-            if (error) throw error;
 
-            x.domain(d3.extent(data, function (d) {
-                return d.date;
-            }));
-            y.domain(d3.extent(data, function (d) {
-                return d.close;
-            }));
+        /*var xAxis = d3.scaleTime()
+            .rangeRound([0, width])
+            .domain([parseTime("2001"), parseTime("2017")]);
 
-            g.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
-                .select(".domain")
-                .remove();
+        var yAxis = d3.scaleLinear()
+            .rangeRound([height, 0])
+            .domain([0, d3.max(lines, function (d) {
+                return d3.max(d.values, function (e) {
+                    return e.video;
+                });
+            })]);
 
-            g.append("g")
-                .call(d3.axisLeft(y))
-                .append("text")
-                .attr("fill", "#000")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", "0.71em")
-                .attr("text-anchor", "end")
-                .text("Price ($)");
+        //var z = d3.scaleOrdinal(d3.schemeCategory10);
 
-            g.append("path")
-                .datum(data)
-                .attr("fill", "none")
-                .attr("stroke", "steelblue")
-                .attr("stroke-linejoin", "round")
-                .attr("stroke-linecap", "round")
-                .attr("stroke-width", 1.5)
-                .attr("d", line);
-        });*/
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(xAxis))
+            .select(".domain")
+        //.remove();
+
+        g.append("g")
+            .call(d3.axisLeft(yAxis))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+            .attr("text-anchor", "end")
+            .text("video");*/
+
+        /*let line = g.selectAll(".lineChart")
+            .data(data)
+            .enter().append("g")
+            .attr("class", "lineChart");*/
+
     }
 }
