@@ -11,6 +11,7 @@ function addButton(tag) {
     groupSet.add(tag);
     lineChart.update();
     table.update();
+    
 
     $("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + "<span class='badge'>4</span></button>");
 
@@ -35,7 +36,7 @@ d3.json("TED_Talks.json", function (data) {
     table = new Table(tagsInfo, allData, groupSet);
 })
 
-$.getJSON("all_tags.json", function (json) {
+/*$.getJSON("all_tags.json", function (json) {
     console.log(json["all_tags"]);
     for (let i = 0; i < json["all_tags"].length; i++) {
         if (json["all_tags"][i] == "alzheimer's") continue;
@@ -54,7 +55,7 @@ $.getJSON("all_tags.json", function (json) {
             });
         });
     }
-});
+});*/
 
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
