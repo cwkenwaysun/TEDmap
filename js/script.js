@@ -1,5 +1,6 @@
 let tagsInfo;
 let allData;
+let buttons;
 var groupSet = new Set();
 
 let lineChart;
@@ -7,7 +8,7 @@ let table;
 
 
 function addButton(tag) {
-    let number_tag;
+    /*let number_tag;
 
     //TODO: change tagsInfo to a hash map instead of an array.
     tagsInfo.forEach(function(element) {
@@ -26,20 +27,20 @@ function addButton(tag) {
         $(this).remove();
         lineChart.update();
         table.update();
-    });
+    });*/
+    buttons.addButton(tag);
 }
 
 // read tags information data
-d3.json("data/tags_info.json", function (data) {
-    tagsInfo = data;
-    //console.log(data);
-})
-
-d3.json("data/TED_Talks.json", function (data) {
-    allData = data;
-    //console.log(data);
-    lineChart = new LineChart(tagsInfo, allData, groupSet);
-    table = new Table(tagsInfo, allData, groupSet);
+d3.json("data/tags_info.json", function (data1) {
+    tagsInfo = data1;
+    d3.json("data/TED_Talks.json", function (data) {
+        allData = data;
+        //console.log(data);
+        lineChart = new LineChart(tagsInfo, allData, groupSet);
+        table = new Table(tagsInfo, allData, groupSet);
+        buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
+    })
 })
 
 // dropdown

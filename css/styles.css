@@ -25,6 +25,13 @@ g rect {
     fill:transparent;
 }
 
+#buttons li  a{
+    font-weight: bold;
+}
+#buttons li  a span{
+    font-weight: normal;
+}
+
 svg circle {
     cursor:pointer;
 }
