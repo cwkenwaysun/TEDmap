@@ -6,6 +6,9 @@
     <title>Visualization - TED Statistic Chart</title>
     <link rel="stylesheet" href="css/styles.css" />
     <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="bower_components/d3-layout/d3.layout.cloud.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -16,6 +19,20 @@
 <body>
     <div class="col-md-12 page-header">
         <h1> TEDmap <small> TED talks topic trend visualization </small> </h1>
+    </div>
+
+    <div class="col-md-8 container" id="tagCloud" >
+        <button class="btn" >0</button>
+        <button class="btn" >1</button>
+        <button class="btn" >2</button>
+        <button class="btn" >3</button>
+        <button class="btn" >4</button>
+        <button class="btn" >5</button>
+        <button class="btn" >6</button>
+        <button class="btn" >7</button>
+        <button class="btn" >8</button>
+        <button class="btn" >9</button>
+        <button class="btn" >10</button> 
     </div>
 
     <div class="col-md-8 container" id="networkChart" >
@@ -73,7 +90,7 @@
     </div>
 
 
-
+    <script type="application/javascript" src="js/textCloudChart.js"></script>
     <script type="application/javascript" src="js/linechart.js"></script>
     <script type="application/javascript" src="js/networkChart.js"></script>
     <script type="application/javascript" src="js/script.js"></script>

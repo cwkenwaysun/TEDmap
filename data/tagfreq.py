@@ -13,6 +13,12 @@ if __name__ == '__main__':
 		cluster[g_index] = g
 		g_index+=1
 
+	tag2g = dict()
+	for key, tags in cluster.items():
+		#print(tags)
+		for t in tags:
+			tag2g[t] = key
+
 	print("Load csv file...")
 	csvfile = pd.read_csv('TEDTalks_byID.csv').to_dict("records")
 
@@ -59,54 +65,33 @@ if __name__ == '__main__':
 				else:
 					tempmap[child] = 1	
 	
-	#tagmapJSON = json.dumps(tagmap['cars'],indent = 4,separators=(',', ': '))			
-	#with open('data_WO_TEDtag_v3.json', 'w') as outfile:
-	#	json.dump(tagmap, outfile)
-
-	print("MAX",MAX);	
-	print(len(nodelist))
-	
 	#print(tagmapJSON)
 	#
 	
 	#print(nodelist)
-	usedmap = dict()
-	linklist = list();
+	#usedmap = dict()
+	tagfreqlist = list();
+	maxf = 0
+	for key, con_dict in tagmap.items():	
 
-	for key, con_dict in tagmap.items():
-		if key in usedmap:
-			usedset = usedmap[key]
-		else:
-			usedset = set()
-			usedmap[key] = usedset	
-
+		freq = 0
 		for child, value in con_dict.items():
-			if child in usedset:
-				continue
-			if child in usedmap and key in usedmap[child]:
-				continue
+			freq+=value
 
-			usedset.add(child)
-			linklist.append(
+		maxf = max(maxf,freq)
+
+		tagfreqlist.append(
 				{
-					"source": key,
-					"target": child,
-					"value": value
+					"tag": key,
+					"frequency": freq,
+					"groupid": tag2g[key]
 				}
-			)
+		)	
 
-	linklist.sort(key = lambda x: x["value"])
-
-	print(len(linklist))
-
-	network = (
-		{
-			"nodes": nodelist,
-			"links": linklist
-		}
-	)
-	with open('network_WO_TEDtag_year.json', 'w') as outfile:
-		json.dump(network, outfile)
+	tagfreqlist.sort(key = lambda x: (x["groupid"],x["tag"]))
+	print(maxf)
+	#with open('TEDtag_frequency.json', 'w') as outfile:
+	#	json.dump(tagfreqlist, outfile)
 
 	#nodelist = list();
 		

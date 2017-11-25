@@ -16,6 +16,12 @@
 
 	//call fetchJSONFile then build and render 
 	fetchJSONFile('data/network_WO_TEDtag_v4.json', function(data) {
-		let nwChart = new networkChart(data);
-		nwChart.update();
+		
+		fetchJSONFile('data/TEDtag_frequency.json', function(f) {
+			let tcChart = new textCloudChart(f);
+			let nwChart = new networkChart(data,tcChart);
+			//tcChart.update();
+			nwChart.update();
+		});
+		
 	});

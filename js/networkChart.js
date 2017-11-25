@@ -6,10 +6,12 @@ class networkChart {
      * Constructor for network chart
      * @param   data network data, including links and nodes.
      */
-    constructor (data) {
+    constructor (data,textCloudChart) {
+        this.tcChart = textCloudChart;
+
         this.networkData = data;
         this.threshold = 15;
-
+        this.nodes = this.networkData.nodes;
         this.initlinksData = this.networkData.links.filter((d)=>{
               return +d['value'] > this.threshold;
             })
@@ -51,7 +53,15 @@ class networkChart {
       	this.gAll.append("g")
       		.attr("class", "nodes");
       	
-      	this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);		    
+      	this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);
+        this.rScale = d3.scaleLinear()
+        .domain([1, 203])
+        .range([5, 20]);
+
+        this.tcChart.setColor(this.colorScale);
+
+        this.switch = true;
+
         this.linksData;
         this.nodesData;
         this.threshold = 15;
@@ -68,7 +78,7 @@ class networkChart {
 
     	this.linksData = this.initlinksData;
     	this.nodesData = this.initnodesData;
-    	this.update();
+    	//this.update();
     }
     /**
      * find data which are related to the selected tag.
@@ -80,10 +90,15 @@ class networkChart {
     		this.selectedTag = null;
     		this.threshold = 15;
     		this.forceParam = -50;
+
+        this.switch = true;
 	    	this.resetData();
     	}
     	else{
-
+        if(this.forceParam==-50)
+          this.switch = true;
+        else
+          this.switch = false;
         /*
         d3.event.stopPropagation();
         let dcx = (this.svgWidth/2-x*1);
@@ -151,16 +166,6 @@ class networkChart {
 
         })
 
-        /*
-	    	let linksdata = this.networkData.links.filter((d)=>{
-                //if(d.target!=undefined)
-                  return d.target == tagName || d.source==tagName || d.source.tag==tagName || d.target.tag==tagName;
-                //return  d.source.tag==tagName || d.target.tag==tagName;
-
-	    				})
-        //*/
-        //console.log(linksdata);
-        console.log(newlinksdata);
 
         let usedTags = newlinksdata.map((d)=>{
              if(d.target.tag!=undefined)
@@ -190,7 +195,6 @@ class networkChart {
                 return t.tag;
               }).sort();
               
-
               return {
                 "valueToGroup":sum,
                 "data":v,
@@ -199,7 +203,7 @@ class networkChart {
             })
             .entries(newlinksdata);
 
-        console.log(groups);
+        //console.log(groups);
             
         let zoominGroup = [];
         groups.forEach( (d)=> {
@@ -226,20 +230,17 @@ class networkChart {
                   "value":e.value,
                 }
               );
+              nodeWithEdge.find((d)=>{return d.tag==e.target})['value'] = e.value;
+                //.value = e.value; 
           });
 
         });
         
         console.log(zoominGroup);
-
-            
+        console.log('after');
+        console.log(nodeWithEdge);
         this.linksData = zoominGroup;
         this.nodesData = nodeWithEdge;
-	    	//this.linksData = linksdata;
-	    	//this.nodesData = nodeWithEdge;
-	    	//this.update();
-        
-        //this.svg.selectAll('g').attr("transform", "translate("+ 0 + "," + 0  + ")");//
     	}
     	this.update();
 
@@ -298,34 +299,94 @@ class networkChart {
                             .distanceMax(300)
 
           )
-		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2));
+		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2))
+        .force('collision', d3.forceCollide().radius(function(d) {
+          return 9;
+        }))
+
+    this.gAll.select('.links').selectAll('line').remove();
 
 		let lines = this.gAll.select('.links').selectAll('line')
                         .data(this.linksData);
     let newlines = lines.enter().append('line').style("opacity", 0);                    
 
+    
         lines.exit()
               .style("opacity", 1)
               .transition()
               .duration(1500)
               .style("opacity", 0)
               .remove();
+              
 
         lines = newlines.merge(lines);
+        if(this.switch){
         lines
         .transition().duration(1500)
         .style("opacity", 1)
         .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
+        }
+        else{
+            //lines
+            //  .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
+        }
         	 //.attr("class", "links");
 
+        let circles;
+        this.nodesData.sort((a,b)=>{
+                  if (a.tag < b.tag) {
+                    return -1;
+                  }
+                  if (a.tag > b.tag) {
+                    return 1;
+                  }
+        })   
+        if(this.switch){
+          this.gAll.selectAll('.nodes').selectAll('circle').remove();
+          circles = this.gAll.selectAll('.nodes').selectAll('circle')
+                        .data(()=>{
+                          if(this.forceParam==-15)
+                            return this.nodes; //all 403 nodes
+                          return this.nodesData;
+                        });
 
-        let circles = this.gAll.selectAll('.nodes').selectAll('circle')
-                        .data(this.nodesData);
-        let newcircles = circles.enter().append('circle')
-                                  .style("opacity", 0)
-                                  .attr("r", 8);
-                        
-        circles.exit()
+          let newcircles = circles.enter().append('circle')
+                                  .style("opacity", (d)=>{
+                                    if(this.forceParam==-15)
+                                      return 0;
+                                    else
+                                      return 1;
+                                  })
+                                  .attr("r", (d)=>{
+                                     if(this.forceParam!=-15)
+                                      return 8
+                                     if(d.value>0)
+                                      return this.rScale(d.value);
+                                     return 8
+                                  })
+                                  .classed("visible",(d)=>{
+                                    if(this.forceParam==-15){
+                                      if(this.nodesData.includes(d)){
+                                          return true;
+                                      }
+                                      return false;
+                                    }
+                                    else
+                                      return true;
+                                  });
+                                  /*
+                                  .style("display", (d)=>{
+                                    if(this.forceParam==-15){
+                                      if(this.nodesData.includes(d)){
+                                          return "inline"
+                                      }
+                                      return "none";
+                                    }
+                                    else
+                                      return "inline";
+                                  });
+                                  */
+          circles.exit()
               .style("opacity", 1)
               .transition()
               .duration(1500)
@@ -336,9 +397,68 @@ class networkChart {
         //circles = circles.enter().append('circle').merge(circles);
         
         circles
-        .transition().duration(1500)
-				.attr("fill", (d)=> { return this.colorScale(d.groupid); })
-        .style("opacity", 1);
+        .transition().duration(3000)
+        .attr("fill", (d)=> { return this.colorScale(d.groupid); })
+        .style("opacity", (d)=>{
+                if(this.forceParam==-15)
+                    if(this.nodesData.includes(d))
+                      return 1;
+                    else
+                      return 0;
+                else 
+                  return 1;
+            }); 
+             
+
+        }
+        else{
+         circles = this.gAll.selectAll('.nodes').selectAll('circle');
+                        //.data(this.nodesData);
+                        //.data(this.nodes);
+                        //
+          let i=0;
+          circles.classed("visible",(d)=>{
+                                    if(this.nodesData.includes(d)){
+                                          i++;
+                                          return true;
+                                      }
+                                      return false;
+                                  })
+                  .transition().duration(2000)
+                  .attr("r", (d)=>{
+                     if(d.value>0)
+                      return this.rScale(d.value);
+                     return 8
+                  })
+                  .style("opacity", (d)=>{
+                                    if(this.nodesData.includes(d))
+                                      return 1;
+                                    return 0;
+                                  });
+                  
+          console.log('visible node:'+i);       
+                                  /*
+                                  .attr("r", 8)
+                                  //.attr("fill", (d)=> { return this.colorScale(d.groupid); })
+                                  .attr("cx",(d)=>{
+                                    if(d.x===0 || d.x == undefined)
+                                      return this.svgWidth/2;
+                                    return d.x;
+                                  })
+                                  .attr("cy",(d)=>{
+                                    if(d.y===0 || d.y == undefined)
+                                      return this.svgHeight/2;
+                                    return d.y;
+                                  });
+                                  
+  
+          circles
+          .transition().duration(4000)
+          .attr("fill", (d)=> { return this.colorScale(d.groupid); })
+          .style("opacity", 1);
+          */
+        }   
+        
 
         circles
 				.call(d3.drag()
@@ -371,13 +491,36 @@ class networkChart {
         });	
 
 			  this.svg.call(circletip);
-            
-        circles.on('mouseover', circletip.show)
-                .on('mouseout', circletip.hide)
-                .on('dblclick',(d)=>{
-                	console.log(d.tag);
-					     this.selectOneNode(d.tag,d.x,d.y);
-				});
+
+        if(this.forceParam != -15){    
+            circles.on('mouseover', function(d){
+                      d3.select(this).classed('selected',true);
+                      circletip.show(d)
+                    })
+                    .on('mouseout', function(d){
+                      d3.select(this).classed('selected',false);
+                      circletip.hide(d)
+                    })
+                    .on('dblclick',(d)=>{
+                    	console.log(d.tag);
+    					     this.selectOneNode(d.tag,d.x,d.y);
+    				});
+        }
+        else{
+             circles = this.gAll.selectAll('.nodes').selectAll('.visible')
+                    .on('mouseover', function(d){
+                      d3.select(this).classed('selected',true);
+                      circletip.show(d)
+                    })
+                    .on('mouseout', function(d){
+                      d3.select(this).classed('selected',false);
+                      circletip.hide(d)
+                    })
+                    .on('dblclick',(d)=>{
+                      console.log(d.tag);
+                   this.selectOneNode(d.tag,d.x,d.y);
+            });
+        }
 
                 
 			  simulation
@@ -387,33 +530,56 @@ class networkChart {
 			  simulation.force("link")
 			      .links(this.linksData);
  
-
+        let self = this;    
 			  function ticked() {
+          if(!self.switch){
 			    lines
+              //.transition().duration(1500)
 			        .attr("x1", function(d) { return d.source.x; })
 			        .attr("y1", function(d) { return d.source.y; })
 			        .attr("x2", function(d) { return d.target.x; })
-			        .attr("y2", function(d) { return d.target.y; });
+			        .attr("y2", function(d) { return d.target.y; })
+              .style("opacity", 1)
+              .attr("stroke-width", (d)=> { return Math.sqrt(d.value-self.threshold); });
 
 			    circles
+              //.transition().duration(500)
+              //.attr("fill", (d)=> { return self.colorScale(d.groupid); })
 			        .attr("cx", function(d) { return d.x; })
 			        .attr("cy", function(d) { return d.y; });
+
+          //lines
+          //    .transition().duration(1500)
+          //    .style("opacity", 1); 
+          }
+          else{
+            lines
+              .attr("x1", function(d) { return d.source.x; })
+              .attr("y1", function(d) { return d.source.y; })
+              .attr("x2", function(d) { return d.target.x; })
+              .attr("y2", function(d) { return d.target.y; });
+
+          circles
+              .attr("cx", function(d) { return d.x; })
+              .attr("cy", function(d) { return d.y; });
+          }    
 			  }
 
         //zoom capabilities 
         let min_zoom = 0.5;
         let max_zoom = 7;
-        let zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom])
-                                    .on("zoom", zoom_actions);
+        //let zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom]);
+        //                            .on("zoom", zoom_actions);
         
-        //let zoom_handler = d3.zoom()
-        //    .on("zoom", zoom_actions);
+        //this.svg.call(circletip);
+        var zoom_handler = d3.zoom()
+            .on("zoom", zoom_actions);
 
         zoom_handler(this.svg);
 
         function zoom_actions(){
-            this.gAll
-              .attr("transform", d3.event.transform)
+            //this.gAll
+            //  .attr("transform", d3.event.transform)
         }
 
   }     
