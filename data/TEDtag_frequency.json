@@ -1,0 +1,2017 @@
+[
+  {
+    "tag": "asteroid",
+    "frequency": 11,
+    "groupid": 0
+  },
+  {
+    "tag": "astronomy",
+    "frequency": 313,
+    "groupid": 0
+  },
+  {
+    "tag": "big bang",
+    "frequency": 84,
+    "groupid": 0
+  },
+  {
+    "tag": "cosmos",
+    "frequency": 161,
+    "groupid": 0
+  },
+  {
+    "tag": "dark matter",
+    "frequency": 109,
+    "groupid": 0
+  },
+  {
+    "tag": "exploration",
+    "frequency": 838,
+    "groupid": 0
+  },
+  {
+    "tag": "extraterrestrial life",
+    "frequency": 127,
+    "groupid": 0
+  },
+  {
+    "tag": "mars",
+    "frequency": 123,
+    "groupid": 0
+  },
+  {
+    "tag": "nasa",
+    "frequency": 217,
+    "groupid": 0
+  },
+  {
+    "tag": "nobel prize",
+    "frequency": 47,
+    "groupid": 0
+  },
+  {
+    "tag": "physics",
+    "frequency": 520,
+    "groupid": 0
+  },
+  {
+    "tag": "planets",
+    "frequency": 235,
+    "groupid": 0
+  },
+  {
+    "tag": "solar system",
+    "frequency": 153,
+    "groupid": 0
+  },
+  {
+    "tag": "space",
+    "frequency": 423,
+    "groupid": 0
+  },
+  {
+    "tag": "string theory",
+    "frequency": 59,
+    "groupid": 0
+  },
+  {
+    "tag": "telescopes",
+    "frequency": 4,
+    "groupid": 0
+  },
+  {
+    "tag": "time",
+    "frequency": 141,
+    "groupid": 0
+  },
+  {
+    "tag": "universe",
+    "frequency": 397,
+    "groupid": 0
+  },
+  {
+    "tag": "anthropology",
+    "frequency": 167,
+    "groupid": 1
+  },
+  {
+    "tag": "ants",
+    "frequency": 18,
+    "groupid": 1
+  },
+  {
+    "tag": "archaeology",
+    "frequency": 74,
+    "groupid": 1
+  },
+  {
+    "tag": "architecture",
+    "frequency": 437,
+    "groupid": 1
+  },
+  {
+    "tag": "arts",
+    "frequency": 38,
+    "groupid": 1
+  },
+  {
+    "tag": "big problems",
+    "frequency": 755,
+    "groupid": 1
+  },
+  {
+    "tag": "blockchain",
+    "frequency": 14,
+    "groupid": 1
+  },
+  {
+    "tag": "cello",
+    "frequency": 13,
+    "groupid": 1
+  },
+  {
+    "tag": "collaboration",
+    "frequency": 1640,
+    "groupid": 1
+  },
+  {
+    "tag": "communication",
+    "frequency": 1718,
+    "groupid": 1
+  },
+  {
+    "tag": "community",
+    "frequency": 1375,
+    "groupid": 1
+  },
+  {
+    "tag": "compassion",
+    "frequency": 292,
+    "groupid": 1
+  },
+  {
+    "tag": "conducting",
+    "frequency": 41,
+    "groupid": 1
+  },
+  {
+    "tag": "crowdsourcing",
+    "frequency": 92,
+    "groupid": 1
+  },
+  {
+    "tag": "demo",
+    "frequency": 362,
+    "groupid": 1
+  },
+  {
+    "tag": "democracy",
+    "frequency": 425,
+    "groupid": 1
+  },
+  {
+    "tag": "development",
+    "frequency": 57,
+    "groupid": 1
+  },
+  {
+    "tag": "discovery",
+    "frequency": 193,
+    "groupid": 1
+  },
+  {
+    "tag": "driverless cars",
+    "frequency": 29,
+    "groupid": 1
+  },
+  {
+    "tag": "ebola",
+    "frequency": 125,
+    "groupid": 1
+  },
+  {
+    "tag": "egypt",
+    "frequency": 111,
+    "groupid": 1
+  },
+  {
+    "tag": "faith",
+    "frequency": 162,
+    "groupid": 1
+  },
+  {
+    "tag": "fear",
+    "frequency": 263,
+    "groupid": 1
+  },
+  {
+    "tag": "gay",
+    "frequency": 21,
+    "groupid": 1
+  },
+  {
+    "tag": "gender equality",
+    "frequency": 198,
+    "groupid": 1
+  },
+  {
+    "tag": "gender spectrum",
+    "frequency": 51,
+    "groupid": 1
+  },
+  {
+    "tag": "google",
+    "frequency": 84,
+    "groupid": 1
+  },
+  {
+    "tag": "government",
+    "frequency": 903,
+    "groupid": 1
+  },
+  {
+    "tag": "guitar",
+    "frequency": 99,
+    "groupid": 1
+  },
+  {
+    "tag": "hearing",
+    "frequency": 55,
+    "groupid": 1
+  },
+  {
+    "tag": "heart health",
+    "frequency": 102,
+    "groupid": 1
+  },
+  {
+    "tag": "history",
+    "frequency": 1179,
+    "groupid": 1
+  },
+  {
+    "tag": "hiv",
+    "frequency": 83,
+    "groupid": 1
+  },
+  {
+    "tag": "human origins",
+    "frequency": 104,
+    "groupid": 1
+  },
+  {
+    "tag": "humanity",
+    "frequency": 1911,
+    "groupid": 1
+  },
+  {
+    "tag": "identity",
+    "frequency": 1211,
+    "groupid": 1
+  },
+  {
+    "tag": "immigration",
+    "frequency": 114,
+    "groupid": 1
+  },
+  {
+    "tag": "innovation",
+    "frequency": 2386,
+    "groupid": 1
+  },
+  {
+    "tag": "journalism",
+    "frequency": 356,
+    "groupid": 1
+  },
+  {
+    "tag": "live music",
+    "frequency": 357,
+    "groupid": 1
+  },
+  {
+    "tag": "map",
+    "frequency": 123,
+    "groupid": 1
+  },
+  {
+    "tag": "materials",
+    "frequency": 350,
+    "groupid": 1
+  },
+  {
+    "tag": "meme",
+    "frequency": 24,
+    "groupid": 1
+  },
+  {
+    "tag": "microsoft",
+    "frequency": 24,
+    "groupid": 1
+  },
+  {
+    "tag": "middle east",
+    "frequency": 274,
+    "groupid": 1
+  },
+  {
+    "tag": "military",
+    "frequency": 159,
+    "groupid": 1
+  },
+  {
+    "tag": "new york",
+    "frequency": 66,
+    "groupid": 1
+  },
+  {
+    "tag": "news",
+    "frequency": 191,
+    "groupid": 1
+  },
+  {
+    "tag": "novel",
+    "frequency": 10,
+    "groupid": 1
+  },
+  {
+    "tag": "nuclear energy",
+    "frequency": 85,
+    "groupid": 1
+  },
+  {
+    "tag": "open-source",
+    "frequency": 244,
+    "groupid": 1
+  },
+  {
+    "tag": "pandemic",
+    "frequency": 47,
+    "groupid": 1
+  },
+  {
+    "tag": "peace",
+    "frequency": 313,
+    "groupid": 1
+  },
+  {
+    "tag": "piano",
+    "frequency": 83,
+    "groupid": 1
+  },
+  {
+    "tag": "policy",
+    "frequency": 594,
+    "groupid": 1
+  },
+  {
+    "tag": "potential",
+    "frequency": 883,
+    "groupid": 1
+  },
+  {
+    "tag": "product design",
+    "frequency": 469,
+    "groupid": 1
+  },
+  {
+    "tag": "protests",
+    "frequency": 70,
+    "groupid": 1
+  },
+  {
+    "tag": "public spaces",
+    "frequency": 151,
+    "groupid": 1
+  },
+  {
+    "tag": "refugees",
+    "frequency": 146,
+    "groupid": 1
+  },
+  {
+    "tag": "religion",
+    "frequency": 350,
+    "groupid": 1
+  },
+  {
+    "tag": "security",
+    "frequency": 362,
+    "groupid": 1
+  },
+  {
+    "tag": "singer",
+    "frequency": 87,
+    "groupid": 1
+  },
+  {
+    "tag": "skateboarding",
+    "frequency": 3,
+    "groupid": 1
+  },
+  {
+    "tag": "social media",
+    "frequency": 360,
+    "groupid": 1
+  },
+  {
+    "tag": "society",
+    "frequency": 2290,
+    "groupid": 1
+  },
+  {
+    "tag": "speech",
+    "frequency": 119,
+    "groupid": 1
+  },
+  {
+    "tag": "sports",
+    "frequency": 180,
+    "groupid": 1
+  },
+  {
+    "tag": "state-building",
+    "frequency": 38,
+    "groupid": 1
+  },
+  {
+    "tag": "teaching",
+    "frequency": 341,
+    "groupid": 1
+  },
+  {
+    "tag": "terrorism",
+    "frequency": 243,
+    "groupid": 1
+  },
+  {
+    "tag": "transgender",
+    "frequency": 59,
+    "groupid": 1
+  },
+  {
+    "tag": "trust",
+    "frequency": 37,
+    "groupid": 1
+  },
+  {
+    "tag": "violence",
+    "frequency": 544,
+    "groupid": 1
+  },
+  {
+    "tag": "violin",
+    "frequency": 35,
+    "groupid": 1
+  },
+  {
+    "tag": "virtual reality",
+    "frequency": 80,
+    "groupid": 1
+  },
+  {
+    "tag": "vulnerability",
+    "frequency": 51,
+    "groupid": 1
+  },
+  {
+    "tag": "war",
+    "frequency": 714,
+    "groupid": 1
+  },
+  {
+    "tag": "wikipedia",
+    "frequency": 51,
+    "groupid": 1
+  },
+  {
+    "tag": "world cultures",
+    "frequency": 188,
+    "groupid": 1
+  },
+  {
+    "tag": "writing",
+    "frequency": 517,
+    "groupid": 1
+  },
+  {
+    "tag": "wunderkind",
+    "frequency": 33,
+    "groupid": 1
+  },
+  {
+    "tag": "ai",
+    "frequency": 301,
+    "groupid": 2
+  },
+  {
+    "tag": "algorithm",
+    "frequency": 328,
+    "groupid": 2
+  },
+  {
+    "tag": "augmented reality",
+    "frequency": 31,
+    "groupid": 2
+  },
+  {
+    "tag": "bullying",
+    "frequency": 64,
+    "groupid": 2
+  },
+  {
+    "tag": "code",
+    "frequency": 212,
+    "groupid": 2
+  },
+  {
+    "tag": "complexity",
+    "frequency": 103,
+    "groupid": 2
+  },
+  {
+    "tag": "computers",
+    "frequency": 864,
+    "groupid": 2
+  },
+  {
+    "tag": "data",
+    "frequency": 704,
+    "groupid": 2
+  },
+  {
+    "tag": "drones",
+    "frequency": 127,
+    "groupid": 2
+  },
+  {
+    "tag": "hack",
+    "frequency": 73,
+    "groupid": 2
+  },
+  {
+    "tag": "intelligence",
+    "frequency": 469,
+    "groupid": 2
+  },
+  {
+    "tag": "interface design",
+    "frequency": 185,
+    "groupid": 2
+  },
+  {
+    "tag": "internet",
+    "frequency": 685,
+    "groupid": 2
+  },
+  {
+    "tag": "iran",
+    "frequency": 40,
+    "groupid": 2
+  },
+  {
+    "tag": "library",
+    "frequency": 114,
+    "groupid": 2
+  },
+  {
+    "tag": "literature",
+    "frequency": 149,
+    "groupid": 2
+  },
+  {
+    "tag": "machine learning",
+    "frequency": 224,
+    "groupid": 2
+  },
+  {
+    "tag": "math",
+    "frequency": 397,
+    "groupid": 2
+  },
+  {
+    "tag": "moon",
+    "frequency": 18,
+    "groupid": 2
+  },
+  {
+    "tag": "one laptop per child",
+    "frequency": 21,
+    "groupid": 2
+  },
+  {
+    "tag": "prediction",
+    "frequency": 129,
+    "groupid": 2
+  },
+  {
+    "tag": "programming",
+    "frequency": 245,
+    "groupid": 2
+  },
+  {
+    "tag": "robots",
+    "frequency": 417,
+    "groupid": 2
+  },
+  {
+    "tag": "sexual violence",
+    "frequency": 37,
+    "groupid": 2
+  },
+  {
+    "tag": "simplicity",
+    "frequency": 80,
+    "groupid": 2
+  },
+  {
+    "tag": "software",
+    "frequency": 431,
+    "groupid": 2
+  },
+  {
+    "tag": "surveillance",
+    "frequency": 10,
+    "groupid": 2
+  },
+  {
+    "tag": "web",
+    "frequency": 296,
+    "groupid": 2
+  },
+  {
+    "tag": "3d printing",
+    "frequency": 28,
+    "groupid": 3
+  },
+  {
+    "tag": "aging",
+    "frequency": 356,
+    "groupid": 3
+  },
+  {
+    "tag": "bioethics",
+    "frequency": 301,
+    "groupid": 3
+  },
+  {
+    "tag": "biomechanics",
+    "frequency": 323,
+    "groupid": 3
+  },
+  {
+    "tag": "biomimicry",
+    "frequency": 202,
+    "groupid": 3
+  },
+  {
+    "tag": "biotech",
+    "frequency": 796,
+    "groupid": 3
+  },
+  {
+    "tag": "cancer",
+    "frequency": 375,
+    "groupid": 3
+  },
+  {
+    "tag": "crispr",
+    "frequency": 20,
+    "groupid": 3
+  },
+  {
+    "tag": "cyborg",
+    "frequency": 68,
+    "groupid": 3
+  },
+  {
+    "tag": "disability",
+    "frequency": 230,
+    "groupid": 3
+  },
+  {
+    "tag": "disease",
+    "frequency": 764,
+    "groupid": 3
+  },
+  {
+    "tag": "dna",
+    "frequency": 473,
+    "groupid": 3
+  },
+  {
+    "tag": "engineering",
+    "frequency": 1184,
+    "groupid": 3
+  },
+  {
+    "tag": "epidemiology",
+    "frequency": 13,
+    "groupid": 3
+  },
+  {
+    "tag": "exoskeleton",
+    "frequency": 39,
+    "groupid": 3
+  },
+  {
+    "tag": "forensics",
+    "frequency": 25,
+    "groupid": 3
+  },
+  {
+    "tag": "genetics",
+    "frequency": 641,
+    "groupid": 3
+  },
+  {
+    "tag": "health",
+    "frequency": 1782,
+    "groupid": 3
+  },
+  {
+    "tag": "health care",
+    "frequency": 1027,
+    "groupid": 3
+  },
+  {
+    "tag": "illness",
+    "frequency": 594,
+    "groupid": 3
+  },
+  {
+    "tag": "medical imaging",
+    "frequency": 129,
+    "groupid": 3
+  },
+  {
+    "tag": "medical research",
+    "frequency": 936,
+    "groupid": 3
+  },
+  {
+    "tag": "medicine",
+    "frequency": 1237,
+    "groupid": 3
+  },
+  {
+    "tag": "molecular biology",
+    "frequency": 405,
+    "groupid": 3
+  },
+  {
+    "tag": "monkeys",
+    "frequency": 78,
+    "groupid": 3
+  },
+  {
+    "tag": "nanoscale",
+    "frequency": 246,
+    "groupid": 3
+  },
+  {
+    "tag": "pharmaceuticals",
+    "frequency": 250,
+    "groupid": 3
+  },
+  {
+    "tag": "physiology",
+    "frequency": 258,
+    "groupid": 3
+  },
+  {
+    "tag": "prosthetics",
+    "frequency": 122,
+    "groupid": 3
+  },
+  {
+    "tag": "public health",
+    "frequency": 458,
+    "groupid": 3
+  },
+  {
+    "tag": "surgery",
+    "frequency": 107,
+    "groupid": 3
+  },
+  {
+    "tag": "synthetic biology",
+    "frequency": 189,
+    "groupid": 3
+  },
+  {
+    "tag": "vaccines",
+    "frequency": 137,
+    "groupid": 3
+  },
+  {
+    "tag": "virus",
+    "frequency": 126,
+    "groupid": 3
+  },
+  {
+    "tag": "illusion",
+    "frequency": 112,
+    "groupid": 4
+  },
+  {
+    "tag": "magic",
+    "frequency": 66,
+    "groupid": 4
+  },
+  {
+    "tag": "autism spectrum disorder",
+    "frequency": 83,
+    "groupid": 5
+  },
+  {
+    "tag": "behavioral economics",
+    "frequency": 200,
+    "groupid": 5
+  },
+  {
+    "tag": "body language",
+    "frequency": 71,
+    "groupid": 5
+  },
+  {
+    "tag": "brain",
+    "frequency": 1176,
+    "groupid": 5
+  },
+  {
+    "tag": "buddhism",
+    "frequency": 76,
+    "groupid": 5
+  },
+  {
+    "tag": "children",
+    "frequency": 1129,
+    "groupid": 5
+  },
+  {
+    "tag": "cognitive science",
+    "frequency": 582,
+    "groupid": 5
+  },
+  {
+    "tag": "consciousness",
+    "frequency": 188,
+    "groupid": 5
+  },
+  {
+    "tag": "crime",
+    "frequency": 224,
+    "groupid": 5
+  },
+  {
+    "tag": "depression",
+    "frequency": 174,
+    "groupid": 5
+  },
+  {
+    "tag": "empathy",
+    "frequency": 290,
+    "groupid": 5
+  },
+  {
+    "tag": "evil",
+    "frequency": 14,
+    "groupid": 5
+  },
+  {
+    "tag": "gaming",
+    "frequency": 204,
+    "groupid": 5
+  },
+  {
+    "tag": "happiness",
+    "frequency": 518,
+    "groupid": 5
+  },
+  {
+    "tag": "memory",
+    "frequency": 176,
+    "groupid": 5
+  },
+  {
+    "tag": "mental health",
+    "frequency": 521,
+    "groupid": 5
+  },
+  {
+    "tag": "mind",
+    "frequency": 685,
+    "groupid": 5
+  },
+  {
+    "tag": "morality",
+    "frequency": 191,
+    "groupid": 5
+  },
+  {
+    "tag": "neuroscience",
+    "frequency": 825,
+    "groupid": 5
+  },
+  {
+    "tag": "pain",
+    "frequency": 83,
+    "groupid": 5
+  },
+  {
+    "tag": "parenting",
+    "frequency": 507,
+    "groupid": 5
+  },
+  {
+    "tag": "personality",
+    "frequency": 185,
+    "groupid": 5
+  },
+  {
+    "tag": "philosophy",
+    "frequency": 389,
+    "groupid": 5
+  },
+  {
+    "tag": "prison",
+    "frequency": 108,
+    "groupid": 5
+  },
+  {
+    "tag": "psychology",
+    "frequency": 742,
+    "groupid": 5
+  },
+  {
+    "tag": "ptsd",
+    "frequency": 32,
+    "groupid": 5
+  },
+  {
+    "tag": "self",
+    "frequency": 386,
+    "groupid": 5
+  },
+  {
+    "tag": "sight",
+    "frequency": 153,
+    "groupid": 5
+  },
+  {
+    "tag": "smell",
+    "frequency": 36,
+    "groupid": 5
+  },
+  {
+    "tag": "sociology",
+    "frequency": 202,
+    "groupid": 5
+  },
+  {
+    "tag": "syria",
+    "frequency": 34,
+    "groupid": 5
+  },
+  {
+    "tag": "advertising",
+    "frequency": 50,
+    "groupid": 6
+  },
+  {
+    "tag": "africa",
+    "frequency": 722,
+    "groupid": 6
+  },
+  {
+    "tag": "aids",
+    "frequency": 125,
+    "groupid": 6
+  },
+  {
+    "tag": "aircraft",
+    "frequency": 74,
+    "groupid": 6
+  },
+  {
+    "tag": "asia",
+    "frequency": 155,
+    "groupid": 6
+  },
+  {
+    "tag": "brand",
+    "frequency": 34,
+    "groupid": 6
+  },
+  {
+    "tag": "business",
+    "frequency": 1874,
+    "groupid": 6
+  },
+  {
+    "tag": "capitalism",
+    "frequency": 127,
+    "groupid": 6
+  },
+  {
+    "tag": "cars",
+    "frequency": 120,
+    "groupid": 6
+  },
+  {
+    "tag": "charter for compassion",
+    "frequency": 22,
+    "groupid": 6
+  },
+  {
+    "tag": "china",
+    "frequency": 144,
+    "groupid": 6
+  },
+  {
+    "tag": "choice",
+    "frequency": 406,
+    "groupid": 6
+  },
+  {
+    "tag": "cities",
+    "frequency": 679,
+    "groupid": 6
+  },
+  {
+    "tag": "consumerism",
+    "frequency": 133,
+    "groupid": 6
+  },
+  {
+    "tag": "corruption",
+    "frequency": 95,
+    "groupid": 6
+  },
+  {
+    "tag": "criminal justice",
+    "frequency": 49,
+    "groupid": 6
+  },
+  {
+    "tag": "culture",
+    "frequency": 2317,
+    "groupid": 6
+  },
+  {
+    "tag": "debate",
+    "frequency": 85,
+    "groupid": 6
+  },
+  {
+    "tag": "decision-making",
+    "frequency": 322,
+    "groupid": 6
+  },
+  {
+    "tag": "economics",
+    "frequency": 1139,
+    "groupid": 6
+  },
+  {
+    "tag": "education",
+    "frequency": 1414,
+    "groupid": 6
+  },
+  {
+    "tag": "entrepreneur",
+    "frequency": 501,
+    "groupid": 6
+  },
+  {
+    "tag": "europe",
+    "frequency": 156,
+    "groupid": 6
+  },
+  {
+    "tag": "failure",
+    "frequency": 101,
+    "groupid": 6
+  },
+  {
+    "tag": "farming",
+    "frequency": 107,
+    "groupid": 6
+  },
+  {
+    "tag": "fashion",
+    "frequency": 73,
+    "groupid": 6
+  },
+  {
+    "tag": "feminism",
+    "frequency": 221,
+    "groupid": 6
+  },
+  {
+    "tag": "finance",
+    "frequency": 106,
+    "groupid": 6
+  },
+  {
+    "tag": "flight",
+    "frequency": 129,
+    "groupid": 6
+  },
+  {
+    "tag": "foreign policy",
+    "frequency": 63,
+    "groupid": 6
+  },
+  {
+    "tag": "global development",
+    "frequency": 586,
+    "groupid": 6
+  },
+  {
+    "tag": "goal-setting",
+    "frequency": 357,
+    "groupid": 6
+  },
+  {
+    "tag": "guns",
+    "frequency": 51,
+    "groupid": 6
+  },
+  {
+    "tag": "india",
+    "frequency": 130,
+    "groupid": 6
+  },
+  {
+    "tag": "industrial design",
+    "frequency": 273,
+    "groupid": 6
+  },
+  {
+    "tag": "inequality",
+    "frequency": 842,
+    "groupid": 6
+  },
+  {
+    "tag": "interview",
+    "frequency": 132,
+    "groupid": 6
+  },
+  {
+    "tag": "invention",
+    "frequency": 1128,
+    "groupid": 6
+  },
+  {
+    "tag": "investment",
+    "frequency": 275,
+    "groupid": 6
+  },
+  {
+    "tag": "iraq",
+    "frequency": 82,
+    "groupid": 6
+  },
+  {
+    "tag": "law",
+    "frequency": 337,
+    "groupid": 6
+  },
+  {
+    "tag": "leadership",
+    "frequency": 1190,
+    "groupid": 6
+  },
+  {
+    "tag": "manufacturing",
+    "frequency": 61,
+    "groupid": 6
+  },
+  {
+    "tag": "marketing",
+    "frequency": 122,
+    "groupid": 6
+  },
+  {
+    "tag": "men",
+    "frequency": 40,
+    "groupid": 6
+  },
+  {
+    "tag": "microfinance",
+    "frequency": 31,
+    "groupid": 6
+  },
+  {
+    "tag": "mobility",
+    "frequency": 114,
+    "groupid": 6
+  },
+  {
+    "tag": "money",
+    "frequency": 224,
+    "groupid": 6
+  },
+  {
+    "tag": "motivation",
+    "frequency": 663,
+    "groupid": 6
+  },
+  {
+    "tag": "narcotics",
+    "frequency": 28,
+    "groupid": 6
+  },
+  {
+    "tag": "natural disaster",
+    "frequency": 47,
+    "groupid": 6
+  },
+  {
+    "tag": "obesity",
+    "frequency": 68,
+    "groupid": 6
+  },
+  {
+    "tag": "personal growth",
+    "frequency": 784,
+    "groupid": 6
+  },
+  {
+    "tag": "philanthropy",
+    "frequency": 160,
+    "groupid": 6
+  },
+  {
+    "tag": "politics",
+    "frequency": 1178,
+    "groupid": 6
+  },
+  {
+    "tag": "poverty",
+    "frequency": 330,
+    "groupid": 6
+  },
+  {
+    "tag": "presentation",
+    "frequency": 65,
+    "groupid": 6
+  },
+  {
+    "tag": "privacy",
+    "frequency": 119,
+    "groupid": 6
+  },
+  {
+    "tag": "productivity",
+    "frequency": 158,
+    "groupid": 6
+  },
+  {
+    "tag": "resources",
+    "frequency": 61,
+    "groupid": 6
+  },
+  {
+    "tag": "shopping",
+    "frequency": 58,
+    "groupid": 6
+  },
+  {
+    "tag": "social change",
+    "frequency": 1932,
+    "groupid": 6
+  },
+  {
+    "tag": "success",
+    "frequency": 209,
+    "groupid": 6
+  },
+  {
+    "tag": "telecom",
+    "frequency": 45,
+    "groupid": 6
+  },
+  {
+    "tag": "television",
+    "frequency": 41,
+    "groupid": 6
+  },
+  {
+    "tag": "trafficking",
+    "frequency": 50,
+    "groupid": 6
+  },
+  {
+    "tag": "transportation",
+    "frequency": 232,
+    "groupid": 6
+  },
+  {
+    "tag": "united states",
+    "frequency": 277,
+    "groupid": 6
+  },
+  {
+    "tag": "women",
+    "frequency": 859,
+    "groupid": 6
+  },
+  {
+    "tag": "women in business",
+    "frequency": 173,
+    "groupid": 6
+  },
+  {
+    "tag": "work",
+    "frequency": 476,
+    "groupid": 6
+  },
+  {
+    "tag": "work-life balance",
+    "frequency": 110,
+    "groupid": 6
+  },
+  {
+    "tag": "animation",
+    "frequency": 100,
+    "groupid": 7
+  },
+  {
+    "tag": "art",
+    "frequency": 1238,
+    "groupid": 7
+  },
+  {
+    "tag": "beauty",
+    "frequency": 581,
+    "groupid": 7
+  },
+  {
+    "tag": "books",
+    "frequency": 223,
+    "groupid": 7
+  },
+  {
+    "tag": "brazil",
+    "frequency": 54,
+    "groupid": 7
+  },
+  {
+    "tag": "christianity",
+    "frequency": 64,
+    "groupid": 7
+  },
+  {
+    "tag": "comedy",
+    "frequency": 268,
+    "groupid": 7
+  },
+  {
+    "tag": "composing",
+    "frequency": 95,
+    "groupid": 7
+  },
+  {
+    "tag": "creativity",
+    "frequency": 1052,
+    "groupid": 7
+  },
+  {
+    "tag": "dance",
+    "frequency": 129,
+    "groupid": 7
+  },
+  {
+    "tag": "death",
+    "frequency": 342,
+    "groupid": 7
+  },
+  {
+    "tag": "design",
+    "frequency": 2359,
+    "groupid": 7
+  },
+  {
+    "tag": "entertainment",
+    "frequency": 1542,
+    "groupid": 7
+  },
+  {
+    "tag": "family",
+    "frequency": 544,
+    "groupid": 7
+  },
+  {
+    "tag": "film",
+    "frequency": 420,
+    "groupid": 7
+  },
+  {
+    "tag": "funny",
+    "frequency": 55,
+    "groupid": 7
+  },
+  {
+    "tag": "glacier",
+    "frequency": 27,
+    "groupid": 7
+  },
+  {
+    "tag": "god",
+    "frequency": 111,
+    "groupid": 7
+  },
+  {
+    "tag": "humor",
+    "frequency": 551,
+    "groupid": 7
+  },
+  {
+    "tag": "islam",
+    "frequency": 50,
+    "groupid": 7
+  },
+  {
+    "tag": "language",
+    "frequency": 345,
+    "groupid": 7
+  },
+  {
+    "tag": "media",
+    "frequency": 494,
+    "groupid": 7
+  },
+  {
+    "tag": "meditation",
+    "frequency": 75,
+    "groupid": 7
+  },
+  {
+    "tag": "movies",
+    "frequency": 32,
+    "groupid": 7
+  },
+  {
+    "tag": "museums",
+    "frequency": 69,
+    "groupid": 7
+  },
+  {
+    "tag": "music",
+    "frequency": 643,
+    "groupid": 7
+  },
+  {
+    "tag": "online video",
+    "frequency": 109,
+    "groupid": 7
+  },
+  {
+    "tag": "origami",
+    "frequency": 8,
+    "groupid": 7
+  },
+  {
+    "tag": "painting",
+    "frequency": 67,
+    "groupid": 7
+  },
+  {
+    "tag": "performance",
+    "frequency": 610,
+    "groupid": 7
+  },
+  {
+    "tag": "performance art",
+    "frequency": 167,
+    "groupid": 7
+  },
+  {
+    "tag": "photography",
+    "frequency": 444,
+    "groupid": 7
+  },
+  {
+    "tag": "play",
+    "frequency": 104,
+    "groupid": 7
+  },
+  {
+    "tag": "poetry",
+    "frequency": 300,
+    "groupid": 7
+  },
+  {
+    "tag": "race",
+    "frequency": 328,
+    "groupid": 7
+  },
+  {
+    "tag": "science and art",
+    "frequency": 383,
+    "groupid": 7
+  },
+  {
+    "tag": "senses",
+    "frequency": 144,
+    "groupid": 7
+  },
+  {
+    "tag": "slavery",
+    "frequency": 95,
+    "groupid": 7
+  },
+  {
+    "tag": "sound",
+    "frequency": 125,
+    "groupid": 7
+  },
+  {
+    "tag": "spoken word",
+    "frequency": 63,
+    "groupid": 7
+  },
+  {
+    "tag": "statistics",
+    "frequency": 146,
+    "groupid": 7
+  },
+  {
+    "tag": "storytelling",
+    "frequency": 667,
+    "groupid": 7
+  },
+  {
+    "tag": "street art",
+    "frequency": 14,
+    "groupid": 7
+  },
+  {
+    "tag": "theater",
+    "frequency": 88,
+    "groupid": 7
+  },
+  {
+    "tag": "toy",
+    "frequency": 75,
+    "groupid": 7
+  },
+  {
+    "tag": "travel",
+    "frequency": 58,
+    "groupid": 7
+  },
+  {
+    "tag": "typography",
+    "frequency": 21,
+    "groupid": 7
+  },
+  {
+    "tag": "visualizations",
+    "frequency": 709,
+    "groupid": 7
+  },
+  {
+    "tag": "vocals",
+    "frequency": 81,
+    "groupid": 7
+  },
+  {
+    "tag": "youth",
+    "frequency": 251,
+    "groupid": 7
+  },
+  {
+    "tag": "friendship",
+    "frequency": 58,
+    "groupid": 8
+  },
+  {
+    "tag": "gender",
+    "frequency": 217,
+    "groupid": 8
+  },
+  {
+    "tag": "latin america",
+    "frequency": 57,
+    "groupid": 8
+  },
+  {
+    "tag": "lgbt",
+    "frequency": 107,
+    "groupid": 8
+  },
+  {
+    "tag": "love",
+    "frequency": 283,
+    "groupid": 8
+  },
+  {
+    "tag": "relationships",
+    "frequency": 441,
+    "groupid": 8
+  },
+  {
+    "tag": "sex",
+    "frequency": 226,
+    "groupid": 8
+  },
+  {
+    "tag": "yesallwomen",
+    "frequency": 44,
+    "groupid": 8
+  },
+  {
+    "tag": "activism",
+    "frequency": 1288,
+    "groupid": 9
+  },
+  {
+    "tag": "adventure",
+    "frequency": 422,
+    "groupid": 9
+  },
+  {
+    "tag": "agriculture",
+    "frequency": 340,
+    "groupid": 9
+  },
+  {
+    "tag": "alternative energy",
+    "frequency": 351,
+    "groupid": 9
+  },
+  {
+    "tag": "ancient world",
+    "frequency": 199,
+    "groupid": 9
+  },
+  {
+    "tag": "animals",
+    "frequency": 877,
+    "groupid": 9
+  },
+  {
+    "tag": "anthropocene",
+    "frequency": 27,
+    "groupid": 9
+  },
+  {
+    "tag": "bacteria",
+    "frequency": 275,
+    "groupid": 9
+  },
+  {
+    "tag": "bees",
+    "frequency": 101,
+    "groupid": 9
+  },
+  {
+    "tag": "biodiversity",
+    "frequency": 644,
+    "groupid": 9
+  },
+  {
+    "tag": "biology",
+    "frequency": 1594,
+    "groupid": 9
+  },
+  {
+    "tag": "biosphere",
+    "frequency": 138,
+    "groupid": 9
+  },
+  {
+    "tag": "birds",
+    "frequency": 106,
+    "groupid": 9
+  },
+  {
+    "tag": "botany",
+    "frequency": 198,
+    "groupid": 9
+  },
+  {
+    "tag": "chemistry",
+    "frequency": 405,
+    "groupid": 9
+  },
+  {
+    "tag": "climate change",
+    "frequency": 841,
+    "groupid": 9
+  },
+  {
+    "tag": "conservation",
+    "frequency": 194,
+    "groupid": 9
+  },
+  {
+    "tag": "curiosity",
+    "frequency": 305,
+    "groupid": 9
+  },
+  {
+    "tag": "deextinction",
+    "frequency": 46,
+    "groupid": 9
+  },
+  {
+    "tag": "dinosaurs",
+    "frequency": 65,
+    "groupid": 9
+  },
+  {
+    "tag": "disaster relief",
+    "frequency": 156,
+    "groupid": 9
+  },
+  {
+    "tag": "ecology",
+    "frequency": 637,
+    "groupid": 9
+  },
+  {
+    "tag": "energy",
+    "frequency": 390,
+    "groupid": 9
+  },
+  {
+    "tag": "environment",
+    "frequency": 1573,
+    "groupid": 9
+  },
+  {
+    "tag": "evolution",
+    "frequency": 491,
+    "groupid": 9
+  },
+  {
+    "tag": "fish",
+    "frequency": 225,
+    "groupid": 9
+  },
+  {
+    "tag": "food",
+    "frequency": 379,
+    "groupid": 9
+  },
+  {
+    "tag": "future",
+    "frequency": 2083,
+    "groupid": 9
+  },
+  {
+    "tag": "garden",
+    "frequency": 233,
+    "groupid": 9
+  },
+  {
+    "tag": "geology",
+    "frequency": 54,
+    "groupid": 9
+  },
+  {
+    "tag": "green",
+    "frequency": 619,
+    "groupid": 9
+  },
+  {
+    "tag": "infrastructure",
+    "frequency": 426,
+    "groupid": 9
+  },
+  {
+    "tag": "insects",
+    "frequency": 283,
+    "groupid": 9
+  },
+  {
+    "tag": "life",
+    "frequency": 982,
+    "groupid": 9
+  },
+  {
+    "tag": "macarthur grant",
+    "frequency": 100,
+    "groupid": 9
+  },
+  {
+    "tag": "microbes",
+    "frequency": 186,
+    "groupid": 9
+  },
+  {
+    "tag": "microbiology",
+    "frequency": 330,
+    "groupid": 9
+  },
+  {
+    "tag": "mining",
+    "frequency": 36,
+    "groupid": 9
+  },
+  {
+    "tag": "mission blue",
+    "frequency": 150,
+    "groupid": 9
+  },
+  {
+    "tag": "natural resources",
+    "frequency": 234,
+    "groupid": 9
+  },
+  {
+    "tag": "nature",
+    "frequency": 1173,
+    "groupid": 9
+  },
+  {
+    "tag": "nuclear weapons",
+    "frequency": 42,
+    "groupid": 9
+  },
+  {
+    "tag": "oceans",
+    "frequency": 539,
+    "groupid": 9
+  },
+  {
+    "tag": "oil",
+    "frequency": 36,
+    "groupid": 9
+  },
+  {
+    "tag": "paleontology",
+    "frequency": 79,
+    "groupid": 9
+  },
+  {
+    "tag": "plants",
+    "frequency": 328,
+    "groupid": 9
+  },
+  {
+    "tag": "plastic",
+    "frequency": 75,
+    "groupid": 9
+  },
+  {
+    "tag": "pollution",
+    "frequency": 476,
+    "groupid": 9
+  },
+  {
+    "tag": "population",
+    "frequency": 140,
+    "groupid": 9
+  },
+  {
+    "tag": "pregnancy",
+    "frequency": 108,
+    "groupid": 9
+  },
+  {
+    "tag": "primates",
+    "frequency": 55,
+    "groupid": 9
+  },
+  {
+    "tag": "rocket science",
+    "frequency": 87,
+    "groupid": 9
+  },
+  {
+    "tag": "sanitation",
+    "frequency": 93,
+    "groupid": 9
+  },
+  {
+    "tag": "solar",
+    "frequency": 170,
+    "groupid": 9
+  },
+  {
+    "tag": "solar energy",
+    "frequency": 174,
+    "groupid": 9
+  },
+  {
+    "tag": "south america",
+    "frequency": 81,
+    "groupid": 9
+  },
+  {
+    "tag": "submarine",
+    "frequency": 68,
+    "groupid": 9
+  },
+  {
+    "tag": "sustainability",
+    "frequency": 694,
+    "groupid": 9
+  },
+  {
+    "tag": "trees",
+    "frequency": 152,
+    "groupid": 9
+  },
+  {
+    "tag": "urban",
+    "frequency": 167,
+    "groupid": 9
+  },
+  {
+    "tag": "urban planning",
+    "frequency": 251,
+    "groupid": 9
+  },
+  {
+    "tag": "water",
+    "frequency": 405,
+    "groupid": 9
+  },
+  {
+    "tag": "weather",
+    "frequency": 117,
+    "groupid": 9
+  },
+  {
+    "tag": "wind energy",
+    "frequency": 73,
+    "groupid": 9
+  },
+  {
+    "tag": "addiction",
+    "frequency": 59,
+    "groupid": 10
+  },
+  {
+    "tag": "alzheimer's",
+    "frequency": 10,
+    "groupid": 10
+  },
+  {
+    "tag": "apes",
+    "frequency": 16,
+    "groupid": 10
+  },
+  {
+    "tag": "atheism",
+    "frequency": 25,
+    "groupid": 10
+  },
+  {
+    "tag": "cloud",
+    "frequency": 4,
+    "groupid": 10
+  },
+  {
+    "tag": "extreme sports",
+    "frequency": 40,
+    "groupid": 10
+  },
+  {
+    "tag": "grammar",
+    "frequency": 14,
+    "groupid": 10
+  },
+  {
+    "tag": "jazz",
+    "frequency": 16,
+    "groupid": 10
+  },
+  {
+    "tag": "mindfulness",
+    "frequency": 49,
+    "groupid": 10
+  },
+  {
+    "tag": "nonviolence",
+    "frequency": 8,
+    "groupid": 10
+  },
+  {
+    "tag": "sleep",
+    "frequency": 25,
+    "groupid": 10
+  },
+  {
+    "tag": "student",
+    "frequency": 40,
+    "groupid": 10
+  },
+  {
+    "tag": "suicide",
+    "frequency": 32,
+    "groupid": 10
+  },
+  {
+    "tag": "testing",
+    "frequency": 4,
+    "groupid": 10
+  }
+]
