@@ -185,7 +185,7 @@ class networkChart {
         nodeWithEdge.sort((a,b)=>{
             return a.groupid - b.groupid;
         });        
-	    	console.log(nodeWithEdge);
+	    	//console.log(nodeWithEdge);
 
         let groups = d3.nest()
             .key(function(d) { return d.t_groupid; })
@@ -236,9 +236,9 @@ class networkChart {
 
         });
         
-        console.log(zoominGroup);
-        console.log('after');
-        console.log(nodeWithEdge);
+        //console.log(zoominGroup);
+        //console.log('after');
+        //console.log(nodeWithEdge);
         this.linksData = zoominGroup;
         this.nodesData = nodeWithEdge;
     	}
@@ -436,7 +436,7 @@ class networkChart {
                                     return 0;
                                   });
                   
-          console.log('visible node:'+i);       
+          //console.log('visible node:'+i);       
                                   /*
                                   .attr("r", 8)
                                   //.attr("fill", (d)=> { return this.colorScale(d.groupid); })
@@ -502,14 +502,14 @@ class networkChart {
                       circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
-                    	console.log(d.tag);
+                    	//console.log(d.tag);
     					     this.selectOneNode(d.tag,d.x,d.y);
-    				})
-					.on('click',(d)=>{
-					// when click, add tag in to buttons
-					console.log(d.tag);
-					addButton(d.tag);
-					});
+    				        })
+          					.on('click',(d)=>{
+          					// when click, add tag in to buttons
+          					//console.log(d.tag);
+          					addButton(d.tag);
+          					});
         }
         else{
              circles = this.gAll.selectAll('.nodes').selectAll('.visible')
@@ -522,14 +522,14 @@ class networkChart {
                       circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
-                      console.log(d.tag);
+                      //console.log(d.tag);
                    this.selectOneNode(d.tag,d.x,d.y);
-            		})
-					.on('click',(d)=>{
-					// when click, add tag in to buttons
-					console.log(d.tag);
-					addButton(d.tag);
-					});
+                		})
+          					.on('click',(d)=>{
+          					// when click, add tag in to buttons
+          					//console.log(d.tag);
+          					addButton(d.tag);
+          					});
         }
 
                 

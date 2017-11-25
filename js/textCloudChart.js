@@ -29,7 +29,7 @@ class textCloudChart {
 
         divnwChart.selectAll('.btn').on('click',(d,i,object)=>{
             let t = d3.select(object[i]).text();
-            console.log(t);
+            //console.log(t);
             this.selectedId = +t; 
             this.update();
         })
@@ -70,7 +70,7 @@ class textCloudChart {
     let gdata = this.freqData.filter((d)=>{
             return d.groupid==this.selectedId;
         }) 
-    console.log(gdata); 
+    //console.log(gdata); 
 
     this.gtext.selectAll(".incloud").remove();
                 
