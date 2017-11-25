@@ -374,18 +374,6 @@ class networkChart {
                                     else
                                       return true;
                                   });
-                                  /*
-                                  .style("display", (d)=>{
-                                    if(this.forceParam==-15){
-                                      if(this.nodesData.includes(d)){
-                                          return "inline"
-                                      }
-                                      return "none";
-                                    }
-                                    else
-                                      return "inline";
-                                  });
-                                  */
           circles.exit()
               .style("opacity", 1)
               .transition()
@@ -437,26 +425,7 @@ class networkChart {
                                   });
                   
           //console.log('visible node:'+i);       
-                                  /*
-                                  .attr("r", 8)
-                                  //.attr("fill", (d)=> { return this.colorScale(d.groupid); })
-                                  .attr("cx",(d)=>{
-                                    if(d.x===0 || d.x == undefined)
-                                      return this.svgWidth/2;
-                                    return d.x;
-                                  })
-                                  .attr("cy",(d)=>{
-                                    if(d.y===0 || d.y == undefined)
-                                      return this.svgHeight/2;
-                                    return d.y;
-                                  });
-                                  
-  
-          circles
-          .transition().duration(4000)
-          .attr("fill", (d)=> { return this.colorScale(d.groupid); })
-          .style("opacity", 1);
-          */
+
         }   
         
 
@@ -491,6 +460,8 @@ class networkChart {
         });	
 
 			  this.svg.call(circletip);
+        
+        let clickstate = 1;
 
         if(this.forceParam != -15){    
             circles.on('mouseover', function(d){
@@ -502,13 +473,20 @@ class networkChart {
                       circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
-                    	//console.log(d.tag);
-    					     this.selectOneNode(d.tag,d.x,d.y);
+                    	console.log(d.tag);
+                      clickstate = 0;
+    					         this.selectOneNode(d.tag,d.x,d.y);
+                       //clickstate = 1;
     				        })
           					.on('click',(d)=>{
           					// when click, add tag in to buttons
           					//console.log(d.tag);
-          					addButton(d.tag);
+                    clickstate=1;
+                      setTimeout(()=>{
+                        if(clickstate==1)
+                          addButton(d.tag);
+                        }, 400);
+          					
           					});
         }
         else{
@@ -523,16 +501,19 @@ class networkChart {
                     })
                     .on('dblclick',(d)=>{
                       //console.log(d.tag);
-                   this.selectOneNode(d.tag,d.x,d.y);
+                      clickstate = 0;
+                      this.selectOneNode(d.tag,d.x,d.y);
                 		})
           					.on('click',(d)=>{
           					// when click, add tag in to buttons
-          					//console.log(d.tag);
-          					addButton(d.tag);
+          					clickstate=1;
+                      setTimeout(()=>{
+                        if(clickstate==1)
+                          addButton(d.tag);
+                        }, 400);
           					});
         }
 
-                
 			  simulation
 			      .nodes(this.nodesData)
 			      .on("tick", ticked);
@@ -544,7 +525,6 @@ class networkChart {
 			  function ticked() {
           if(!self.switch){
 			    lines
-              //.transition().duration(1500)
 			        .attr("x1", function(d) { return d.source.x; })
 			        .attr("y1", function(d) { return d.source.y; })
 			        .attr("x2", function(d) { return d.target.x; })
@@ -553,14 +533,9 @@ class networkChart {
               .attr("stroke-width", (d)=> { return Math.sqrt(d.value-self.threshold); });
 
 			    circles
-              //.transition().duration(500)
-              //.attr("fill", (d)=> { return self.colorScale(d.groupid); })
 			        .attr("cx", function(d) { return d.x; })
 			        .attr("cy", function(d) { return d.y; });
 
-          //lines
-          //    .transition().duration(1500)
-          //    .style("opacity", 1); 
           }
           else{
             lines
@@ -578,10 +553,7 @@ class networkChart {
         //zoom capabilities 
         let min_zoom = 0.5;
         let max_zoom = 7;
-        //let zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom]);
-        //                            .on("zoom", zoom_actions);
-        
-        //this.svg.call(circletip);
+
         var zoom_handler = d3.zoom()
             .on("zoom", zoom_actions);
 
