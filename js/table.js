@@ -103,27 +103,18 @@ class Table {
      * @return text HTML content for tool tip
      */
     tooltip_render(tooltip_data) {
-        //let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
-        //text +=  "Group ID: " + tooltip_data.groupid;
         let text = "<h4>" + tooltip_data.headline + "</h4>";
-        //text += tooltip_data.rates;
-        console.log(tooltip_data.rates);
-        /*d3.selectAll('.d3-tip').remove();
-        let circletip = d3.tip().attr('class', 'd3-tip')
-        .direction('se')
-        .offset(function() {
-            return [0,0];
-        })
-        .html((d)=>{
-            let tooltip_data = {
-                "tag": d.tag,
-                "groupid":d.groupid,
-                "color":this.colorScale(d.groupid)
-              };
-            return this.circle_tooltip_render(tooltip_data);
-
-});	*/
+        // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
+        text += "<div class='radarChart2' style='display: inline-flex;'></div>"
+        console.log(data);
+        //console.log(tooltip_data.rates);
+        
         return text;
+    }
+
+    drawRadar() {
+        console.log("drawradar");
+        RadarChart(".radarChart2", data, radarChartOptions2);
     }
 
 
@@ -160,6 +151,7 @@ class Table {
                     tip.html(tmp.tooltip_render(element))
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
+                    tmp.drawRadar();
                 })
                 .on('mouseout', function (d) {
                     tip.transition()
