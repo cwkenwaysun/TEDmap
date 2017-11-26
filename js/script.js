@@ -148,9 +148,9 @@ function fetchJSONFile(path, callback) {
 }
 
 //call fetchJSONFile then build and render 
-	fetchJSONFile('data/network_WO_TEDtag_v4.json', function(data) {
+	fetchJSONFile('data/network_WO_TEDtag_v5.json', function(data) {
 		
-		fetchJSONFile('data/TEDtag_frequency.json', function(f) {
+		fetchJSONFile('data/TEDtag_frequency_v2.json', function(f) {
 			let tcChart = new textCloudChart(f);
 			let nwChart = new networkChart(data,tcChart);
 			//tcChart.update();

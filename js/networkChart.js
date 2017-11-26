@@ -53,12 +53,16 @@ class networkChart {
       	this.gAll.append("g")
       		.attr("class", "nodes");
       	
-      	this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);
+      	this.colorScale = d3.scaleOrdinal() //ten colors
+                  .domain(d3.range(0,9))
+                  .range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
+                  //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
+
         this.rScale = d3.scaleLinear()
         .domain([1, 203])
         .range([5, 20]);
 
-        this.tcChart.setColor(this.colorScale);
+        this.tcChart.setColor();
 
         this.switch = true;
 

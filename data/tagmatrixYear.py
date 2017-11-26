@@ -1,30 +1,37 @@
 """Preprocess tags per video and create their node description"""
-
+"""save con-occurence between tags each year"""
 import csv
 import pandas as pd
 import json
 
 if __name__ == '__main__':
-	print("Load json file...")
+	print("Load group file...")
 	json_data = json.load(open('data_clusters_v6.json'))
 	cluster = dict()
 	g_index = 0
 	for key, g in json_data.items():
 		cluster[g_index] = g
 		g_index+=1
-
-	print(g_index)
-	print("Load csv file...")
-	csvfile = pd.read_csv('TEDTalks_byID.csv').to_dict("records")
+		
+    print(g_index)
+	print("Load json file...")
+	videos = json.load(open('TED_Talks.json'))
 
 	print("check all tags...")
 	removeTag = ["science","technology","global issues"]
+
+	yearmap = dict()
+	for i in range(2001,2017)
+		yearmap[i] = dict()
 
 	MAX = 0	
 	tagset = set()
 	tagmap = dict()
 	nodelist = list();
-	for row in csvfile:
+	for row in videos:
+		year = int(row['date'].split("-")[0])
+		thisymap = yearmap[year]
+
 		s = row['tags'].split(",")
 		for i in range(len(s)):
 			key = s[i].strip().lower()
@@ -42,10 +49,14 @@ if __name__ == '__main__':
 
 			if key in tagmap:
 				tempmap = tagmap[key]
+				tempYmap = yearmap[year][key]
 			else:
 				tempmap = dict()
 				tagmap[key] = tempmap
-			#print (tempmap)
+				for i in range(2001,2017)
+					yearmap[i][key] = dict()
+				tempYmap = yearmap[year][key]	
+
 
 			for j in range(len(s)):
 				child = s[j].strip().lower()
@@ -58,11 +69,12 @@ if __name__ == '__main__':
 					if tempmap[child] > MAX:
 						MAX = tempmap[child]
 				else:
-					tempmap[child] = 1	
-	
-	#tagmapJSON = json.dumps(tagmap['cars'],indent = 4,separators=(',', ': '))			
-	#with open('data_WO_TEDtag_v3.json', 'w') as outfile:
-	#	json.dump(tagmap, outfile)
+					tempmap[child] = 1
+
+				if child in tempYmap:
+					tempYmap[child] += 1
+				else:
+					tempYmap[child] = 1		
 
 	print("MAX",MAX);	
 	print(len(nodelist))
@@ -102,7 +114,7 @@ if __name__ == '__main__':
 			"links": linklist
 		}
 	)
-	with open('network_WO_TEDtag_v5.json', 'w') as outfile:
+	with open('network_per_year.json', 'w') as outfile:
 		json.dump(network, outfile)
 
 	#nodelist = list();
