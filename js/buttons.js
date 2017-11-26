@@ -44,7 +44,6 @@ class Buttons {
             console.warn(tag + " is already in the set.");
         } else {
             this.groupSet.add(tag);
-            this.update();
 
             //TODO: beautify it
             //$("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + " <span class='badge'>" + number_tag + "</span></button>");

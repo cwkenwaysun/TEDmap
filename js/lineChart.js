@@ -60,7 +60,7 @@ class LineChart {
      */
     update() {
         let data = this.processData();
-        console.log(data);
+        //console.log(data);
 
         let svg = d3.select("#lineChart");
         let width = svg.attr("width") - this.margin.left - this.margin.right;
@@ -153,7 +153,7 @@ class LineChart {
                         return yScale(d.video);
                     }));
 
-            console.log(data[i]);
+            //console.log(data[i]);
             g.append("text")
                 .attr("transform", "translate(" + (width + 45) + "," + (20 * i) + ")")
                 .text(data[i].tagName)
