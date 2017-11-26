@@ -36,11 +36,12 @@ class textCloudChart {
 
         this.gtext = this.svg.append("g")
                     .attr("transform", "translate("+this.svgWidth/2+",175)");
+                    //.attr("text-align", "center");
 
         this.cloud = d3.layout.cloud().size([this.svgWidth, 325]);
         this.sizeScale = d3.scaleLinear()
                         .domain([1, 2386])
-                        .range([10, 100]);        
+                        .range([8, 75]);        
 
     };
     
@@ -88,8 +89,11 @@ class textCloudChart {
     this.cloud
             .words(gdata)
             .rotate(0)
-            //.padding(0)
-            .fontSize((d)=> { return this.sizeScale(d.frequency) });       
+            .padding(2)
+            .spiral('archimedean')
+            .text((d)=>{ return d.tag; })
+            .fontSize((d)=> { return this.sizeScale(d.frequency)+7 });
+                  
 
     this.cloud.on("end", (words)=>{
         
@@ -108,20 +112,7 @@ class textCloudChart {
                 })
                 .text(function(d) { return d.tag; })
                 .transition().duration(1500)
-                .style("opacity", 1); 
-
-        //alltext.exit()
-              //.style("opacity", 1)
-              //.transition()
-              //.duration(1500)
-              //.style("opacity", 0)
-        //      .remove();        
-
-        //alltext = newtext.merge(alltext);
-
-        //alltext
-        //.transition().duration(3000)
-        //.style("opacity", 1);        
+                .style("opacity", 1);       
     });
 
 
