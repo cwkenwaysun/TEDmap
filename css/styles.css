@@ -69,7 +69,8 @@ svg circle {
 }
 
 .incloud{
-    font-family: Lato;
+    text-anchor: middle;
+    font-family: "Comic Sans MS";
 }
 
 body {

@@ -24,12 +24,15 @@ class textCloudChart {
             .attr("height", this.svgHeight)
             .attr("class", "wordcloud");
 
-        this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);   
+        this.colorScale = d3.scaleOrdinal() //ten colors
+                  .domain(d3.range(0,9))
+                  .range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
+                  //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
+
         this.selectedId = 0;
 
         divnwChart.selectAll('.btn').on('click',(d,i,object)=>{
             let t = d3.select(object[i]).text();
-            //console.log(t);
             this.selectedId = +t; 
             this.update();
         })
@@ -40,12 +43,12 @@ class textCloudChart {
         this.cloud = d3.layout.cloud().size([this.svgWidth, 325]);
         this.sizeScale = d3.scaleLinear()
                         .domain([1, 2386])
-                        .range([10, 100]);        
+                        .range([8, 75]);        
 
     };
     
-    setColor(colscale) {
-        this.colorScale = colscale;
+    setColor() {
+        //this.colorScale = colscale;
         this.update();
     }
 
@@ -70,7 +73,7 @@ class textCloudChart {
     let gdata = this.freqData.filter((d)=>{
             return d.groupid==this.selectedId;
         }) 
-    //console.log(gdata); 
+    console.log(this.selectedId); 
 
     this.gtext.selectAll(".incloud").remove();
                 
@@ -88,8 +91,11 @@ class textCloudChart {
     this.cloud
             .words(gdata)
             .rotate(0)
-            //.padding(0)
-            .fontSize((d)=> { return this.sizeScale(d.frequency) });       
+            .padding(2)
+            .spiral('archimedean')
+            .text((d)=>{ return d.tag; })
+            .fontSize((d)=> { return this.sizeScale(d.frequency)+7 });
+                  
 
     this.cloud.on("end", (words)=>{
         
@@ -98,8 +104,7 @@ class textCloudChart {
         alltext.enter().append("text")
                 .style("font-size", (d)=> { return this.sizeScale(d.frequency) + "px"; })
                 .style("fill", (d)=>{ 
-                  return this.colorScale(d.groupid) 
-                  //return 'black';
+                  return this.colorScale(d.groupid);
                 })
                 .attr('class','incloud')
                 .attr('opacity',0)
@@ -108,20 +113,7 @@ class textCloudChart {
                 })
                 .text(function(d) { return d.tag; })
                 .transition().duration(1500)
-                .style("opacity", 1); 
-
-        //alltext.exit()
-              //.style("opacity", 1)
-              //.transition()
-              //.duration(1500)
-              //.style("opacity", 0)
-        //      .remove();        
-
-        //alltext = newtext.merge(alltext);
-
-        //alltext
-        //.transition().duration(3000)
-        //.style("opacity", 1);        
+                .style("opacity", 1);       
     });
 
 

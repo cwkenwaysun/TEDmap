@@ -6,7 +6,7 @@ import json
 
 if __name__ == '__main__':
 	print("Load json file...")
-	json_data = json.load(open('data_clusters_v5.json'))
+	json_data = json.load(open('data_clusters_v6.json'))
 	cluster = dict()
 	g_index = 0
 	for key, g in json_data.items():
@@ -65,11 +65,6 @@ if __name__ == '__main__':
 				else:
 					tempmap[child] = 1	
 	
-	#print(tagmapJSON)
-	#
-	
-	#print(nodelist)
-	#usedmap = dict()
 	tagfreqlist = list();
 	maxf = 0
 	for key, con_dict in tagmap.items():	
@@ -90,8 +85,8 @@ if __name__ == '__main__':
 
 	tagfreqlist.sort(key = lambda x: (x["groupid"],x["tag"]))
 	print(maxf)
-	#with open('TEDtag_frequency.json', 'w') as outfile:
-	#	json.dump(tagfreqlist, outfile)
+	with open('TEDtag_frequency_v2.json', 'w') as outfile:
+		json.dump(tagfreqlist, outfile)
 
 	#nodelist = list();
 		
