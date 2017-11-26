@@ -52,7 +52,8 @@ class Buttons {
 
             let tmp = this;
             $("#buttons > li").click(function () {
-                tmp.removeButton(this.childNodes[0].textContent);
+                //console.log(this.childNodes[0].childNodes[0].textContent.trim());
+                tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
                 $(this).remove();
             });
 
@@ -66,8 +67,10 @@ class Buttons {
      * Remove a button from groupSet.
      */
     removeButton(tag) {
-        // if groupset not exist tag print warning
+        // if groupset not exist tag print warnig
+        //console.log(tag);
         this.groupSet.delete(tag);
+        //console.log(groupSet);
         this.update();
     }
 }

@@ -15,9 +15,9 @@ class LineChart {
 
         this.margin = {
             top: 20,
-            right: 20,
+            right: 150,
             bottom: 30,
-            left: 50
+            left: 30
         };
     };
 
@@ -105,15 +105,45 @@ class LineChart {
 
         let line = d3.selectAll("#lines > path")
         line.remove();
+        d3.selectAll("#lines > text").remove();
+        d3.selectAll("#lines > line").remove();
 
-        for (var i = 0; i < data.length; i++) {
+
+        // add symbol to line path
+        let shapes = [d3.symbolCircle,
+            d3.symbolTriangle,
+            d3.symbolDiamond,
+            d3.symbolSquare,
+            d3.symbolStar,
+            d3.symbolCross,
+            d3.symbolWye
+        ];
+
+        let symbol = function (i) {
+            return d3.symbol().size(100).type(shapes[i]);
+        }
+
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].values.length; j++) {
+                g.append("path")
+                    .datum(data[i].values[j])
+                    .attr("class", "symbols")
+                    .attr("fill", "steelblue")
+                    .attr("stroke", "steelblue")
+                    .attr("d", symbol(i % 7))
+                    .attr("transform", function (d) {
+                        return "translate(" + xScale(parseTime(d.years)) + "," + yScale(d.video) + ")";
+                    });
+            }
+
+
             g.append("path")
                 .datum(data[i].values)
                 .attr("fill", "none")
                 .attr("stroke", "steelblue")
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-linecap", "round")
-                .attr("stroke-width", 1.5)
+                .attr("stroke-width", 2)
                 .attr("d", d3.line()
                     //.curve(d3.curveBasis)
                     .x(function (d) {
@@ -122,6 +152,26 @@ class LineChart {
                     .y(function (d) {
                         return yScale(d.video);
                     }));
+
+            console.log(data[i]);
+            g.append("text")
+                .attr("transform", "translate(" + (width + 45) + "," + (20 * i) + ")")
+                .text(data[i].tagName)
+            g.append("line")
+                .attr("x1", width+10)
+                .attr("x2", width+40)
+                .attr("y1", -4+i*20)
+                .attr("y2", -4+i*20)
+                .attr("stroke", "steelblue")
+                .attr("stroke-width", 2)
+            //.attr("transform", "translate(" + (width + 10) + "," + (20 * i) + ")")
+            //.text(data[i].tagName)
+            g.append("path")
+                .attr("fill", "steelblue")
+                .attr("stroke", "steelblue")
+                .attr("d", symbol(i % 7))
+                .attr("transform", "translate(" + (width + 25) + "," + (20 * i-4) + ")")
+
         }
 
         /*var xAxis = d3.scaleTime()
