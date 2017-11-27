@@ -45,6 +45,18 @@ class networkChart {
         this.svg = divnwChart.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight);
+
+        //border of svg    
+        let border = this.svg.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", this.svgHeight)
+            .attr("width", this.svgWidth)
+            .style("stroke", 'Gray')
+            .style("opacity", 0.8)
+            .style("fill", "none")
+            .style("stroke-width", '3px');
+
         this.gAll = this.svg.append("g");
         this.gAll.attr("class", "everything");   
 
@@ -82,7 +94,6 @@ class networkChart {
 
     	this.linksData = this.initlinksData;
     	this.nodesData = this.initnodesData;
-    	//this.update();
     }
     /**
      * find data which are related to the selected tag.
@@ -103,16 +114,7 @@ class networkChart {
           this.switch = true;
         else
           this.switch = false;
-        /*
-        d3.event.stopPropagation();
-        let dcx = (this.svgWidth/2-x*1);
-        let dcy = (this.svgHeight/2-y*1);
-        //zoom.translate([dcx,dcy]);
-        this.svg.selectAll('g')
-        .transition()
-        .duration(1500).attr("transform", "translate("+ dcx + "," + dcy  + ")");
-        */
-        //tagName = "cars";
+
     		this.threshold = 0;
     		this.selectedTag = tagName;
     		this.forceParam = -15;
@@ -235,14 +237,10 @@ class networkChart {
                 }
               );
               nodeWithEdge.find((d)=>{return d.tag==e.target})['value'] = e.value;
-                //.value = e.value; 
           });
 
         });
-        
-        //console.log(zoominGroup);
-        //console.log('after');
-        //console.log(nodeWithEdge);
+
         this.linksData = zoominGroup;
         this.nodesData = nodeWithEdge;
     	}
@@ -258,6 +256,15 @@ class networkChart {
     circle_tooltip_render(tooltip_data) {
         let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
         text +=  "Group ID: " + tooltip_data.groupid;
+
+        if(this.forceParam != -15){
+          text += "<h3> Top 5 strong related tags:</h3>";
+          text += "<ul>"
+          tooltip_data.top5.forEach((row)=>{
+              text += "<li><b>" + row.tag + "</b>:" + row.value+ "</li>"
+          });
+          text += "</ul>";
+        } 
 
         return text;
     }
@@ -426,9 +433,7 @@ class networkChart {
                                     if(this.nodesData.includes(d))
                                       return 1;
                                     return 0;
-                                  });
-                  
-          //console.log('visible node:'+i);       
+                                  });     
 
         }   
         
@@ -447,7 +452,47 @@ class networkChart {
                     return [0,0];
                 })
                 .html((d)=>{
-                    let tooltip_data = {
+                  let tooltip_data;
+                  let dvalue = d.value;
+                  if(this.forceParam != -15){
+                    let relatedLine = this.linksData.filter((l)=>{
+                      return l.source.tag == d.tag || l.target.tag == d.tag;
+                    });
+                    let rank = relatedLine.map((l)=>{
+                        let tagName;
+                        let gid;
+                        if(l.source.tag==d.tag){
+                          tagName = l.target.tag;
+                          gid = l.target.groupid;
+                        }
+                        else{
+                          tagName = l.source.tag;
+                          gid = l.source.groupid;
+                        }
+                        return{
+                          "tag": tagName,
+                          "value":l.value,
+                          "groupid":gid
+                        }
+                    });
+
+                    rank.sort((a,b)=>{
+                      return(b.value - a.value); 
+                    });
+                    //console.log(rank);
+                    let top5 = rank.slice(0,5);
+                    //console.log(top5);
+
+                    tooltip_data = {
+                        "tag": d.tag,
+                        "groupid":d.groupid,
+                        "color":this.colorScale(d.groupid),
+                        "top5":top5
+                      };
+
+                  }
+                  else{
+                    tooltip_data = {
                         "tag": d.tag,
                         "groupid":d.groupid,
                         "color":this.colorScale(d.groupid)
@@ -459,7 +504,8 @@ class networkChart {
                          ]
                          */
                       };
-                    return this.circle_tooltip_render(tooltip_data);
+                  }    
+                  return this.circle_tooltip_render(tooltip_data);
 
         });	
 
@@ -554,6 +600,7 @@ class networkChart {
           }    
 			  }
 
+        /*
         //zoom capabilities 
         let min_zoom = 0.5;
         let max_zoom = 7;
@@ -567,6 +614,7 @@ class networkChart {
             //this.gAll
             //  .attr("transform", d3.event.transform)
         }
+        */
 
   }     
 

@@ -28,14 +28,17 @@ class textCloudChart {
                   .domain(d3.range(0,9))
                   .range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
                   //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
-
+        this.textScale = d3.scaleOrdinal() //ten colors
+                  .domain(['exploration','society','computers','health','brain','culture','design','relationships','future','other'])
+                  .range(d3.range(0,10));  
+          
         this.selectedId = 0;
 
         divnwChart.selectAll('.btn').on('click',(d,i,object)=>{
             let t = d3.select(object[i]).text();
-            this.selectedId = +t; 
+            this.selectedId = this.textScale(t); 
             this.update();
-        })
+        });
 
         this.gtext = this.svg.append("g")
                     .attr("transform", "translate("+this.svgWidth/2+",175)");
