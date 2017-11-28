@@ -115,8 +115,19 @@ class Table {
         return text;
     }
 
-    drawRadar() {
-        console.log(data);
+    /*compare(a, b) {
+        if (a.id < b.id)
+            return -1;
+        if (a.id > b.id)
+            return 1;
+        return 0;
+    }*/
+
+    drawRadar(video) {
+        let rates = video.rates.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+        let sum = video.rates.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0);
+        console.log(rates);
+        console.log(sum);
         RadarChart(".radarChart2", data, radarChartOptions2);
     }
 
@@ -152,7 +163,7 @@ class Table {
                     tmp.tip.html(tmp.tooltip_render(element))
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
-                    tmp.drawRadar();
+                    tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
                     tmp.tip.transition()
