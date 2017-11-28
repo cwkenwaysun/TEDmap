@@ -12,6 +12,10 @@ class Table {
         this.tagsInfo = tagsInfo;
         this.allData = allData;
         this.groupSet = groupSet;
+
+        this.tip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
     }
 
 
@@ -106,14 +110,13 @@ class Table {
         let text = "<h4>" + tooltip_data.headline + "</h4>";
         // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
         text += "<div class='radarChart2' style='display: inline-flex;'></div>"
-        console.log(data);
         //console.log(tooltip_data.rates);
-        
+
         return text;
     }
 
     drawRadar() {
-        console.log("drawradar");
+        console.log(data);
         RadarChart(".radarChart2", data, radarChartOptions2);
     }
 
@@ -127,9 +130,7 @@ class Table {
         console.log(data);
 
         // Tooltips.
-        var tip = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
+
 
         // Remove table element.
         document.getElementById("videos").innerHTML = "";
@@ -145,16 +146,16 @@ class Table {
             row.append("td").text(element.weight);
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
-                    tip.transition()
+                    tmp.tip.transition()
                         .duration(200)
                         .style("opacity", .9);
-                    tip.html(tmp.tooltip_render(element))
+                    tmp.tip.html(tmp.tooltip_render(element))
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
                     tmp.drawRadar();
                 })
                 .on('mouseout', function (d) {
-                    tip.transition()
+                    tmp.tip.transition()
                         .duration(500)
                         .style("opacity", 0);
                 })
