@@ -6,8 +6,8 @@ class networkChart {
      * Constructor for network chart
      * @param   data network data, including links and nodes.
      */
-    constructor (data,textCloudChart) {
-        this.tcChart = textCloudChart;
+    constructor (data) {
+        //this.tcChart = textCloudChart;
 
         this.networkData = data;
         this.threshold = 15;
@@ -45,6 +45,18 @@ class networkChart {
         this.svg = divnwChart.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight);
+
+        //border of svg    
+        let border = this.svg.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("height", this.svgHeight)
+            .attr("width", this.svgWidth)
+            .style("stroke", 'Gray')
+            .style("opacity", 0.8)
+            .style("fill", "none")
+            .style("stroke-width", '3px');
+
         this.gAll = this.svg.append("g");
         this.gAll.attr("class", "everything");   
 
@@ -60,9 +72,9 @@ class networkChart {
 
         this.rScale = d3.scaleLinear()
         .domain([1, 203])
-        .range([5, 20]);
+        .range([5, 30]);
 
-        this.tcChart.setColor();
+        //this.tcChart.setColor();
 
         this.switch = true;
 
@@ -82,7 +94,6 @@ class networkChart {
 
     	this.linksData = this.initlinksData;
     	this.nodesData = this.initnodesData;
-    	//this.update();
     }
     /**
      * find data which are related to the selected tag.
@@ -103,16 +114,7 @@ class networkChart {
           this.switch = true;
         else
           this.switch = false;
-        /*
-        d3.event.stopPropagation();
-        let dcx = (this.svgWidth/2-x*1);
-        let dcy = (this.svgHeight/2-y*1);
-        //zoom.translate([dcx,dcy]);
-        this.svg.selectAll('g')
-        .transition()
-        .duration(1500).attr("transform", "translate("+ dcx + "," + dcy  + ")");
-        */
-        //tagName = "cars";
+
     		this.threshold = 0;
     		this.selectedTag = tagName;
     		this.forceParam = -15;
@@ -181,8 +183,6 @@ class networkChart {
 
 	    	let nodeWithEdge = this.networkData.nodes
 	    					.filter((d)=>{
-                  //if(d.tag!=undefined)
-	    						//return  targets.includes(d.tag) || sources.includes(d.tag);
                   return  usedTags.includes(d.tag);
 	    					});
 
@@ -235,14 +235,10 @@ class networkChart {
                 }
               );
               nodeWithEdge.find((d)=>{return d.tag==e.target})['value'] = e.value;
-                //.value = e.value; 
           });
 
         });
-        
-        //console.log(zoominGroup);
-        //console.log('after');
-        //console.log(nodeWithEdge);
+
         this.linksData = zoominGroup;
         this.nodesData = nodeWithEdge;
     	}
@@ -257,7 +253,19 @@ class networkChart {
      */
     circle_tooltip_render(tooltip_data) {
         let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
-        text +=  "Group ID: " + tooltip_data.groupid;
+        //text +=  "Group ID: " + tooltip_data.groupid;
+
+        if(this.forceParam != -15){
+          text += "<h4> Top 5 strong related tags:</h4>";
+          text += "<ul>"
+          tooltip_data.top5.forEach((row)=>{
+              text += "<li><b>" + row.tag + "</b>:" + row.value+ "</li>"
+          });
+          text += "</ul>";
+        }
+        else if(tooltip_data.tag!=this.selectedTag){
+          text += "co-occurrence: "+tooltip_data.value;
+        } 
 
         return text;
     }
@@ -284,19 +292,10 @@ class networkChart {
 		  d.fy = null;
 		}
 
-    	//let color = d3.scaleOrdinal(d3.schemeCategory20);
-
 		let simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink()
                         .id(function(d) { 
                         return d.tag; })
-                        /*
-                        .distance(()=>{
-                          //if(this.forceParam == -15)
-                          //  return 10
-                          return 20
-                        })
-                        */
           )
 		    .force("charge", d3.forceManyBody()
                             .strength(this.forceParam)
@@ -312,28 +311,38 @@ class networkChart {
 
 		let lines = this.gAll.select('.links').selectAll('line')
                         .data(this.linksData);
-    let newlines = lines.enter().append('line').style("opacity", 0);                    
+    let newlines = lines.enter().append('line').style("opacity", 0);
+    /*
+                    .attr("x1", function(d) { return this.svgWidth/2; })
+                    .attr("y1", function(d) { return this.svgWidth/2; })
+                    .attr("x2", function(d) { return this.svgWidth/2+4; })
+                    .attr("y2", function(d) { return this.svgWidth/2+4; });*/  
+    
+    if(this.forceParam==-15){ 
+    }                            
 
     
         lines.exit()
               .style("opacity", 1)
               .transition()
-              .duration(1500)
+              .duration(3000)
               .style("opacity", 0)
               .remove();
               
 
         lines = newlines.merge(lines);
-        if(this.switch){
+        //if(this.switch){
         lines
-        .transition().duration(1500)
+        .transition().duration(2000)
         .style("opacity", 1)
         .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
-        }
-        else{
-            //lines
-            //  .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
-        }
+        //}
+        //else{
+            lines
+        .transition().duration(2000)
+        .style("opacity", 1)
+        .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
+        //}
         	 //.attr("class", "links");
 
         let circles;
@@ -378,6 +387,7 @@ class networkChart {
                                     else
                                       return true;
                                   });
+
           circles.exit()
               .style("opacity", 1)
               .transition()
@@ -426,11 +436,20 @@ class networkChart {
                                     if(this.nodesData.includes(d))
                                       return 1;
                                     return 0;
-                                  });
-                  
-          //console.log('visible node:'+i);       
+                                  });     
 
         }   
+        
+        
+        this.svg.select('.centerTag').remove();
+        if(this.forceParam==-15){    
+              this.svg.append('text')
+                  .attr('dy','2.0em')  
+                  .attr("x", 20)
+                  .attr('y',10)
+                  .classed('centerTag',true)
+                  .text("Center: "+this.selectedTag);
+        }
         
 
         circles
@@ -447,10 +466,51 @@ class networkChart {
                     return [0,0];
                 })
                 .html((d)=>{
-                    let tooltip_data = {
+                  let tooltip_data;
+                  let dvalue = d.value;
+                  if(this.forceParam != -15){
+                    let relatedLine = this.linksData.filter((l)=>{
+                      return l.source.tag == d.tag || l.target.tag == d.tag;
+                    });
+                    let rank = relatedLine.map((l)=>{
+                        let tagName;
+                        let gid;
+                        if(l.source.tag==d.tag){
+                          tagName = l.target.tag;
+                          gid = l.target.groupid;
+                        }
+                        else{
+                          tagName = l.source.tag;
+                          gid = l.source.groupid;
+                        }
+                        return{
+                          "tag": tagName,
+                          "value":l.value,
+                          "groupid":gid
+                        }
+                    });
+
+                    rank.sort((a,b)=>{
+                      return(b.value - a.value); 
+                    });
+                    //console.log(rank);
+                    let top5 = rank.slice(0,5);
+                    //console.log(top5);
+
+                    tooltip_data = {
                         "tag": d.tag,
                         "groupid":d.groupid,
-                        "color":this.colorScale(d.groupid)
+                        "color":this.colorScale(d.groupid),
+                        "top5":top5
+                      };
+
+                  }
+                  else{
+                    tooltip_data = {
+                        "tag": d.tag,
+                        "groupid":d.groupid,
+                        "color":this.colorScale(d.groupid),
+                        "value":d.value
                         /*
                         "result":[
                           {"nominee": d.D_Nominee_prop,"votecount": d.D_Votes,"percentage": d.D_Percentage,"party":"D"} ,
@@ -459,7 +519,8 @@ class networkChart {
                          ]
                          */
                       };
-                    return this.circle_tooltip_render(tooltip_data);
+                  }    
+                  return this.circle_tooltip_render(tooltip_data);
 
         });	
 
@@ -477,10 +538,9 @@ class networkChart {
                       circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
-                    	console.log(d.tag);
+                    	//console.log(d.tag);
                       clickstate = 0;
     					         this.selectOneNode(d.tag,d.x,d.y);
-                       //clickstate = 1;
     				        })
           					.on('click',(d)=>{
           					// when click, add tag in to buttons
@@ -527,14 +587,15 @@ class networkChart {
  
         let self = this;    
 			  function ticked() {
+          /*
           if(!self.switch){
 			    lines
 			        .attr("x1", function(d) { return d.source.x; })
 			        .attr("y1", function(d) { return d.source.y; })
 			        .attr("x2", function(d) { return d.target.x; })
-			        .attr("y2", function(d) { return d.target.y; })
-              .style("opacity", 1)
-              .attr("stroke-width", (d)=> { return Math.sqrt(d.value-self.threshold); });
+			        .attr("y2", function(d) { return d.target.y; });
+              //.style("opacity", 1)
+              //.attr("stroke-width", (d)=> { return Math.sqrt(d.value-self.threshold); });
 
 			    circles
 			        .attr("cx", function(d) { return d.x; })
@@ -542,6 +603,7 @@ class networkChart {
 
           }
           else{
+            */
             lines
               .attr("x1", function(d) { return d.source.x; })
               .attr("y1", function(d) { return d.source.y; })
@@ -551,9 +613,10 @@ class networkChart {
           circles
               .attr("cx", function(d) { return d.x; })
               .attr("cy", function(d) { return d.y; });
-          }    
+          //}    
 			  }
 
+        /*
         //zoom capabilities 
         let min_zoom = 0.5;
         let max_zoom = 7;
@@ -567,6 +630,7 @@ class networkChart {
             //this.gAll
             //  .attr("transform", d3.event.transform)
         }
+        */
 
   }     
 
