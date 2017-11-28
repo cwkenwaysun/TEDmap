@@ -43,6 +43,9 @@ svg circle {
 #myTable2 th {
     cursor:pointer;
 }
+#myTable2 tr {
+    cursor:pointer;
+}
 
 div.tooltip {
     padding-left: 10px;
@@ -55,6 +58,10 @@ div.tooltip {
     border-radius: 10px;
     pointer-events: none;
   }
+
+div .radarChart2 svg {
+    float: left;
+}
 
 .content {
     display: inline-block;

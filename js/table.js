@@ -12,6 +12,10 @@ class Table {
         this.tagsInfo = tagsInfo;
         this.allData = allData;
         this.groupSet = groupSet;
+
+        this.tip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
     }
 
 
@@ -103,27 +107,36 @@ class Table {
      * @return text HTML content for tool tip
      */
     tooltip_render(tooltip_data) {
-        //let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
-        //text +=  "Group ID: " + tooltip_data.groupid;
         let text = "<h4>" + tooltip_data.headline + "</h4>";
-        //text += tooltip_data.rates;
-        console.log(tooltip_data.rates);
-        /*d3.selectAll('.d3-tip').remove();
-        let circletip = d3.tip().attr('class', 'd3-tip')
-        .direction('se')
-        .offset(function() {
-            return [0,0];
-        })
-        .html((d)=>{
-            let tooltip_data = {
-                "tag": d.tag,
-                "groupid":d.groupid,
-                "color":this.colorScale(d.groupid)
-              };
-            return this.circle_tooltip_render(tooltip_data);
+        // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
+        text += "<div class='radarChart2' style='display: inline-flex;'></div>"
+        //console.log(tooltip_data.rates);
 
-});	*/
         return text;
+    }
+
+    /*compare(a, b) {
+        if (a.id < b.id)
+            return -1;
+        if (a.id > b.id)
+            return 1;
+        return 0;
+    }*/
+
+    drawRadar(video) {
+        let rates = video.rates.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+        let sum = video.rates.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0);
+        let axes = [];
+        rates.forEach(function(element) {
+            let axis = {}
+            axis["axis"] = element.name;
+            axis["value"] = element.count/sum * 100;
+            axes.push(axis);
+        }, this);
+        let data = [{"name": "  total: " + sum, "axes": axes}];
+        //console.log(data);
+
+        let radarChart = new RadarChart(".radarChart2", data);
     }
 
 
@@ -136,9 +149,7 @@ class Table {
         console.log(data);
 
         // Tooltips.
-        var tip = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
+
 
         // Remove table element.
         document.getElementById("videos").innerHTML = "";
@@ -154,21 +165,23 @@ class Table {
             row.append("td").text(element.weight);
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
-                    tip.transition()
+                    tmp.tip.transition()
                         .duration(200)
                         .style("opacity", .9);
-                    tip.html(tmp.tooltip_render(element))
+                    tmp.tip.html(tmp.tooltip_render(element))
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
+                    tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
-                    tip.transition()
+                    tmp.tip.transition()
                         .duration(500)
                         .style("opacity", 0);
                 })
 
                 .on('click', (d) => {
-
+                    let win = window.open(element.newURL, '_blank');
+                    win.focus();
                 });
 
         }, this);
