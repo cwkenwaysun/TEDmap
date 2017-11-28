@@ -126,9 +126,17 @@ class Table {
     drawRadar(video) {
         let rates = video.rates.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
         let sum = video.rates.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0);
-        console.log(rates);
-        console.log(sum);
-        RadarChart(".radarChart2", data, radarChartOptions2);
+        let axes = [];
+        rates.forEach(function(element) {
+            let axis = {}
+            axis["axis"] = element.name;
+            axis["value"] = element.count/sum * 100;
+            axes.push(axis);
+        }, this);
+        let data = [{"name": "  total: " + sum, "axes": axes}];
+        //console.log(data);
+
+        let radarChart = new RadarChart(".radarChart2", data);
     }
 
 
@@ -172,7 +180,8 @@ class Table {
                 })
 
                 .on('click', (d) => {
-
+                    let win = window.open(element.newURL, '_blank');
+                    win.focus();
                 });
 
         }, this);
