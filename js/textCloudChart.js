@@ -6,7 +6,8 @@ class textCloudChart {
      * Constructor for text cloud chart
      * @param   data network data, including links and nodes.
      */
-    constructor (data) {
+    constructor (data, networkChart) {
+        this.networkChart = networkChart;
         this.freqData = data;
      
         // Initializes the svg elements required for this chart
@@ -61,6 +62,8 @@ class textCloudChart {
         this.sizeScale = d3.scaleLinear()
                         .domain([1, 2386])
                         .range([8, 75]); 
+        this.networkChart.update();
+        this.update();                
 
 
     };
