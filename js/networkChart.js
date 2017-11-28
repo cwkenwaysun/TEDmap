@@ -72,7 +72,7 @@ class networkChart {
 
         this.rScale = d3.scaleLinear()
         .domain([1, 203])
-        .range([5, 20]);
+        .range([5, 30]);
 
         this.tcChart.setColor();
 
@@ -255,15 +255,18 @@ class networkChart {
      */
     circle_tooltip_render(tooltip_data) {
         let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
-        text +=  "Group ID: " + tooltip_data.groupid;
+        //text +=  "Group ID: " + tooltip_data.groupid;
 
         if(this.forceParam != -15){
-          text += "<h3> Top 5 strong related tags:</h3>";
+          text += "<h4> Top 5 strong related tags:</h4>";
           text += "<ul>"
           tooltip_data.top5.forEach((row)=>{
               text += "<li><b>" + row.tag + "</b>:" + row.value+ "</li>"
           });
           text += "</ul>";
+        }
+        else if(tooltip_data.tag!=this.selectedTag){
+          text += "co-occurrence: "+tooltip_data.value;
         } 
 
         return text;
@@ -385,6 +388,7 @@ class networkChart {
                                     else
                                       return true;
                                   });
+
           circles.exit()
               .style("opacity", 1)
               .transition()
@@ -436,6 +440,17 @@ class networkChart {
                                   });     
 
         }   
+        
+        
+        this.svg.select('.centerTag').remove();
+        if(this.forceParam==-15){    
+              this.svg.append('text')
+                  .attr('dy','2.0em')  
+                  .attr("x", 20)
+                  .attr('y',10)
+                  .classed('centerTag',true)
+                  .text("Center: "+this.selectedTag);
+        }
         
 
         circles
@@ -495,7 +510,8 @@ class networkChart {
                     tooltip_data = {
                         "tag": d.tag,
                         "groupid":d.groupid,
-                        "color":this.colorScale(d.groupid)
+                        "color":this.colorScale(d.groupid),
+                        "value":d.value
                         /*
                         "result":[
                           {"nominee": d.D_Nominee_prop,"votecount": d.D_Votes,"percentage": d.D_Percentage,"party":"D"} ,
