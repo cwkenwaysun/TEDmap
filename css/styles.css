@@ -72,6 +72,13 @@ div.tooltip {
   visibility: hidden;
 }
 
+.centerTag{
+  color: black;
+  fill: black;
+  font-size: 20px;
+  font-family: "Comic Sans MS";
+}
+
 .nodes .visible{
     visibility: visible;
 }
@@ -89,10 +96,10 @@ body {
     font-family: Lato;
 }
 
-h1 {
-    font-family: "Arvo";
+#header h1 {
+    font-family: "Arial Black";
     font-size:35px;
-    color: #464646;
+    color: rgba(255, 0, 0, 0.9);
     margin: 0px;
     padding: 0px;
     margin-left: 20px;
@@ -107,7 +114,7 @@ h2{
     /*line-height: 5;*/
     padding-left: 10px;
     padding-right: 10px;
-    min-width: 400px;
+    min-width: 300px;
     border-style: groove;
     /*padding: 12px;*/
     background: #FFFFFF;
@@ -168,40 +175,37 @@ h2{
 }
 
 h3{
+    font-family: "Lucida Grande";
     text-anchor:middle;
     font-size: 32px;
 }
 
-.btn {
+#tagCloud .btn {
   display: inline-block;
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(188, 188, 188, 1);
+  
   border-color: rgba(255, 255, 255, 0.2);
   border-style: solid;
   border-width: 1px;
   border-radius: 0.3rem;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
-  .btn:hover {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3); }
-  .btn + .btn {
+
+#tagCloud  .btn + .btn {
     margin-left: 1rem; }
   @media screen and (min-width: 64em) {
-    .btn {
+#tagCloud    .btn {
       padding: 0.75rem 1rem; } }
   @media screen and (min-width: 42em) and (max-width: 64em) {
-    .btn {
+#tagCloud    .btn {
       padding: 0.6rem 0.9rem;
       font-size: 0.9rem; } }
   @media screen and (max-width: 42em) {
-    .btn {
+#tagCloud    .btn {
       display: block;
       width: 100%;
       padding: 0.75rem;
       font-size: 0.9rem; }
       .btn + .btn {
         margin-top: 1rem;
-        margin-left: 0; } }
+        margin-left: 0; } }  
