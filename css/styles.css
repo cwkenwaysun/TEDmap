@@ -44,6 +44,18 @@ svg circle {
     cursor:pointer;
 }
 
+div.tooltip {
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 400px;
+    border-style: groove;
+    /*padding: 12px;*/
+    background: #FFFFFF;
+    color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
 .content {
     display: inline-block;
     width: 50%;

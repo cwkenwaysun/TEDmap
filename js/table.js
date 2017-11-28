@@ -83,7 +83,7 @@ class Table {
                 }
             }
         }
-        return lines;
+        return lines.reverse();
     }
 
     rightRoundedRect(x, y, width, height, radius) {
@@ -94,6 +94,36 @@ class Table {
             "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius +
             "h" + (radius - width) +
             "z";
+    };
+
+    /**
+     * Renders the HTML content for tool tip.
+     *
+     * @param tooltip_data information that needs to be populated in the tool tip
+     * @return text HTML content for tool tip
+     */
+    tooltip_render(tooltip_data) {
+        //let text = "<h2 style='color:"  + tooltip_data.color + ";' >" + tooltip_data.tag + "</h2>";
+        //text +=  "Group ID: " + tooltip_data.groupid;
+        let text = "<h4>" + tooltip_data.headline + "</h4>";
+        //text += tooltip_data.rates;
+        console.log(tooltip_data.rates);
+        /*d3.selectAll('.d3-tip').remove();
+        let circletip = d3.tip().attr('class', 'd3-tip')
+        .direction('se')
+        .offset(function() {
+            return [0,0];
+        })
+        .html((d)=>{
+            let tooltip_data = {
+                "tag": d.tag,
+                "groupid":d.groupid,
+                "color":this.colorScale(d.groupid)
+              };
+            return this.circle_tooltip_render(tooltip_data);
+
+});	*/
+        return text;
     }
 
 
@@ -101,19 +131,59 @@ class Table {
      * Remove old line charts and generate new ones.
      */
     update() {
+        let tmp = this;
         let data = this.processData();
         console.log(data);
 
+        // Tooltips.
+        var tip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        // Remove table element.
         document.getElementById("videos").innerHTML = "";
 
+
+        let videos = d3.select("#videos");
         data.forEach(function (element, i) {
-            let videos = document.getElementById("videos");
+            // Append a table row and some table data.
+            let row = videos.append("tr");
+            row.append("td").text(i);
+            row.append("td").text(element.headline);
+            row.append("td").text(element.date);
+            row.append("td").text(element.weight);
+            // Mouseover: tooltip
+            row.on('mouseover', function (d) {
+                    tip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tip.html(tmp.tooltip_render(element))
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on('mouseout', function (d) {
+                    tip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                })
+
+                .on('click', (d) => {
+
+                });
+
+        }, this);
+
+        /*let videos = document.getElementById("videos");
+        data.forEach(function (element, i) {
+            console.log(element.rates);
             let row = videos.insertRow(0);
             row.insertCell(0).innerHTML = data.length - i;
             row.insertCell(1).innerHTML = element.headline;
             row.insertCell(2).innerHTML = element.date;
             row.insertCell(3).innerHTML = element.weight;
-        }, this);
+            console.log(row);
+        }, this);*/
+
         /*let padding_x = 5;
 
         let barHeight = 60;
