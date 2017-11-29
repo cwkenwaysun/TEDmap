@@ -148,9 +148,11 @@ function fetchJSONFile(path, callback) {
     httpRequest.send();
 }
 
+var groupIDs;
+
 //call fetchJSONFile then build and render 
 	fetchJSONFile('data/network_WO_TEDtag_v5.json', function(data) {
-		
+		groupIDs = data.nodes;
 		fetchJSONFile('data/TEDtag_frequency_v2.json', function(f) {
 			let nwChart = new networkChart(data);
 			let tcChart = new textCloudChart(f,nwChart);
@@ -158,4 +160,9 @@ function fetchJSONFile(path, callback) {
 			//nwChart.update();
 		});
 		
-	});
+    });
+    
+var pathColorScale = d3.scaleOrdinal() //ten colors
+.domain(d3.range(0,9))
+.range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
+//[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]

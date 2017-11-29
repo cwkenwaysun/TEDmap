@@ -39,7 +39,7 @@ class networkChart {
         //fetch the svg bounds
         this.svgBounds = divnwChart.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = 700;
+        this.svgHeight = 500;
 
         //add the svg to the div
         this.svg = divnwChart.append("svg")
@@ -52,10 +52,10 @@ class networkChart {
             .attr("y", 0)
             .attr("height", this.svgHeight)
             .attr("width", this.svgWidth)
-            .style("stroke", 'Gray')
+            //.style("stroke", 'Gray')
             .style("opacity", 0.8)
             .style("fill", "none")
-            .style("stroke-width", '3px');
+            //.style("stroke-width", '3px');
 
         this.gAll = this.svg.append("g");
         this.gAll.attr("class", "everything");   
