@@ -10,20 +10,6 @@ svg#table {
     height: 200%;
 }
 
-g rect {
-    background:transparent;
-    stroke:darkblue; 
-    stroke-width:3;
-    fill:transparent;
-}
-
-#table path {
-    background:transparent;
-    stroke:darkblue; 
-    stroke-width:3;
-    fill:transparent;
-}
-
 #buttons li  a{
     font-weight: bold;
 }

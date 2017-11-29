@@ -45,9 +45,11 @@ class Buttons {
         } else {
             this.groupSet.add(tag);
 
+            tag.fontcolor("green");
+
             //TODO: beautify it
             //$("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + " <span class='badge'>" + number_tag + "</span></button>");
-            $("#buttons").append("<li role='presentation'><a href='#'>" + tag + " <span class='badge'>" + number_tag + "</span></a></li>")
+            let button = $("#buttons").append("<li><a>" + tag + " <span class='badge'>" + number_tag + "</span></a></li>");
 
             let tmp = this;
             $("#buttons > li").click(function () {
