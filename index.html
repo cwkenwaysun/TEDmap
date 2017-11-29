@@ -23,7 +23,7 @@
         <h1>TEDmap <small> TED talks topic trend visualization </small> </h1>
     </div>
  
-    <div class="col-md-8 container" id="tagCloud" >
+    <div class="col-md-6 container" id="tagCloud" >
     <h3 >Tag Category word cloud</h3>
         <button id="exploration" class="btn" >exploration</button>
         <button id="society" class="btn" >society</button>
@@ -37,7 +37,25 @@
         <button id="other" class="btn" >other</button>
     </div>
 
-    <div class="col-md-8 container" id="networkChart" >
+    <!-- buttons -->
+    <!--<div id="buttons" class="col-md-12">
+    </div>-->
+    <ul class="nav nav-pills col-md-6" id="buttons">
+    </ul>
+
+    <!-- line chart -->
+    <div class="col-md-6">
+        <div class="container">
+            <svg width="600" height="300" id="lineChart">
+                <g id="lines">
+                    <g id="xAxis"></g>
+                    <g id="yAxis"></g>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <div class="col-md-7 container" id="networkChart" >
     <h3> Network Chart - co-occurrence of tags </h3>
 
     </div>
@@ -54,25 +72,9 @@
     </div> -->
 
 
-    <!-- buttons -->
-    <!--<div id="buttons" class="col-md-12">
-    </div>-->
-    <ul class="nav nav-pills col-md-12" id="buttons">
-    </ul>
+    
 
-    <!-- line chart -->
-    <div class="col-md-8">
-        <div class="container">
-            <svg width="600" height="300" id="lineChart">
-                <g id="lines">
-                    <g id="xAxis"></g>
-                    <g id="yAxis"></g>
-                </g>
-            </svg>
-        </div>
-    </div>
-
-    <div class="col-md-4" id="table_container">
+    <div class="col-md-5" id="table_container">
         <table class="table table-striped table-hover" id="myTable2">
             <thead>
                 <tr>

@@ -1,6 +1,5 @@
 div#table_container {
     height: 600px;
-    width: 700px;
     border:2px solid #000;
     overflow-y: scroll;
     overflow-x: hidden;
