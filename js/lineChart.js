@@ -124,23 +124,34 @@ class LineChart {
         }
 
         for (let i = 0; i < data.length; i++) {
+
+            console.log(groupIDs);
+            console.log(pathColorScale(1));
+            console.log(data[i].tagName);
+            let pathColor;
+            groupIDs.forEach(function(element) {
+                if (data[i].tagName == element.tag) {
+                    pathColor = pathColorScale(element.groupid);
+                    return true;
+                }
+            }, this);
+
             for (let j = 0; j < data[i].values.length; j++) {
                 g.append("path")
                     .datum(data[i].values[j])
                     .attr("class", "symbols")
-                    .attr("fill", "steelblue")
-                    .attr("stroke", "steelblue")
+                    .attr("fill", pathColor)
+                    .attr("stroke", pathColor)
                     .attr("d", symbol(i % 7))
                     .attr("transform", function (d) {
                         return "translate(" + xScale(parseTime(d.years)) + "," + yScale(d.video) + ")";
                     });
             }
 
-
             g.append("path")
                 .datum(data[i].values)
                 .attr("fill", "none")
-                .attr("stroke", "steelblue")
+                .attr("stroke", pathColor)
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-linecap", "round")
                 .attr("stroke-width", 2)
@@ -162,13 +173,13 @@ class LineChart {
                 .attr("x2", width+40)
                 .attr("y1", -4+i*20)
                 .attr("y2", -4+i*20)
-                .attr("stroke", "steelblue")
+                .attr("stroke", pathColor)
                 .attr("stroke-width", 2)
             //.attr("transform", "translate(" + (width + 10) + "," + (20 * i) + ")")
             //.text(data[i].tagName)
             g.append("path")
-                .attr("fill", "steelblue")
-                .attr("stroke", "steelblue")
+                .attr("fill", pathColor)
+                .attr("stroke", pathColor)
                 .attr("d", symbol(i % 7))
                 .attr("transform", "translate(" + (width + 25) + "," + (20 * i-4) + ")")
 
