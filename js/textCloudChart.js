@@ -11,7 +11,7 @@ class textCloudChart {
         this.freqData = data;
      
         // Initializes the svg elements required for this chart
-        this.margin = {top: 10, right: 20, bottom: 30, left: 50};
+        this.margin = {top: 10, right: 20, bottom: 30, left: 20};
         let divnwChart = d3.select("#tagCloud").classed("content", true);
 
         //fetch the svg bounds

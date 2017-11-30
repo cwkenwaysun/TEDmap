@@ -33,7 +33,7 @@ class networkChart {
         //console.log(this.initlinksData);  //583
         //console.log(this.initnodesData ); //151       
         // Initializes the svg elements required for this chart
-        this.margin = {top: 10, right: 20, bottom: 30, left: 50};
+        this.margin = {top: 10, right: 20, bottom: 30, left: 20};
         let divnwChart = d3.select("#networkChart").classed("content", true);
 
         //fetch the svg bounds
@@ -303,7 +303,7 @@ class networkChart {
           )
 		    .force("charge", d3.forceManyBody()
                             .strength(this.forceParam)
-                            .distanceMax(300)
+                            .distanceMax(200)
 
           )
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2))
