@@ -13,7 +13,7 @@ if __name__ == '__main__':
 		cluster[g_index] = g
 		g_index+=1
 		
-    print(g_index)
+	#print(g_index)
 	print("Load json file...")
 	videos = json.load(open('TED_Talks.json'))
 
@@ -21,8 +21,8 @@ if __name__ == '__main__':
 	removeTag = ["science","technology","global issues"]
 
 	yearmap = dict()
-	for i in range(2001,2017)
-		yearmap[i] = dict()
+	for y in range(2001,2018):
+		yearmap[y] = dict()
 
 	MAX = 0	
 	tagset = set()
@@ -53,8 +53,8 @@ if __name__ == '__main__':
 			else:
 				tempmap = dict()
 				tagmap[key] = tempmap
-				for i in range(2001,2017)
-					yearmap[i][key] = dict()
+				for y in range(2001,2018):
+					yearmap[y][key] = dict()
 				tempYmap = yearmap[year][key]	
 
 
@@ -96,11 +96,21 @@ if __name__ == '__main__':
 				continue
 
 			usedset.add(child)
+			ydata = dict()
+
+			for y in range(2001,2018):
+				ymap = yearmap[y][key]
+				yvalue = 0
+				if child in ymap.keys():
+					yvalue = ymap[child]	
+				ydata[i] = yvalue
+
 			linklist.append(
 				{
 					"source": key,
 					"target": child,
-					"value": value
+					"value": value,
+					"year": ydata
 				}
 			)
 

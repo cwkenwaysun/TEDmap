@@ -92,6 +92,10 @@ div.tooltip {
     font-family: "Comic Sans MS";
 }
 
+.incloud .hoverOn{
+    opacity: 0.7;
+}
+
 body {
     font-family: Lato;
 }
@@ -208,4 +212,5 @@ h3{
       font-size: 0.9rem; }
       .btn + .btn {
         margin-top: 1rem;
-        margin-left: 0; } }  
+        margin-left: 0; } }
+#tagCloud           

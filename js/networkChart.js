@@ -74,7 +74,8 @@ class networkChart {
         .domain([1, 203])
         .range([5, 30]);
 
-        //this.tcChart.setColor();
+        this.circletip;
+        //this.texthover = false;
 
         this.switch = true;
 
@@ -275,6 +276,9 @@ class networkChart {
      */
     update () {
 
+      let divnwChart = d3.select("#tagCloud").node();
+      console.log(divnwChart);
+
     	function dragstarted(d) {
 		  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
 		  d.fx = d.x;
@@ -460,10 +464,23 @@ class networkChart {
 
 		//tooltip
 				d3.selectAll('.d3-tip').remove();
-				let circletip = d3.tip().attr('class', 'd3-tip')
+				this.circletip = d3.tip().attr('class', 'd3-tip')
                 .direction('se')
-                .offset(function() {
-                    return [0,0];
+                
+                .offset((d)=> {
+                    if(d['fromcloud']!=undefined){
+                      //console.log('d3.event.pageX: ' + d3.event.pageX);
+                      //console.log('d3.event.pageY: ' + d3.event.pageY);
+                      let radius = this.forceParam == -15? this.rScale(d.value)*2:16;
+
+                      let offsetx = 10 + d.x + radius- d3.event.pageX - d['xshift'];//d3.event.pageX;
+                      let yshift = this.forceParam == -15? 630:630;
+                      let offsety = yshift + d.y - d3.event.pageY - d['yshift'];
+                      //console.log('offsetX: ' + offsetx);
+                      //console.log('offsety: ' + offsety);
+                      return [offsety,offsetx]//[d.x,d.y]
+                    }
+                    return [0,0]
                 })
                 .html((d)=>{
                   let tooltip_data;
@@ -521,21 +538,30 @@ class networkChart {
                       };
                   }    
                   return this.circle_tooltip_render(tooltip_data);
+        });
+        /*        
+        .style("left", ()=>{
+          if(d['fromcloud']!=undefined)
+            return d.x
+          return 0;
+        })     
+        .style("top", (d)=>{
+          if(d['fromcloud']!=undefined)
+            return d.y+400
+        });*/
 
-        });	
-
-			  this.svg.call(circletip);
+			  this.svg.call(this.circletip);
         
         let clickstate = 1;
-
+        let self = this;
         if(this.forceParam != -15){    
             circles.on('mouseover', function(d){
                       d3.select(this).classed('selected',true);
-                      circletip.show(d)
+                      self.circletip.show(d)
                     })
                     .on('mouseout', function(d){
                       d3.select(this).classed('selected',false);
-                      circletip.hide(d)
+                      self.circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
                     	//console.log(d.tag);
@@ -557,11 +583,11 @@ class networkChart {
              circles = this.gAll.selectAll('.nodes').selectAll('.visible')
                     .on('mouseover', function(d){
                       d3.select(this).classed('selected',true);
-                      circletip.show(d)
+                      self.circletip.show(d)
                     })
                     .on('mouseout', function(d){
                       d3.select(this).classed('selected',false);
-                      circletip.hide(d)
+                      self.circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
                       //console.log(d.tag);
@@ -585,7 +611,7 @@ class networkChart {
 			  simulation.force("link")
 			      .links(this.linksData);
  
-        let self = this;    
+            
 			  function ticked() {
           /*
           if(!self.switch){
@@ -632,6 +658,37 @@ class networkChart {
         }
         */
 
+  }
+
+  textHoverOn(tagName,xshift,yshift){
+      let circles = this.gAll.selectAll('.nodes').selectAll('.visible').filter((d)=>{
+        return d.tag==tagName;
+      })._groups;
+
+      let circle = circles[0][0];
+      if(circle!=undefined){
+        
+        d3.select(circle).classed('selected',true);
+        let data = circle.__data__;
+
+        data['fromcloud'] = true;
+        data['xshift'] = xshift;
+        data['yshift'] = yshift;
+        this.circletip.show(data);
+      }
+  }
+
+  textHoverOff(tagName){
+      this.gAll.selectAll('.nodes').selectAll('.visible').classed('selected',false);
+      let circle = this.gAll.selectAll('.nodes').selectAll('.visible').filter((d)=>{
+        return d.tag==tagName;
+      })._groups[0][0];
+      if(circle!=undefined){
+        delete circle.__data__['fromcloud'];
+        delete circle.__data__['xshift'];
+        delete circle.__data__['yshift'];
+        this.circletip.hide(circle.__data__);
+      }  
   }     
 
 
