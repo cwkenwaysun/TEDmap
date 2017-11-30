@@ -125,9 +125,9 @@ class LineChart {
 
         for (let i = 0; i < data.length; i++) {
 
-            console.log(groupIDs);
-            console.log(pathColorScale(1));
-            console.log(data[i].tagName);
+            //console.log(groupIDs);
+            //console.log(pathColorScale(1));
+            //console.log(data[i].tagName);
             let pathColor;
             groupIDs.forEach(function(element) {
                 if (data[i].tagName == element.tag) {

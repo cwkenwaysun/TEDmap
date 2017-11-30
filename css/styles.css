@@ -17,6 +17,10 @@ svg#table {
     font-weight: normal;
 }
 
+svg .incloud {
+    cursor:pointer;
+}
+
 svg circle {
     cursor:pointer;
 }

@@ -108,8 +108,26 @@ class Table {
      */
     tooltip_render(tooltip_data) {
         let text = "<h4>" + tooltip_data.headline + "</h4>";
+        text += "<h5>Speaker: " + tooltip_data.speaker + "<h5>";
+        text += "<h5>Has tags: ";
+        tooltip_data.tags.split(",").forEach(function (element) {
+            if (groupSet.has(element.toLowerCase())) {
+                let pathColor;
+                groupIDs.forEach(function (e) {
+                    if (element.toLowerCase() == e.tag) {
+                        pathColor = pathColorScale(e.groupid);
+                        return true;
+                    }
+                }, this);
+                text += "<font color='" + pathColor + "'>" + element + "  </font> ";
+            }
+        }, this);
+        text += "</h5>";
+
+
         // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
         text += "<div class='radarChart2' style='display: inline-flex;'></div>"
+        text += "<p>Date: " + tooltip_data.date + "<p>";
         //console.log(tooltip_data.rates);
 
         return text;
@@ -124,16 +142,21 @@ class Table {
     }*/
 
     drawRadar(video) {
-        let rates = video.rates.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+        let rates = video.rates.sort(function (a, b) {
+            return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);
+        });
         let sum = video.rates.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0);
         let axes = [];
-        rates.forEach(function(element) {
+        rates.forEach(function (element) {
             let axis = {}
             axis["axis"] = element.name;
-            axis["value"] = element.count/sum * 100;
+            axis["value"] = element.count / sum * 100;
             axes.push(axis);
         }, this);
-        let data = [{"name": "  total: " + sum, "axes": axes}];
+        let data = [{
+            "name": "  total: " + sum,
+            "axes": axes
+        }];
         //console.log(data);
 
         let radarChart = new RadarChart(".radarChart2", data);
@@ -161,8 +184,8 @@ class Table {
             let row = videos.append("tr");
             row.append("td").text(i);
             row.append("td").text(element.headline);
-            row.append("td").text(element.date);
-            row.append("td").text(element.weight);
+            row.append("td").text(element.speaker);
+            row.append("td").text(element.views);
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
                     tmp.tip.transition()
