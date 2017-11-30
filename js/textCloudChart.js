@@ -35,12 +35,13 @@ class textCloudChart {
           
         this.selectedId = 0;
         this.selectedCategory = "exploration";
-        let self = this;
-        divnwChart.selectAll('.btn').on('click',(d,i,object)=>{
+        
+        divnwChart.selectAll('li').on('click',(d,i,object)=>{
             this.selectedCategory = d3.select(object[i]).text();
             this.selectedId = this.textScale(this.selectedCategory); 
             this.update();
-        })
+        });
+        /*
         .on('mouseover', function(d){
                       let t = d3.select(this).text();
                       d3.select(this)
@@ -54,6 +55,7 @@ class textCloudChart {
                   if(d3.select(this).text()!=self.selectedCategory)
                       d3.select(this).style('background-color',"rgba(188, 188, 188, 1)");
         });
+        */
 
         this.gtext = this.svg.append("g")
                     .attr("transform", "translate("+this.svgWidth/2+",175)");
@@ -69,13 +71,18 @@ class textCloudChart {
     };
 
     updateButton() {
-        d3.select("#tagCloud").selectAll('.btn')
-        .style('background-color',(d,i,object)=>{
+        d3.select("#tagCloud").selectAll('li')
+        .classed('active',(d,i,object)=>{
             let t = d3.select(object[i]).text();
+            if(t==this.selectedCategory)
+              return true;
+            return false;
+            /*
             if(t==this.selectedCategory)
               return this.colorScale(this.textScale(t));
             else
               return "rgba(188, 188, 188, 1)"
+            */
         });
     }
     /**
@@ -130,7 +137,8 @@ class textCloudChart {
             .text((d)=>{ return d.tag; })
             .fontSize((d)=> { return this.sizeScale(d.frequency)+7 });
                   
-
+    let self = this;
+    let clickstate = 1;        
     this.cloud.on("end", (words)=>{
         
         let alltext = this.gtext.selectAll(".incloud").data(gdata);
@@ -146,6 +154,34 @@ class textCloudChart {
                     return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                 })
                 .text(function(d) { return d.tag; })
+                .on('click',(d)=>{
+                    clickstate=1;
+                      setTimeout(()=>{
+                        if(clickstate==1)
+                          addButton(d.tag);
+                        }, 400);
+                })
+                .on('dblclick',(d)=>{
+                    clickstate = 0;
+                    this.networkChart.selectOneNode(d.tag,0,0);
+                })
+                .on('mouseover', function(d){
+                      var coords = d3.mouse(this);
+                      let targetel = d3.event.target;
+                      let tbbox      = targetel.getBBox();
+                      let xshift = tbbox.width/2 - coords[0];
+                      let yshift = tbbox.height/2 - coords[1];
+                      //console.log(coords);
+                      d3.select(this).style('opacity',0.5);
+                      let t = d3.select(this).text();
+                      self.networkChart.textHoverOn(t,xshift,yshift);
+                })
+                .on('mouseout', function(d){
+                  d3.select(this).style('opacity',1);
+                    let t = d3.select(this).text();
+                      self.networkChart.textHoverOff(t);
+
+                })
                 .transition().duration(1500)
                 .style("opacity", 1);       
     });

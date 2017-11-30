@@ -102,8 +102,8 @@ if __name__ == '__main__':
 			"links": linklist
 		}
 	)
-	with open('network_WO_TEDtag_v5.json', 'w') as outfile:
-		json.dump(network, outfile)
+	#with open('network_WO_TEDtag_v5.json', 'w') as outfile:
+	#	json.dump(network, outfile)
 
 	#nodelist = list();
 		
