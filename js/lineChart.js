@@ -145,7 +145,8 @@ class LineChart {
                     .attr("d", symbol(i % 7))
                     .attr("transform", function (d) {
                         return "translate(" + xScale(parseTime(d.years)) + "," + yScale(d.video) + ")";
-                    });
+                    })
+                    .classed(tagName2Class(data[i].tagName), true);
             }
 
             g.append("path")
@@ -155,6 +156,7 @@ class LineChart {
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-linecap", "round")
                 .attr("stroke-width", 2)
+                .classed(tagName2Class(data[i].tagName), true)
                 .attr("d", d3.line()
                     //.curve(d3.curveBasis)
                     .x(function (d) {

@@ -107,9 +107,9 @@ class Table {
      * @return text HTML content for tool tip
      */
     tooltip_render(tooltip_data) {
-        let text = "<h4>" + tooltip_data.headline + "</h4>";
-        text += "<h5>Speaker: " + tooltip_data.speaker + "<h5>";
-        text += "<h5>Has tags: ";
+        let text = "<h3>" + tooltip_data.headline + "</h3>";
+        text += "<h4>Speaker: " + tooltip_data.speaker + "<h4>";
+        text += "<h4>Has tags: ";
         tooltip_data.tags.split(",").forEach(function (element) {
             if (groupSet.has(element.toLowerCase())) {
                 let pathColor;
@@ -122,11 +122,12 @@ class Table {
                 text += "<font color='" + pathColor + "'>" + element + "  </font> ";
             }
         }, this);
-        text += "</h5>";
+        text += "</h4>";
 
 
         // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
         text += "<div class='radarChart2' style='display: inline-flex;'></div>"
+        text += "<h5>" + tooltip_data.description + "</h5>"; 
         text += "<p>Date: " + tooltip_data.date + "<p>";
         //console.log(tooltip_data.rates);
 
@@ -192,8 +193,9 @@ class Table {
                         .duration(200)
                         .style("opacity", .9);
                     tmp.tip.html(tmp.tooltip_render(element))
-                        .style("left", (d3.event.pageX) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px");
+                        .classed("col-md-6", true)
+                        .style("left", (d3.event.pageX - 535) + "px")
+                        .style("top", (d3.event.pageY - 380) + "px");
                     tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
