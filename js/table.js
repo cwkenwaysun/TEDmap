@@ -192,10 +192,21 @@ class Table {
                     tmp.tip.transition()
                         .duration(200)
                         .style("opacity", .9);
+
+                      let coords = d3.mouse(this);
+                      console.log(coords);
+                      //let targetel = d3.event.target;
+                      //console.log(targetel);
+                      let height  = d3.select(this).node().getBoundingClientRect().height;
+                      console.log(height);
+                      let yshift = height - coords[1];
+                          
                     tmp.tip.html(tmp.tooltip_render(element))
                         .classed("col-md-6", true)
+                        //.direction('sw')
                         .style("left", (d3.event.pageX - 535) + "px")
-                        .style("top", (d3.event.pageY - 380) + "px");
+                        //.style("top", (d3.event.pageY - 380) + "px");
+                        .style("top", (d3.event.pageY + yshift) + "px");
                     tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
