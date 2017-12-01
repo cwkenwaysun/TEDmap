@@ -1,6 +1,6 @@
 div#table_container {
     height: 600px;
-    border:2px solid #000;
+    border:2px solid #ccc;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -24,9 +24,21 @@ svg circle {
 .table_header {
     font-size: 150%;
 }
+/*
+#myTable2 tbody.scrollContent {
+  display: block;
+  height: 262px;
+  overflow: auto;
+  width: 100%
+}
+*/
+#myTable2 thead.fixed-header {
+  position: fixed;
+}
 
 #myTable2 th {
     cursor:pointer;
+    background: #eee;
 }
 #myTable2 tr {
     cursor:pointer;
@@ -84,8 +96,8 @@ div .radarChart2 svg {
     font-family: "Comic Sans MS";
 }
 
-.incloud .hoverOn{
-    opacity: 0.7;
+.incloud:hover{
+    cursor: pointer;
 }
 
 body {

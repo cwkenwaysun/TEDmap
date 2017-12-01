@@ -147,7 +147,7 @@ class Table {
         let tmp = this;
         let data = this.processData();
         console.log(data);
-
+        //d3.select("#tablehead").classed('fixed-header',true);
         // Tooltips.
 
 

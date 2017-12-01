@@ -24,8 +24,8 @@
         <h1>TEDmap <small> TED talks topic trend visualization </small> </h1>
     </div>
  
-    <div class="col-md-5 container" id="tagCloud" >
-    <h3 >Tag Category word cloud</h3>
+    <div class="col-md-6 container" id="tagCloud" >
+    <h3 >Word Cloud - Category of Tags</h3>
     <ul class="nav nav-tabs" id="ulid">
       <li id="exploration" role="presentation" ><a href="#">exploration</a></li>
       <li id="society" role="presentation" class="active"><a href="#">society</a></li>
@@ -51,18 +51,20 @@
         <button id="other" class="btn" >other</button>
         -->
     </div>
-    <div class="col-md-7 container" id="networkChart" >
-    <h3> Network Chart - co-occurrence of tags </h3>
+    <div class="col-md-6 container" id="networkChart" >
+    <h3> Network Chart - Co-occurrence of Tags </h3>
 
     </div>
     <!-- buttons -->
-    <!--<div id="buttons" class="col-md-12">
-    </div>-->
-    <ul class="nav nav-pills col-md-6" id="buttons">
+    <div class="col-md-6">
+    <h3 >Tag Frequency versus Year</h3>
+    <h5 >Observe the trend of science</h5>
+    <!--<ul class="nav nav-pills col-md-6" id="buttons">-->
+    <ul class="nav nav-pills" id="buttons">
     </ul>
 
     <!-- line chart -->
-    <div class="col-md-6">
+    <!--<div class="col-md-6">-->
         <div class="container">
             <svg width="600" height="300" id="lineChart">
                 <g id="lines">
@@ -71,6 +73,7 @@
                 </g>
             </svg>
         </div>
+    <!--</div>-->
     </div>
 
     
@@ -87,23 +90,38 @@
     </div> -->
 
 
-    
-
-    <div class="col-md-6" id="table_container">
-        <table class="table table-striped table-hover" id="myTable2">
-            <thead>
-                <tr>
+    <div class="col-md-6">
+    <h3 >TED Talks within seleted tags</h3>
+    <div id="outter_table">
+        <table class="table table-striped table-hover">
+            <thead id="tablehead">
+                <tr >
                     <th onclick="sortTable(0)">#</th>
                     <th onclick="sortTable(1)">Headline</th>
                     <th onclick="sortTable(2)">Speaker</th>
                     <th onclick="sortTable(3)">Views</th>
                 </tr>
             </thead>
-            <tbody id="videos">
-            </tbody>
-
         </table>
-    </div>
+            <div  id="table_container">
+                 <table class="table table-striped table-hover" id="myTable2">
+                    <!-- -->
+                    <thead >
+                        <tr >
+                            <th onclick="sortTable(0)">#</th>
+                            <th onclick="sortTable(1)">Headline</th>
+                            <th onclick="sortTable(2)">Speaker</th>
+                            <th onclick="sortTable(3)">Views</th>
+                        </tr>
+                    </thead>
+                    <!---->
+                    <tbody id="videos">
+                    </tbody>
+
+                </table>
+            </div>
+     </div>
+     </div>
 
     <!--<div class="radarChart2 col-md-8" style="display: inline-flex;"></div>-->
 

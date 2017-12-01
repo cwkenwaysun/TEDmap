@@ -39,7 +39,7 @@ class networkChart {
         //fetch the svg bounds
         this.svgBounds = divnwChart.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = 500;
+        this.svgHeight = 600;
 
         //add the svg to the div
         this.svg = divnwChart.append("svg")

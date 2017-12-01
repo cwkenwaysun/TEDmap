@@ -132,7 +132,7 @@ class textCloudChart {
         
         let alltext = this.gtext.selectAll(".incloud").data(gdata);
 
-        alltext.enter().append("text")
+        let textshown = alltext.enter().append("text")
                 .style("font-size", (d)=> { return this.sizeScale(d.frequency) + "px"; })
                 .style("fill", (d)=>{ 
                   return this.colorScale(d.groupid);
@@ -143,14 +143,18 @@ class textCloudChart {
                     return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                 })
                 .text(function(d) { return d.tag; })
-                .on('click',(d)=>{
+                .transition().duration(1500)
+                .style("opacity", 1);
+
+        this.gtext.selectAll(".incloud")
+              .on('click',(d)=>{
                     clickstate=1;
                       setTimeout(()=>{
                         if(clickstate==1)
                           addButton(d.tag);
                         }, 400);
                 })
-                .on('dblclick',(d)=>{
+              .on('dblclick',(d)=>{
                     clickstate = 0;
                     this.networkChart.selectOneNode(d.tag,0,0);
                 })
@@ -160,19 +164,18 @@ class textCloudChart {
                       let tbbox      = targetel.getBBox();
                       let xshift = tbbox.width/2 - coords[0];
                       let yshift = tbbox.height/2 - coords[1];
-                      //console.log(coords);
-                      d3.select(this).style('opacity',0.5);
+                      console.log(d3.select(this));
+                      d3.select(this).style('opacity',0.5)
+                      .classed('hoverOn',true);
                       let t = d3.select(this).text();
                       self.networkChart.textHoverOn(t,xshift,yshift);
                 })
                 .on('mouseout', function(d){
-                  d3.select(this).style('opacity',1);
+                  d3.select(this).style('opacity',1).classed('hoverOn',false);
                     let t = d3.select(this).text();
                       self.networkChart.textHoverOff(t);
 
-                })
-                .transition().duration(1500)
-                .style("opacity", 1);       
+                });      
     });
 
 
