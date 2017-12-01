@@ -1,3 +1,8 @@
+.highlighted {
+    stroke: #ff6600;
+    stroke-width: 5px;
+}
+
 div#table_container {
     height: 600px;
     border:2px solid #000;
@@ -15,6 +20,10 @@ svg#table {
 }
 #buttons li  a span{
     font-weight: normal;
+}
+
+svg .incloud {
+    cursor:pointer;
 }
 
 svg circle {

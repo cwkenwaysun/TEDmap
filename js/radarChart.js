@@ -32,7 +32,7 @@ class RadarChart {
             maxValue: 10,
             levels: 5,
             roundStrokes: false,
-            color: d3.scaleOrdinal().range(["#AFC52F"]),
+            color: d3.scaleOrdinal().range(["#ff6600"]),
             format: '.0f',
             legend: {
                 title: '',
