@@ -67,8 +67,8 @@ class networkChart {
       	
       	this.colorScale = d3.scaleOrdinal() //ten colors
                   .domain(d3.range(0,9))
-                  .range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
-                  //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
+                  .range(['#1f77b4','#d448ce','#edaf6d','#f492a8','#965628','#3e8934','#21c2ce','#070cc2','#70c32a','#e9272a']);  
+                  //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]21c2ce
 
         this.rScale = d3.scaleLinear()
         .domain([1, 203])
@@ -277,7 +277,7 @@ class networkChart {
     update () {
 
       let divnwChart = d3.select("#tagCloud").node();
-      console.log(divnwChart);
+      //console.log(divnwChart);
 
     	function dragstarted(d) {
 		  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -465,7 +465,10 @@ class networkChart {
 		//tooltip
 				d3.selectAll('.d3-tip').remove();
 				this.circletip = d3.tip().attr('class', 'd3-tip')
-                .direction('se')
+                .direction((d)=>{
+                  if(d['fromcloud']!=undefined) return 'sw'
+                  return 'se'
+                })
                 
                 .offset((d)=> {
                     if(d['fromcloud']!=undefined){
@@ -473,9 +476,10 @@ class networkChart {
                       //console.log('d3.event.pageY: ' + d3.event.pageY);
                       let radius = this.forceParam == -15? this.rScale(d.value)*2:16;
 
-                      let offsetx = 10 + d.x + radius- d3.event.pageX - d['xshift'];//d3.event.pageX;
+                      let xshift = 500;
+                      let offsetx = xshift + 10 + d.x + radius- d3.event.pageX - d['xshift'];//d3.event.pageX;
                       let yshift = this.forceParam == -15? 630:630;
-                      let offsety = yshift + d.y - d3.event.pageY - d['yshift'];
+                      let offsety = d.y - d3.event.pageY - d['yshift'];
                       //console.log('offsetX: ' + offsetx);
                       //console.log('offsety: ' + offsety);
                       return [offsety,offsetx]//[d.x,d.y]

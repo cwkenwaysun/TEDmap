@@ -164,5 +164,5 @@ var groupIDs;
     
 var pathColorScale = d3.scaleOrdinal() //ten colors
 .domain(d3.range(0,9))
-.range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
+.range(['#1f77b4','#d448ce','#edaf6d','#f492a8','#965628','#3e8934','#21c2ce','#070cc2','#70c32a','#e9272a']);  
 //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]

@@ -27,35 +27,20 @@ class textCloudChart {
 
         this.colorScale = d3.scaleOrdinal() //ten colors
                   .domain(d3.range(0,9))
-                  .range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
+                  .range(['#1f77b4','#d448ce','#edaf6d','#f492a8','#965628','#3e8934','#21c2ce','#070cc2','#70c32a','#e9272a']);  
                   //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
         this.textScale = d3.scaleOrdinal() //ten colors
                   .domain(['exploration','society','computers','health','brain','culture','design','relationships','future','other'])
                   .range(d3.range(0,10));  
           
-        this.selectedId = 0;
-        this.selectedCategory = "exploration";
+        this.selectedId = 1;
+        this.selectedCategory = "society";
         
         divnwChart.selectAll('li').on('click',(d,i,object)=>{
             this.selectedCategory = d3.select(object[i]).text();
             this.selectedId = this.textScale(this.selectedCategory); 
             this.update();
         });
-        /*
-        .on('mouseover', function(d){
-                      let t = d3.select(this).text();
-                      d3.select(this)
-                      .style('background-color',()=>{
-                        return self.colorScale(self.textScale(t))
-                      });
-                      //.style("opacity","0.5");
-
-                    })
-        .on('mouseout', function(d){
-                  if(d3.select(this).text()!=self.selectedCategory)
-                      d3.select(this).style('background-color',"rgba(188, 188, 188, 1)");
-        });
-        */
 
         this.gtext = this.svg.append("g")
                     .attr("transform", "translate("+this.svgWidth/2+",175)");
@@ -73,17 +58,21 @@ class textCloudChart {
     updateButton() {
         d3.select("#tagCloud").selectAll('li')
         .classed('active',(d,i,object)=>{
+          let obj = d3.select(object[i]).select('a');
             let t = d3.select(object[i]).text();
-            if(t==this.selectedCategory)
+            if(t==this.selectedCategory){
+              obj.style('border-color',()=>{return this.colorScale(this.selectedId)})
+                  .style('border-bottom-color',"transparent");
               return true;
-            return false;
-            /*
-            if(t==this.selectedCategory)
-              return this.colorScale(this.textScale(t));
-            else
-              return "rgba(188, 188, 188, 1)"
-            */
+            }
+            else {
+              obj.style('border-color',"transparent");
+               // .style('border-bottom-color',"transparent");
+              return false;
+            }
+
         });
+        d3.select('#ulid').style('border-bottom-color',()=>{return this.colorScale(this.selectedId)});
     }
     /**
      * call by networkChart
