@@ -41,8 +41,22 @@ svg circle {
   width: 100%
 }
 */
-#myTable2 thead.fixed-header {
-  position: fixed;
+table.tableHeader{
+
+  margin-bottom: 0px;
+  width: 100%;
+  max-width: 100%;
+
+}
+.tableHeader #tablehead{
+  width: 100%;
+  max-width: 100%;
+  border:2px solid #ccc;
+}
+
+#tablehead th {
+    cursor:pointer;
+    background: #eee;
 }
 
 #myTable2 th {
