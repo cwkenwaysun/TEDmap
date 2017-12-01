@@ -474,7 +474,7 @@ class networkChart {
                 .offset((d)=> {
                     if(d['fromcloud']!=undefined){
                       let uppershift = d3.select("#networkChart").node().getBoundingClientRect();
-                      console.log('uppershift: ' + uppershift.y)
+                      //console.log('uppershift: ' + uppershift.y)
                       let cloudW = d3.select("#tagCloud").node().getBoundingClientRect().width;
                       //console.log('cloudW: ' + cloudW)
                       //console.log('d3.event.pageX: ' + d3.event.pageX);

@@ -170,7 +170,7 @@ class Table {
     update() {
         let tmp = this;
         let data = this.processData();
-        console.log(data);
+        //console.log(data);
         //d3.select("#tablehead").classed('fixed-header',true);
         // Tooltips.
 
@@ -187,6 +187,7 @@ class Table {
             row.append("td").text(element.headline);
             row.append("td").text(element.speaker);
             row.append("td").text(element.views);
+            
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
                     tmp.tip.transition()
@@ -198,7 +199,7 @@ class Table {
                       //let targetel = d3.event.target;
                       //console.log(targetel);
                       let height  = d3.select(this).node().getBoundingClientRect().height;
-                      console.log(height);
+                      //console.log(height);
                       let yshift = height - coords[1];
                           
                     tmp.tip.html(tmp.tooltip_render(element))
@@ -222,6 +223,17 @@ class Table {
 
         }, this);
 
+        //if(i==0){
+                //let rtd = row.selectAll('td');
+        let firsttr = document.getElementById("myTable2").getElementsByTagName("TR")[0].getElementsByTagName("TD");
+        for (let j = 0; j < 4; j++) {
+                    let afterwidth = firsttr[j].offsetWidth;
+                    console.log(afterwidth);
+                    //console.log(rtd._groups[0][j]);
+                    let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
+                    thelem.style.width=afterwidth+"px";
+        }
+        //    }
         /*let videos = document.getElementById("videos");
         data.forEach(function (element, i) {
             console.log(element.rates);
