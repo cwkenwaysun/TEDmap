@@ -112,6 +112,7 @@ div .radarChart2 svg {
 
 .nodes .selected{
   stroke: #000;
+  stroke-width: 3px;
 }
 
 .incloud{

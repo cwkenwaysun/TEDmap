@@ -71,8 +71,8 @@ class networkChart {
                   //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]21c2ce
 
         this.rScale = d3.scaleLinear()
-        .domain([1, 203])
-        .range([5, 30]);
+        .domain([1,203])
+        .range([5, 35]);
 
         this.circletip;
         //this.texthover = false;
@@ -307,8 +307,8 @@ class networkChart {
 
           )
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2))
-        .force('collision', d3.forceCollide().radius(function(d) {
-          return 9;
+        .force('collision', d3.forceCollide().radius((d)=>{
+          return this.rScale(d.value);
         }))
 
     this.gAll.select('.links').selectAll('line').remove();
@@ -565,11 +565,17 @@ class networkChart {
         let self = this;
         if(this.forceParam != -15){    
             circles.on('mouseover', function(d){
-                      d3.select(this).classed('selected',true);
+                      d3.select(this).classed('selected',true)
+                      .attr('r',(d)=>{
+                        return 12;
+                      });
                       self.circletip.show(d)
                     })
                     .on('mouseout', function(d){
-                      d3.select(this).classed('selected',false);
+                      d3.select(this).classed('selected',false)
+                      .attr('r',(d)=>{
+                        return 8;
+                      })
                       self.circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
@@ -591,11 +597,20 @@ class networkChart {
         else{
              circles = this.gAll.selectAll('.nodes').selectAll('.visible')
                     .on('mouseover', function(d){
-                      d3.select(this).classed('selected',true);
+                      let rsize = d3.select(this).attr('r');
+                      //console.log('rsize: '+rsize);
+                      d3.select(this).classed('selected',true)
+                      .attr('r',(d)=>{
+                        return +rsize+4;
+                      });
                       self.circletip.show(d)
                     })
                     .on('mouseout', function(d){
-                      d3.select(this).classed('selected',false);
+                      let rsize = d3.select(this).attr('r');
+                      d3.select(this).classed('selected',false)
+                      .attr('r',(d)=>{
+                        return +rsize-4;
+                      });
                       self.circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
