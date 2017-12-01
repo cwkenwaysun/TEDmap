@@ -466,20 +466,25 @@ class networkChart {
 				d3.selectAll('.d3-tip').remove();
 				this.circletip = d3.tip().attr('class', 'd3-tip')
                 .direction((d)=>{
-                  if(d['fromcloud']!=undefined) return 'sw'
-                  return 'se'
+                  return 'sw'
+                  //if(d['fromcloud']!=undefined) return 'sw'
+                  //return 'se'
                 })
                 
                 .offset((d)=> {
                     if(d['fromcloud']!=undefined){
+                      let uppershift = d3.select("#networkChart").node().getBoundingClientRect();
+                      console.log('uppershift: ' + uppershift.y)
+                      let cloudW = d3.select("#tagCloud").node().getBoundingClientRect().width;
+                      //console.log('cloudW: ' + cloudW)
                       //console.log('d3.event.pageX: ' + d3.event.pageX);
                       //console.log('d3.event.pageY: ' + d3.event.pageY);
                       let radius = this.forceParam == -15? this.rScale(d.value)*2:16;
 
                       let xshift = 500;
-                      let offsetx = xshift + 10 + d.x + radius- d3.event.pageX - d['xshift'];//d3.event.pageX;
+                      let offsetx = cloudW + d.x - d3.event.pageX + d['xshift'];//d3.event.pageX;
                       let yshift = this.forceParam == -15? 630:630;
-                      let offsety = d.y - d3.event.pageY - d['yshift'];
+                      let offsety = radius + uppershift.y + d.y - d3.event.pageY - d['yshift'];
                       //console.log('offsetX: ' + offsetx);
                       //console.log('offsety: ' + offsety);
                       return [offsety,offsetx]//[d.x,d.y]

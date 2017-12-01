@@ -162,9 +162,11 @@ class textCloudChart {
                       var coords = d3.mouse(this);
                       let targetel = d3.event.target;
                       let tbbox      = targetel.getBBox();
-                      let xshift = tbbox.width/2 - coords[0];
+                      let xshift = tbbox.width/2 + coords[0];
                       let yshift = tbbox.height/2 - coords[1];
-                      console.log(d3.select(this));
+                      //console.log('tbbox: h'+ tbbox.height + "tbbox: w: "+ tbbox.width);
+                      //console.log(coords);
+                      //console.log('yshift: '+yshift);
                       d3.select(this).style('opacity',0.5)
                       .classed('hoverOn',true);
                       let t = d3.select(this).text();
