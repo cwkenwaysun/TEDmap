@@ -51,6 +51,7 @@ class Buttons {
             //$("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + " <span class='badge'>" + number_tag + "</span></button>");
             let button = $("#buttons").append("<li><a>" + tag + " <span class='badge'>" + number_tag + "</span></a></li>");
 
+            // TODO: may be redundent here.
             let tmp = this;
             $("#buttons > li").click(function () {
                 //console.log(this.childNodes[0].childNodes[0].textContent.trim());
@@ -58,11 +59,22 @@ class Buttons {
                 $(this).remove();
             });
 
-            //TODO: add hover
+            // TODO: may be redundent here.
+            $("#buttons > li").mouseover(function () {
+                let tag = this.childNodes[0].childNodes[0].textContent.trim();
+                console.log(tag);
+                $("." + tagName2Class(tag)).addClass("highlighted");
+                //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
+                //$(this).remove();
+            });
+            $("#buttons > li").mouseout(function () {
+                $(".highlighted").removeClass("highlighted");
+            });
 
             this.update();
         }
     }
+
 
     /**
      * Remove a button from groupSet.

@@ -65,12 +65,14 @@ d3.json("data/tags_info.json", function (data1) {
     }
 });*/
 
+//TODO: change this sort function
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("myTable2");
     switching = true;
     // Set the sorting direction to ascending:
     dir = "asc";
+    if (n==3) dir = "desc";
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
@@ -88,14 +90,14 @@ function sortTable(n) {
             y = rows[i + 1].getElementsByTagName("TD")[n];
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
-            if (n == 0) {
+            if (n == 0 || n == 3) {
                 if (dir == "asc") {
                     if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
                         shouldSwitch = true;
                         break;
                     }
                 } else if (dir == "desc") {
-                    if (n == 0 && parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+                    if ((n == 0 || n == 3) && parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
                         shouldSwitch = true;
                         break;
                     }
@@ -132,6 +134,16 @@ function sortTable(n) {
             }
         }
     }
+}
+
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
+
+function tagName2Class(tagName) {
+    console.log(tagName);
+    return tagName.replaceAll(" ", "").replaceAll("'", "");
 }
 
 function fetchJSONFile(path, callback) {
