@@ -16,6 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="bower_components/d3-tip/index.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/padolsey/jQuery-Plugins/master/sortElements/jquery.sortElements.js"></script>
     <!-- <link rel="stylesheet" href="css/styles.css" /> -->
 </head>
 
@@ -30,10 +31,11 @@
             <button type="button" class="btn btn-default">Process Book</button>
             <button type="button" class="btn btn-primary">How to Use</button>
         </div>
-        <hr class="col-md-12">        
+        <!--<hr class="col-md-12">    -->    
     </div>
     <div class="col-md-6 container" id="tagCloud" >
     <h3 >Word Cloud - Category of Tags</h3>
+    <br><br><br><br>
     <ul class="nav nav-tabs" id="ulid">
       <li id="exploration" role="presentation" ><a href="#">exploration</a></li>
       <li id="society" role="presentation" class="active"><a href="#">society</a></li>
@@ -98,13 +100,13 @@
     <h3 >Tag Frequency versus Year</h3>
     <h5 >Observe the trend of science</h5>
     <!--<ul class="nav nav-pills col-md-6" id="buttons">-->
-    <ul class="nav nav-pills" id="buttons">
-    </ul>
+    <div id="buttons">
+    </div>
 
     <!-- line chart -->
     <!--<div class="col-md-6">-->
         <div class="container">
-            <svg width="600" height="300" id="lineChart">
+            <svg height="550" id="lineChart">
                 <g id="lines">
                     <g id="xAxis"></g>
                     <g id="yAxis"></g>
@@ -133,17 +135,18 @@
     <div id="outter_table">
         <table class="tableHeader table table-striped table-hover">
             <thead id="tablehead">
-                <tr >
-                    <th  onclick="sortTable(0)">#</th>
-                    <th  onclick="sortTable(1)">Headline</th>
-                    <th  onclick="sortTable(2)">Speaker</th>
-                    <th  onclick="sortTable(3)">Views</th>
+                <tr class="table-primary" width="100%">
+                    <th id="t_number">#</th>
+                    <th id="t_headline">Headline</th>
+                    <th id="t_speaker">Speaker</th>
+                    <th id="t_views">Views</th>    
                     <!-- <th class="col-xs-2" onclick="sortTable(3)">Views</th> -->
                 </tr>
             </thead>
         </table>
             <div  id="table_container">
                  <table class="table table-striped table-hover" id="myTable2">
+
                     <!-- 
                     <thead >
                         <tr >

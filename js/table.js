@@ -90,15 +90,7 @@ class Table {
         return lines.reverse();
     }
 
-    rightRoundedRect(x, y, width, height, radius) {
-        return "M" + x + "," + y +
-            "h" + (width - radius) +
-            "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius +
-            "v" + (height - 2 * radius) +
-            "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius +
-            "h" + (radius - width) +
-            "z";
-    };
+
 
     /**
      * Renders the HTML content for tool tip.
@@ -127,7 +119,7 @@ class Table {
 
         // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
         text += "<div class='radarChart2' style='display: inline-flex;'></div>"
-        text += "<h5>" + tooltip_data.description + "</h5>"; 
+        text += "<h5>" + tooltip_data.description + "</h5>";
         text += "<p>Date: " + tooltip_data.date + "<p>";
         //console.log(tooltip_data.rates);
 
@@ -170,7 +162,6 @@ class Table {
     update() {
         let tmp = this;
         let data = this.processData();
-        //console.log(data);
         //d3.select("#tablehead").classed('fixed-header',true);
         // Tooltips.
 
@@ -183,16 +174,20 @@ class Table {
         data.forEach(function (element, i) {
             // Append a table row and some table data.
             let row = videos.append("tr");
+            element.tags.split(",").forEach(function (e) {
+                row.classed(tagName2Class(e), true)
+            }, this);
             row.append("td").text(i);
             row.append("td").text(element.headline);
             row.append("td").text(element.speaker);
             row.append("td").text(element.views);
-            
+
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
                     tmp.tip.transition()
                         .duration(200)
                         .style("opacity", .9);
+
 
                       let coords = d3.mouse(this);
                       //console.log(coords);
@@ -203,11 +198,11 @@ class Table {
                       let yshift = height - coords[1];
                           
                     tmp.tip.html(tmp.tooltip_render(element))
-                        .classed("col-md-6", true)
+                        .classed("col-md-4", true)
                         //.direction('sw')
                         .style("left", (d3.event.pageX - 535) + "px")
                         //.style("top", (d3.event.pageY - 380) + "px");
-                        .style("top", (d3.event.pageY + yshift) + "px");
+                        .style("top", (d3.event.pageY + yshift - 400) + "px");
                     tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
@@ -232,70 +227,7 @@ class Table {
                     //console.log(rtd._groups[0][j]);
                     let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
                     thelem.style.width=afterwidth+"px";
+
         }
-        //    }
-        /*let videos = document.getElementById("videos");
-        data.forEach(function (element, i) {
-            console.log(element.rates);
-            let row = videos.insertRow(0);
-            row.insertCell(0).innerHTML = data.length - i;
-            row.insertCell(1).innerHTML = element.headline;
-            row.insertCell(2).innerHTML = element.date;
-            row.insertCell(3).innerHTML = element.weight;
-            console.log(row);
-        }, this);*/
-
-        /*let padding_x = 5;
-
-        let barHeight = 60;
-
-        let svg = d3.select("#table");
-        console.log(svg);
-
-        let binding = svg.selectAll("g")
-            .data(data);
-
-        console.log(binding);
-
-        let enterG = binding.enter()
-            .append("g")
-        console.log(enterG);
-
-    
-
-        enterG.append("rect")
-        //.attr("d", this.rightRoundedRect(-240, -120, 480, barHeight, 20));
-            .attr("width", 600)
-            .attr("height", barHeight - 1);
-
-        enterG.append("a")
-        .attr("xlink:href", (d) => d.newURL)
-        .append("text")
-        .attr("x", padding_x)
-        .attr("y", barHeight / 3 * 1)
-        .attr("class", "table_header")
-        .text((d) => d.headline)
-
-        enterG.append("text")
-            .attr("x", padding_x)
-            .attr("y", barHeight / 3 * 2  - 5)
-            .text(function (d) {
-                return "speaker: " + d.speaker;
-            });
-
-        enterG.append("text")
-            .attr("x", padding_x)
-            .attr("y", barHeight - 5)
-            .text(function (d) {
-                return "views: " + d.views;
-            });
-
-
-        binding.transition()
-            .duration(1500)
-            .attr("transform", function (d, i) {
-                return "translate(0," + i * barHeight + ")";
-            });
-            */
     };
 }

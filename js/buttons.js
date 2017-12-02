@@ -47,27 +47,35 @@ class Buttons {
 
             tag.fontcolor("green");
 
-            //TODO: beautify it
-            //$("#buttons").append("<button class='btn btn-primary' type='button'>" + tag + " <span class='badge'>" + number_tag + "</span></button>");
-            let button = $("#buttons").append("<li><a>" + tag + " <span class='badge'>" + number_tag + "</span></a></li>");
+
+            let pathColor;
+            groupIDs.forEach(function (element) {
+                if (tag == element.tag) {
+                    pathColor = pathColorScale(element.groupid);
+                    return true;
+                }
+            }, this);
+
+            let button = $("#buttons").append("<button type='button' class='btn btn-primary' style='background:" + pathColor + "'>" + tag + " <span class='badge' style='color:" + pathColor + "'>" + number_tag + "</span></button>");
 
             // TODO: may be redundent here.
             let tmp = this;
-            $("#buttons > li").click(function () {
+            $("#buttons > button").click(function () {
                 //console.log(this.childNodes[0].childNodes[0].textContent.trim());
-                tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
                 $(this).remove();
+                tmp.removeButton(this.childNodes[0].textContent.trim());
             });
 
             // TODO: may be redundent here.
-            $("#buttons > li").mouseover(function () {
-                let tag = this.childNodes[0].childNodes[0].textContent.trim();
+            $("#buttons > button").mouseover(function () {
+                let tag = this.childNodes[0].textContent.trim();
                 console.log(tag);
                 $("." + tagName2Class(tag)).addClass("highlighted");
+                $("tr > ." + tagName2Class(tag)).addClass("highlighted");
                 //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
                 //$(this).remove();
             });
-            $("#buttons > li").mouseout(function () {
+            $("#buttons > button").mouseout(function () {
                 $(".highlighted").removeClass("highlighted");
             });
 

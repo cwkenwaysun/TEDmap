@@ -155,10 +155,6 @@ class RadarChart {
             feMergeNode_1 = feMerge.append('feMergeNode').attr('in', 'coloredBlur'),
             feMergeNode_2 = feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
 
-        /////////////////////////////////////////////////////////
-        /////////////// Draw the Circular grid //////////////////
-        /////////////////////////////////////////////////////////
-
         //Wrapper for the grid & axes
         let axisGrid = g.append("g").attr("class", "axisWrapper");
 
@@ -186,10 +182,6 @@ class RadarChart {
             .attr("fill", "#737373")
             .text(d => Format(maxValue * d / cfg.levels) + cfg.unit);
 
-        /////////////////////////////////////////////////////////
-        //////////////////// Draw the axes //////////////////////
-        /////////////////////////////////////////////////////////
-
         //Create the straight lines radiating outward from the center
         var axis = axisGrid.selectAll(".axis")
             .data(allAxis)
@@ -216,10 +208,6 @@ class RadarChart {
             .attr("y", (d, i) => rScale(maxValue * cfg.labelFactor) * sin(angleSlice * i - HALF_PI))
             .text(d => d)
             .call(wrap, cfg.wrapWidth);
-
-        /////////////////////////////////////////////////////////
-        ///////////// Draw the radar chart blobs ////////////////
-        /////////////////////////////////////////////////////////
 
         //The radial line function
         const radarLine = d3.radialLine()
@@ -283,10 +271,6 @@ class RadarChart {
             .attr("cy", (d, i) => rScale(d.value) * sin(angleSlice * i - HALF_PI))
             .style("fill", (d) => cfg.color(d.id))
             .style("fill-opacity", 0.8);
-
-        /////////////////////////////////////////////////////////
-        //////// Append invisible circles for tooltip ///////////
-        /////////////////////////////////////////////////////////
 
         //Wrapper for the invisible circles on top
         const blobCircleWrapper = g.selectAll(".radarCircleWrapper")

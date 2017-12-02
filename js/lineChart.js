@@ -9,6 +9,7 @@ class LineChart {
      */
     constructor(tagsInfo, allData, groupSet) {
 
+        d3.select("#lineChart").attr("width", window.window.innerWidth*0.5);
         this.tagsInfo = tagsInfo;
         this.allData = allData;
         this.groupSet = groupSet;
@@ -19,6 +20,7 @@ class LineChart {
             bottom: 30,
             left: 30
         };
+
     };
 
 
@@ -92,6 +94,7 @@ class LineChart {
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
+        d3.select("#yAxis > text").remove();
         let yAxisGroup = d3.select("#yAxis")
             .call(yAxis)
             .append("text")
@@ -146,7 +149,13 @@ class LineChart {
                     .attr("transform", function (d) {
                         return "translate(" + xScale(parseTime(d.years)) + "," + yScale(d.video) + ")";
                     })
-                    .classed(tagName2Class(data[i].tagName), true);
+                    .classed(tagName2Class(data[i].tagName), true)
+                    .on('mouseover', function (d) {
+                        $("." + tagName2Class(data[i].tagName)).addClass("highlighted");
+                    })
+                    .on('mouseout', function (d) {
+                        $(".highlighted").removeClass("highlighted");
+                    })
             }
 
             g.append("path")
@@ -164,12 +173,19 @@ class LineChart {
                     })
                     .y(function (d) {
                         return yScale(d.video);
-                    }));
+                    }))
+                    .on('mouseover', function (d) {
+                        $("." + tagName2Class(data[i].tagName)).addClass("highlighted");
+                    })
+                    .on('mouseout', function (d) {
+                        $(".highlighted").removeClass("highlighted");
+                    })
 
             //console.log(data[i]);
             g.append("text")
                 .attr("transform", "translate(" + (width + 45) + "," + (20 * i) + ")")
                 .text(data[i].tagName)
+                .classed(tagName2Class(data[i].tagName), true);
             g.append("line")
                 .attr("x1", width+10)
                 .attr("x2", width+40)
@@ -177,6 +193,7 @@ class LineChart {
                 .attr("y2", -4+i*20)
                 .attr("stroke", pathColor)
                 .attr("stroke-width", 2)
+                .classed(tagName2Class(data[i].tagName), true);
             //.attr("transform", "translate(" + (width + 10) + "," + (20 * i) + ")")
             //.text(data[i].tagName)
             g.append("path")
@@ -184,43 +201,8 @@ class LineChart {
                 .attr("stroke", pathColor)
                 .attr("d", symbol(i % 7))
                 .attr("transform", "translate(" + (width + 25) + "," + (20 * i-4) + ")")
+                .classed(tagName2Class(data[i].tagName), true);
 
         }
-
-        /*var xAxis = d3.scaleTime()
-            .rangeRound([0, width])
-            .domain([parseTime("2001"), parseTime("2017")]);
-
-        var yAxis = d3.scaleLinear()
-            .rangeRound([height, 0])
-            .domain([0, d3.max(lines, function (d) {
-                return d3.max(d.values, function (e) {
-                    return e.video;
-                });
-            })]);
-
-        //var z = d3.scaleOrdinal(d3.schemeCategory10);
-
-        g.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(xAxis))
-            .select(".domain")
-        //.remove();
-
-        g.append("g")
-            .call(d3.axisLeft(yAxis))
-            .append("text")
-            .attr("fill", "#000")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .attr("text-anchor", "end")
-            .text("video");*/
-
-        /*let line = g.selectAll(".lineChart")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "lineChart");*/
-
     }
 }
