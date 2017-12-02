@@ -5,6 +5,8 @@ var groupSet = new Set();
 
 let lineChart;
 let table;
+var groupIDs;
+
 
 
 function addButton(tag) {
@@ -14,14 +16,28 @@ function addButton(tag) {
 // read tags information data
 d3.json("data/tags_info.json", function (data1) {
     tagsInfo = data1;
-    d3.json("data/TED_Talks.json", function (data) {
-        allData = data;
-        //console.log(data);
-        lineChart = new LineChart(tagsInfo, allData, groupSet);
-        table = new Table(tagsInfo, allData, groupSet);
-        buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
-        addButton("innovation");
-    })
+
+    //call fetchJSONFile then build and render 
+    //data/network_WO_TEDtag_v5.json
+    fetchJSONFile('data/network_per_year.json', function (data2) {
+        groupIDs = data2.nodes;
+        fetchJSONFile('data/TEDtag_frequency_v2.json', function (f) {
+            let nwChart = new networkChart(data2);
+            let tcChart = new textCloudChart(f, nwChart);
+            tcChart.update();
+            //nwChart.update();
+            d3.json("data/TED_Talks.json", function (data) {
+                allData = data;
+                //console.log(data);
+                lineChart = new LineChart(tagsInfo, allData, groupSet);
+                table = new Table(tagsInfo, allData, groupSet);
+                buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
+                addButton("innovation");
+            })
+        });
+
+    });
+
 })
 
 // dropdown
@@ -135,20 +151,7 @@ function fetchJSONFile(path, callback) {
     httpRequest.send();
 }
 
-var groupIDs;
 
-//call fetchJSONFile then build and render 
-//data/network_WO_TEDtag_v5.json
-	fetchJSONFile('data/network_per_year.json', function(data) {
-		groupIDs = data.nodes;
-		fetchJSONFile('data/TEDtag_frequency_v2.json', function(f) {
-			let nwChart = new networkChart(data);
-			let tcChart = new textCloudChart(f,nwChart);
-			tcChart.update();
-			//nwChart.update();
-		});
-
-});
 
 var pathColorScale = d3.scaleOrdinal() //ten colors
     .domain(d3.range(0, 9))
