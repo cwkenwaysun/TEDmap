@@ -42,7 +42,7 @@ if __name__ == '__main__':
 			if key not in tagset:
 				for g, glist in cluster.items():
 					if key in glist:
-						nodelist.append({'tag':key, 'group':g})
+						nodelist.append({'tag':key, 'groupid':g})
 						break
 						
 			tagset.add(key)
@@ -96,15 +96,18 @@ if __name__ == '__main__':
 				continue
 
 			usedset.add(child)
-			ydata = dict()
+			ydata = list()
 
 			for y in range(2001,2018):
 				ymap = yearmap[y][key]
 				yvalue = 0
 				if child in ymap.keys():
 					yvalue = ymap[child]	
-				ydata[i] = yvalue
-
+				ydata.append(
+					{
+						y: yvalue
+					}
+				)	
 			linklist.append(
 				{
 					"source": key,

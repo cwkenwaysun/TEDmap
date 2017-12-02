@@ -188,14 +188,15 @@ class Table {
                         .duration(200)
                         .style("opacity", .9);
 
-                    let coords = d3.mouse(this);
-                    console.log(coords);
-                    //let targetel = d3.event.target;
-                    //console.log(targetel);
-                    let height = d3.select(this).node().getBoundingClientRect().height;
-                    //console.log(height);
-                    let yshift = height - coords[1];
 
+                      let coords = d3.mouse(this);
+                      //console.log(coords);
+                      //let targetel = d3.event.target;
+                      //console.log(targetel);
+                      let height  = d3.select(this).node().getBoundingClientRect().height;
+                      //console.log(height);
+                      let yshift = height - coords[1];
+                          
                     tmp.tip.html(tmp.tooltip_render(element))
                         .classed("col-md-4", true)
                         //.direction('sw')
@@ -218,17 +219,15 @@ class Table {
         }, this);
 
         //if(i==0){
-        //let rtd = row.selectAll('td');
-        let firsttr = document.getElementById("myTable2");
-        if (firsttr.getElementsByTagName("TR")[0] != null) {
-            firsttr = firsttr.getElementsByTagName("TR")[0].getElementsByTagName("TD");
-            for (let j = 0; j < 4; j++) {
-                let afterwidth = firsttr[j].offsetWidth;
-                console.log(afterwidth);
-                //console.log(rtd._groups[0][j]);
-                let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
-                thelem.style.width = afterwidth + "px";
-            }
+                //let rtd = row.selectAll('td');
+        let firsttr = document.getElementById("myTable2").getElementsByTagName("TR")[0].getElementsByTagName("TD");
+        for (let j = 0; j < 4; j++) {
+                    let afterwidth = firsttr[j].offsetWidth;
+                    //console.log(afterwidth);
+                    //console.log(rtd._groups[0][j]);
+                    let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
+                    thelem.style.width=afterwidth+"px";
+
         }
     };
 }

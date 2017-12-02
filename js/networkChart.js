@@ -7,7 +7,7 @@ class networkChart {
      * @param   data network data, including links and nodes.
      */
     constructor (data) {
-        //this.tcChart = textCloudChart;
+        //403 node, 19488 links
 
         this.networkData = data;
         this.threshold = 15;
@@ -30,9 +30,6 @@ class networkChart {
                   return  targets.includes(d.tag) || sources.includes(d.tag);
                 });
 
-        //console.log(this.initlinksData);  //583
-        //console.log(this.initnodesData ); //151       
-        // Initializes the svg elements required for this chart
         this.margin = {top: 10, right: 20, bottom: 30, left: 20};
         let divnwChart = d3.select("#networkChart").classed("content", true);
 
@@ -69,13 +66,15 @@ class networkChart {
                   .domain(d3.range(0,9))
                   .range(['#1f77b4','#d448ce','#edaf6d','#f492a8','#965628','#3e8934','#21c2ce','#070cc2','#70c32a','#e9272a']);  
                   //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]21c2ce
-
+        let max_r = d3.scaleLinear()
+        .domain([350,920])
+        .range([30, 58])(this.svgWidth);
+                  
         this.rScale = d3.scaleLinear()
         .domain([1,203])
         .range([5, 35]);
 
         this.circletip;
-        //this.texthover = false;
 
         this.switch = true;
 
@@ -83,36 +82,104 @@ class networkChart {
         this.nodesData;
         this.threshold = 15;
         this.selectedTag = null; 
-        this.forceParam = -50;
+
+        this.defaultForce = d3.scaleLinear()
+        .domain([350,920])
+        .range([-50, -100])(this.svgWidth);
+
+        //console.log('defaultForce: '+this.defaultForce);
+        this.forceParam = this.defaultForce;
+        this.selectedYear = 0;
+
+        let liall = d3.select('#YearSelection').selectAll('li').on('click',(d,i,object)=>{
+            this.selectedYear = d3.select(object[i]).text();
+            //console.log(this.selectedYear)
+            d3.select('#showYear').text(this.selectedYear);
+            if(this.selectedYear=='All')
+              this.selectedYear = 0;
+            this.selectYear();
+        });
+        //console.log('YearSelection li : ' + liall);
         this.resetData();
 
     };
+    /**
+     * [selectYear description]
+     * @return {[type]} [description]
+     */
+    selectYear(){
+      if(this.selectedTag == null){
+        this.resetData();
+        this.update();
+      }
+      else{
+        this.selectOneNode(this.selectedTag,true);
+      }
+      //console.log('selected year: ' +year);
+    }
     /**
      * Set data to the initial state, display links whose value are bigger than threshold
      * @return void call update in the end of function
      */
     resetData(){
+       //this.selectedYear==0;
+       d3.select('#showYear').text('All');
+       d3.select('#yearbutton').classed('yearbutton',true);
+    	 this.linksData = this.initlinksData;
+    	 this.nodesData = this.initnodesData;
+      /*
+      else{
+        let newlinksdata = this.networkData.links.reduce((filtered,d)=>{
+                let v;
+                let linkvalue = +d['year'][+this.selectedYear - 2001][this.selectedYear];
+                
+                  v= {
+                    "source":d.target,
+                    "target":d.source,
+                    "value":linkvalue
+                  }
+                
+                if(linkvalue>this.threshold && v!=undefined)
+                  filtered.push(v);
+                return filtered;
+              },[])
 
-    	this.linksData = this.initlinksData;
-    	this.nodesData = this.initnodesData;
+        this.linksData = newlinksdata;
+
+        let targets = this.linksData.map((d)=>{
+                return d.target;
+              })
+        let sources = this.linksData.map((d)=>{
+                return d.source;
+              })
+
+        this.nodesData = this.networkData.nodes
+                .filter((d)=>{
+                  return  targets.includes(d.tag) || sources.includes(d.tag);
+                });
+      }*/
     }
     /**
      * find data which are related to the selected tag.
      * @param  string tagName selected tag
      * @return void   
      */
-    selectOneNode(tagName,x,y){
-    	if(this.selectedTag == tagName){
+    //selectOneNode(tagName,x,y){
+    selectOneNode(tagName,yearchange){  
+    	if(this.selectedTag == tagName && yearchange==false){
     		this.selectedTag = null;
     		this.threshold = 15;
-    		this.forceParam = -50;
+    		this.forceParam = this.defaultForce;
+        this.selectedYear = 0;
 
         this.switch = true;
 	    	this.resetData();
     	}
     	else{
-        if(this.forceParam==-50)
+        if(this.forceParam==this.defaultForce){
+          d3.select('#yearbutton').classed("yearbutton",false);
           this.switch = true;
+        }
         else
           this.switch = false;
 
@@ -122,11 +189,12 @@ class networkChart {
 
         let newlinksdata = this.networkData.links.reduce((filtered,d)=>{
                 let v;
+                let linkvalue = this.selectedYear==0? d.value: d['year'][+this.selectedYear - 2001][this.selectedYear];
                 if(d.target.tag==tagName){
                   v= {
                     "source":tagName,
                     "target":d.source.tag,
-                    "value":d.value,
+                    "value":linkvalue,
                     "t_groupid":this.tagMap.get(d.source.tag),
                   }
                 }
@@ -134,7 +202,7 @@ class networkChart {
                   v= {
                     "source":tagName,
                     "target":d.target.tag,
-                    "value":d.value,
+                    "value":linkvalue,
                     "t_groupid":this.tagMap.get(d.target.tag),
                   }
                 }
@@ -142,7 +210,7 @@ class networkChart {
                   v= {
                     "source":tagName,
                     "target":d.source,
-                    "value":d.value,
+                    "value":linkvalue,
                     "t_groupid":this.tagMap.get(d.source),
                   }
                 }
@@ -150,12 +218,12 @@ class networkChart {
                   v = {
                     "source":tagName,
                     "target":d.target,
-                    "value":d.value,
+                    "value":linkvalue,
                     "t_groupid":this.tagMap.get(d.target),
                   }
 
                 }
-                if(v!=undefined)
+                if(linkvalue>this.threshold && v!=undefined)
                   filtered.push(v);
                 return filtered;
               },[])
@@ -175,7 +243,7 @@ class networkChart {
 
 
         let usedTags = newlinksdata.map((d)=>{
-             if(d.target.tag!=undefined)
+             if(d.target!=undefined && d.target.tag!=undefined)
                   return d.target.tag;
               return d.target;
         })
@@ -190,7 +258,6 @@ class networkChart {
         nodeWithEdge.sort((a,b)=>{
             return a.groupid - b.groupid;
         });        
-	    	//console.log(nodeWithEdge);
 
         let groups = d3.nest()
             .key(function(d) { return d.t_groupid; })
@@ -308,7 +375,9 @@ class networkChart {
           )
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2))
         .force('collision', d3.forceCollide().radius((d)=>{
-          return this.rScale(d.value);
+          if(d.value!=undefined && d.value >0)
+            return this.rScale(d.value);
+          return 9
         }))
 
     this.gAll.select('.links').selectAll('line').remove();
@@ -316,15 +385,6 @@ class networkChart {
 		let lines = this.gAll.select('.links').selectAll('line')
                         .data(this.linksData);
     let newlines = lines.enter().append('line').style("opacity", 0);
-    /*
-                    .attr("x1", function(d) { return this.svgWidth/2; })
-                    .attr("y1", function(d) { return this.svgWidth/2; })
-                    .attr("x2", function(d) { return this.svgWidth/2+4; })
-                    .attr("y2", function(d) { return this.svgWidth/2+4; });*/  
-    
-    if(this.forceParam==-15){ 
-    }                            
-
     
         lines.exit()
               .style("opacity", 1)
@@ -335,19 +395,16 @@ class networkChart {
               
 
         lines = newlines.merge(lines);
-        //if(this.switch){
+        
         lines
         .transition().duration(2000)
         .style("opacity", 1)
         .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
-        //}
-        //else{
-            lines
+        
+        lines
         .transition().duration(2000)
         .style("opacity", 1)
         .attr("stroke-width", (d)=> { return Math.sqrt(d.value-this.threshold); });
-        //}
-        	 //.attr("class", "links");
 
         let circles;
         this.nodesData.sort((a,b)=>{
@@ -400,7 +457,6 @@ class networkChart {
               .remove();
 
         circles =  newcircles.merge(circles); 
-        //circles = circles.enter().append('circle').merge(circles);
         
         circles
         .transition().duration(3000)
@@ -419,9 +475,7 @@ class networkChart {
         }
         else{
          circles = this.gAll.selectAll('.nodes').selectAll('circle');
-                        //.data(this.nodesData);
-                        //.data(this.nodes);
-                        //
+
           let i=0;
           circles.classed("visible",(d)=>{
                                     if(this.nodesData.includes(d)){
@@ -470,25 +524,29 @@ class networkChart {
                   //if(d['fromcloud']!=undefined) return 'sw'
                   //return 'se'
                 })
-                
                 .offset((d)=> {
+                  
                     if(d['fromcloud']!=undefined){
-                      let uppershift = d3.select("#networkChart").node().getBoundingClientRect();
-                      //console.log('uppershift: ' + uppershift.y)
+                      let headerHeight = d3.select("#header").node().getBoundingClientRect().height;
+                      let topshift = d3.select("#networkChart").node().getBoundingClientRect();
+                      let textshift = d3.select("#networkChart").select('h3').node().getBoundingClientRect();
+                      //console.log('textshift: ' + textshift.height)
                       let cloudW = d3.select("#tagCloud").node().getBoundingClientRect().width;
                       //console.log('cloudW: ' + cloudW)
                       //console.log('d3.event.pageX: ' + d3.event.pageX);
                       //console.log('d3.event.pageY: ' + d3.event.pageY);
-                      let radius = this.forceParam == -15? this.rScale(d.value)*2:16;
+                      let radius = this.forceParam == -15? d.tag==this.selectedTag? 16:this.rScale(d.value)*2 :16;
 
+                      let x = d.tag==this.selectedTag? this.svgWidth/2 - 8: d.x;
+                      let y = d.tag==this.selectedTag? this.svgHeight/2: d.y;
                       let xshift = 500;
-                      let offsetx = cloudW + d.x - d3.event.pageX + d['xshift'];//d3.event.pageX;
-                      let yshift = this.forceParam == -15? 630:630;
-                      let offsety = radius + uppershift.y + d.y - d3.event.pageY - d['yshift'];
-                      //console.log('offsetX: ' + offsetx);
+                      let offsetx = cloudW + x - d3.event.pageX + d['xshift'];
+                      let offsety = radius + textshift.height + headerHeight + this.margin.top + y - d3.event.pageY - d['yshift'];
+                      //console.log('y: ' + y);
                       //console.log('offsety: ' + offsety);
                       return [offsety,offsetx]//[d.x,d.y]
                     }
+                    //*/
                     return [0,0]
                 })
                 .html((d)=>{
@@ -581,7 +639,7 @@ class networkChart {
                     .on('dblclick',(d)=>{
                     	//console.log(d.tag);
                       clickstate = 0;
-    					         this.selectOneNode(d.tag,d.x,d.y);
+    					         this.selectOneNode(d.tag,false);
     				        })
           					.on('click',(d)=>{
           					// when click, add tag in to buttons
@@ -616,7 +674,7 @@ class networkChart {
                     .on('dblclick',(d)=>{
                       //console.log(d.tag);
                       clickstate = 0;
-                      this.selectOneNode(d.tag,d.x,d.y);
+                      this.selectOneNode(d.tag,false);
                 		})
           					.on('click',(d)=>{
           					// when click, add tag in to buttons
