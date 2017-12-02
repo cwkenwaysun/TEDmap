@@ -92,6 +92,7 @@ class LineChart {
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
+        d3.select("#yAxis > text").remove();
         let yAxisGroup = d3.select("#yAxis")
             .call(yAxis)
             .append("text")

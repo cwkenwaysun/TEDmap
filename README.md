@@ -1,18 +1,14 @@
 # TEDmap
 
-## Webpage
-[TEDmap-TED talks topic trend visualization](https://cwkenwaysun.github.io/TEDmap/)
+Let us help you find your next TED video! Please visit our demo: [TEDmap-TED talks topic trend visualization](https://cwkenwaysun.github.io/TEDmap/)
 
-## Process Book
-[Process Book](https://github.com/cwkenwaysun/TEDmap/blob/master/final_report/ProcessBook_v1.pdf)
+See also our [Process Book](https://github.com/cwkenwaysun/TEDmap/blob/master/final_report/ProcessBook_v1.pdf) and [Video-How to observe science trend](https://github.com/cwkenwaysun/TEDmap/blob/master/final_report/ProcessBook_v1.pdf).
 
-## Screencast
-[Video-How to observe science trend](https://github.com/cwkenwaysun/TEDmap/blob/master/final_report/ProcessBook_v1.pdf)
-
-- - -
-## Tools
-* ### TED talks topic trend visualization
+## Reference
+* ### Source
   * [TED](https://www.ted.com/) - Ideas worth spreading
+
+* ### Libraries
   * [D3.js](https://d3js.org/) - Data-Driven Documents
   * [Bootstrap](http://getbootstrap.com/) - Web toolkit
 

@@ -205,7 +205,7 @@ class Table {
                     tmp.tip.html(tmp.tooltip_render(element))
                         .classed("col-md-6", true)
                         //.direction('sw')
-                        .style("left", (d3.event.pageX - 535) + "px")
+                        //.style("left", (d3.event.pageX - 535) + "px")
                         //.style("top", (d3.event.pageY - 380) + "px");
                         .style("top", (d3.event.pageY + yshift) + "px");
                     tmp.drawRadar(element);

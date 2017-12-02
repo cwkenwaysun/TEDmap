@@ -40,6 +40,7 @@ d3.json("data/tags_info.json", function (data1) {
         lineChart = new LineChart(tagsInfo, allData, groupSet);
         table = new Table(tagsInfo, allData, groupSet);
         buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
+        addButton("innovation");
     })
 })
 
