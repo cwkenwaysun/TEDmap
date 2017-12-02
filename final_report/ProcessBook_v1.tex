@@ -135,17 +135,17 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \section{Prototype}
 \quad Our design is based on the network layout, as shown in Figure~\ref{fig:design1}. This network is composed of tags, and user can choose several tags they are interested in to through interaction with the network node. Next, the line chart in the middle of Figure~\ref{fig:design1} will display the tendency of chosen tags versus time/year. The last part help user to search for TED talks including these tags. User can decide the result is sorted by views or popularity.
 
-\begin{figure} [h]
+\begin{figure}
 \begin{center}
-\includegraphics[scale=0.13]{"IMG_9010".JPG}
-\caption{Category of data, and it relationship with the layout}
+\includegraphics[scale=0.12]{"IMG_9010".JPG}
+\caption{Design draft}
 \label{fig:design1}
 \end{center}
 \end{figure}
 
-\begin{figure} [h]
+\begin{figure}
 \begin{center}
-\includegraphics[scale=0.13]{"IMG_9011".JPG}
+\includegraphics[scale=0.12]{"IMG_9011".JPG}
 \caption{Design of Optional features}
 \label{fig:design2}
 \end{center}
@@ -153,7 +153,7 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 
 \quad We also want to compare the statistic of the tags between years, so we design a bar chart as shown in Figure~\ref{fig:design2}. By making use of the sliding bar on the top, the statistics of two years is displayed. Figure~\ref{fig:data} helps us to figure out what attributes are needed in each chart. It also shows the relationship of charts.  
 
-\begin{figure} [h]
+\begin{figure}
 \begin{center}
 \includegraphics[scale=0.8]{"Untitled Diagram".png}
 \caption{Category of data, and it relationship with the layout}
@@ -167,7 +167,7 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \quad First, we generate the network chart accoring the co-occurence matrix. Each node represent a tag, and the thickness of one link is decided by the co-occurence value between two tags. However, there are 403 tags and 19488 links on this chart, which make the network look crazy and take a lot of time to draw these lines, as shown in Figure~\ref{fig:networkball}. 
 
 \quad We discuss how to fix this issue and propose two solution for that. One is to draw chord layout in the beginning. Chord layout help people understand the relationship between two groups. We can let user to click ribbon to then show the network layout of tags in these two groups. However, this design does not allow us to observe all the related tags of one tag we choose. The other solution is to reduce the amount of links and nodes. We can provide an overview of network chart with nodes and links whose frequencies and value of co-occurence are bigger than threshold. Then, to zoom in on this chart, user can double-click on the tag they interested in to find all the other tag which is related to the chosen one. After applying the second method, our network chart looks better, as you can find in Figure~\ref{fig:networkwithcolor}.
-\begin{figure} [h]
+\begin{figure}
 \begin{center}
 \includegraphics[scale=0.3]{Crazylink}
 \caption{Network chart with Over 19,000 links}
@@ -175,7 +175,7 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \end{center}
 \end{figure}
 
-\begin{figure} [h]
+\begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{networkChartProto}
 \caption{Network chart with link vale bigger than 15}
@@ -183,25 +183,76 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \end{center}
 \end{figure}	
 
+\quad Next, we want to observe the relationship between a chosen tag and other co-occurrence tags, so we implement a function that the network chart shows all the links whose edges include a specific tag after double-clicking on one the corresponding node. The image was not easy to understand and hard to find the most relative tag, as shown in Figure~\ref{fig:zoomin1}.
+
+\quad Figure~\ref{fig:zoomin2} is the modified design to solve the above issue. This time, we grouped all the related tags by their categories. Instead of connecting the center with relative node, we connect it to an invisible group center and then link node with the center. This design help user to learn which category has strong co-occurrence within the specific, and also it is obvious to observe the most related tag.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{focusOneTag_d1}
+\caption{Zoom in for one tag}
+\label{fig:zoomin1}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{focusOneTag_d2}
+\caption{Zoom in for one tag with grouping}
+\label{fig:zoomin2}
+\end{center}
+\end{figure}
+
+
 \subsection{Word Cloud Chart}
 \quad After we draw the network chart and color each node according to category, we suddenly find that we did not explain the category and which tags are classified to. Therefore, we decide to add a word cloud chart on the top of page, which provides the information about the members each category includes, and the color of text follow the ordinal color scale we define in network chart. 
 
-\quad In the beginning, the word cloud use a list of buttons for user to select the category, as shown in Figure~\ref{fig:networkwithcolor}
+\quad In the beginning, the word cloud use a list of buttons for user to select the category, as Figure~\ref{fig:wcbutton1}
 
-\begin{figure} [h]
+\begin{figure}
 \begin{center}
-\includegraphics[scale=0.5]{networkChartProto}
-\caption{Network chart with link vale bigger than 15}
-\label{fig:networkwithcolor}
+\includegraphics[scale=0.5]{wcbutton1}
+\caption{Word Cloud button design, version 1}
+\label{fig:wcbutton1}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{wcbutton2}
+\caption{Word Cloud button design, version 2}
+\label{fig:wcbutton2}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{wcbutton3}
+\caption{Word Cloud button design, version 3}
+\label{fig:wcbutton3}
 \end{center}
 \end{figure}
 
 \subsection{Line Chart}
 
+\subsection{Button of Line Chart}
+
 \subsection{Video List}
 %\appendix
 
+\chapter{Implementation}
+\section{Interaction}
+\subsection{Network Chart}
+\subsection{Word Cloud}
+\subsection{Line Chart}
+\subsection{Button of Line Chart}
+\subsection{Video List}
 
+\section{Flow-Chart}
+
+\chapter{Evaluation}
+\section{Solution in our question}
+ 
 \bibliographystyle{acm}
 %%\bibliography{nfv.bib}
 \bibliography{js6.bib}
