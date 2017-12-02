@@ -143,8 +143,7 @@ String.prototype.replaceAll = function(str1, str2, ignore)
 } 
 
 function tagName2Class(tagName) {
-    console.log(tagName);
-    return tagName.replaceAll(" ", "").replaceAll("'", "");
+    return tagName.replaceAll(" ", "").replaceAll("'", "").toLowerCase();
 }
 
 function fetchJSONFile(path, callback) {

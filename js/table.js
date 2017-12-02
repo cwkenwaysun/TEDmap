@@ -90,15 +90,7 @@ class Table {
         return lines.reverse();
     }
 
-    rightRoundedRect(x, y, width, height, radius) {
-        return "M" + x + "," + y +
-            "h" + (width - radius) +
-            "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius +
-            "v" + (height - 2 * radius) +
-            "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius +
-            "h" + (radius - width) +
-            "z";
-    };
+
 
     /**
      * Renders the HTML content for tool tip.
@@ -127,7 +119,7 @@ class Table {
 
         // <div class="radarChart2 col-md-8" style="display: inline-flex;"></div>
         text += "<div class='radarChart2' style='display: inline-flex;'></div>"
-        text += "<h5>" + tooltip_data.description + "</h5>"; 
+        text += "<h5>" + tooltip_data.description + "</h5>";
         text += "<p>Date: " + tooltip_data.date + "<p>";
         //console.log(tooltip_data.rates);
 
@@ -170,7 +162,6 @@ class Table {
     update() {
         let tmp = this;
         let data = this.processData();
-        //console.log(data);
         //d3.select("#tablehead").classed('fixed-header',true);
         // Tooltips.
 
@@ -183,31 +174,34 @@ class Table {
         data.forEach(function (element, i) {
             // Append a table row and some table data.
             let row = videos.append("tr");
+            element.tags.split(",").forEach(function (e) {
+                row.classed(tagName2Class(e), true)
+            }, this);
             row.append("td").text(i);
             row.append("td").text(element.headline);
             row.append("td").text(element.speaker);
             row.append("td").text(element.views);
-            
+
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
                     tmp.tip.transition()
                         .duration(200)
                         .style("opacity", .9);
 
-                      let coords = d3.mouse(this);
-                      console.log(coords);
-                      //let targetel = d3.event.target;
-                      //console.log(targetel);
-                      let height  = d3.select(this).node().getBoundingClientRect().height;
-                      //console.log(height);
-                      let yshift = height - coords[1];
-                          
+                    let coords = d3.mouse(this);
+                    console.log(coords);
+                    //let targetel = d3.event.target;
+                    //console.log(targetel);
+                    let height = d3.select(this).node().getBoundingClientRect().height;
+                    //console.log(height);
+                    let yshift = height - coords[1];
+
                     tmp.tip.html(tmp.tooltip_render(element))
-                        .classed("col-md-6", true)
+                        .classed("col-md-4", true)
                         //.direction('sw')
-                        //.style("left", (d3.event.pageX - 535) + "px")
+                        .style("left", (d3.event.pageX - 535) + "px")
                         //.style("top", (d3.event.pageY - 380) + "px");
-                        .style("top", (d3.event.pageY + yshift) + "px");
+                        .style("top", (d3.event.pageY + yshift - 400) + "px");
                     tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
@@ -224,14 +218,17 @@ class Table {
         }, this);
 
         //if(i==0){
-                //let rtd = row.selectAll('td');
-        let firsttr = document.getElementById("myTable2").getElementsByTagName("TR")[0].getElementsByTagName("TD");
-        for (let j = 0; j < 4; j++) {
-                    let afterwidth = firsttr[j].offsetWidth;
-                    console.log(afterwidth);
-                    //console.log(rtd._groups[0][j]);
-                    let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
-                    thelem.style.width=afterwidth+"px";
+        //let rtd = row.selectAll('td');
+        let firsttr = document.getElementById("myTable2");
+        if (firsttr.getElementsByTagName("TR")[0] != null) {
+            firsttr = firsttr.getElementsByTagName("TR")[0].getElementsByTagName("TD");
+            for (let j = 0; j < 4; j++) {
+                let afterwidth = firsttr[j].offsetWidth;
+                console.log(afterwidth);
+                //console.log(rtd._groups[0][j]);
+                let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
+                thelem.style.width = afterwidth + "px";
+            }
         }
         //    }
         /*let videos = document.getElementById("videos");

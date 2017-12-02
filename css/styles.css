@@ -1,19 +1,33 @@
 .highlighted {
-    stroke: red;
     stroke-width: 5px;
+    color:#ff6600;
+}
+
+text.highlighted {
+    fill: #ff6600;
+}
+
+
+#buttons button {
+    margin-left: 5px; 
+    margin-top: 3px;
 }
 
 div#table_container {
     height: 600px;
     border:2px solid #ccc;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
-svg#table {
+
+  table tbody,table thead {
     display: block;
-    width: 200%;
-    height: 200%;
-}
+  }
+  table tbody {
+    overflow: auto;
+    height: 585px;
+  }
+
+
+
 
 #buttons li  a{
     font-weight: bold;

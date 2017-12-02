@@ -62,8 +62,8 @@ class Buttons {
             let tmp = this;
             $("#buttons > button").click(function () {
                 //console.log(this.childNodes[0].childNodes[0].textContent.trim());
-                tmp.removeButton(this.childNodes[0].textContent.trim());
                 $(this).remove();
+                tmp.removeButton(this.childNodes[0].textContent.trim());
             });
 
             // TODO: may be redundent here.
@@ -71,6 +71,7 @@ class Buttons {
                 let tag = this.childNodes[0].textContent.trim();
                 console.log(tag);
                 $("." + tagName2Class(tag)).addClass("highlighted");
+                $("tr > ." + tagName2Class(tag)).addClass("highlighted");
                 //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
                 //$(this).remove();
             });
