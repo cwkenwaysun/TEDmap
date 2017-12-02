@@ -69,7 +69,7 @@ class Buttons {
             // TODO: may be redundent here.
             $("#buttons > button").mouseover(function () {
                 let tag = this.childNodes[0].textContent.trim();
-                console.log(tag);
+                //console.log(tag);
                 $("." + tagName2Class(tag)).addClass("highlighted");
                 $("tr > ." + tagName2Class(tag)).addClass("highlighted");
                 //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
