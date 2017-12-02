@@ -163,7 +163,8 @@ function fetchJSONFile(path, callback) {
 var groupIDs;
 
 //call fetchJSONFile then build and render 
-	fetchJSONFile('data/network_WO_TEDtag_v5.json', function(data) {
+//data/network_WO_TEDtag_v5.json
+	fetchJSONFile('data/network_per_year.json', function(data) {
 		groupIDs = data.nodes;
 		fetchJSONFile('data/TEDtag_frequency_v2.json', function(f) {
 			let nwChart = new networkChart(data);

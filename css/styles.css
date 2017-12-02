@@ -155,7 +155,7 @@ h2{
     /*line-height: 5;*/
     padding-left: 10px;
     padding-right: 10px;
-    min-width: 300px;
+    min-width: 200px;
     border-style: groove;
     /*padding: 12px;*/
     background: #FFFFFF;
@@ -265,4 +265,6 @@ h3{
    background: #3c3c3c;
    text-align: center;
 } 
-
+.yearbutton {
+  visibility: hidden;
+}

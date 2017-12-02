@@ -195,7 +195,7 @@ class Table {
                         .style("opacity", .9);
 
                       let coords = d3.mouse(this);
-                      console.log(coords);
+                      //console.log(coords);
                       //let targetel = d3.event.target;
                       //console.log(targetel);
                       let height  = d3.select(this).node().getBoundingClientRect().height;
@@ -228,7 +228,7 @@ class Table {
         let firsttr = document.getElementById("myTable2").getElementsByTagName("TR")[0].getElementsByTagName("TD");
         for (let j = 0; j < 4; j++) {
                     let afterwidth = firsttr[j].offsetWidth;
-                    console.log(afterwidth);
+                    //console.log(afterwidth);
                     //console.log(rtd._groups[0][j]);
                     let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
                     thelem.style.width=afterwidth+"px";
