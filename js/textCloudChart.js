@@ -17,7 +17,7 @@ class textCloudChart {
         //fetch the svg bounds
         this.svgBounds = divnwChart.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = 350;
+        this.svgHeight = 450;
 
         //add the svg to the div
         this.svg = divnwChart.append("svg")
@@ -43,12 +43,14 @@ class textCloudChart {
         });
 
         this.gtext = this.svg.append("g")
-                    .attr("transform", "translate("+this.svgWidth/2+",175)");
+                    .attr("transform", "translate("+this.svgWidth/2+","+ this.svgHeight/2+")");
 
-        this.cloud = d3.layout.cloud().size([this.svgWidth, 325]);
+        this.cloud = d3.layout.cloud().size([this.svgWidth, 425]);
+
+        let maxT = 60;
         this.sizeScale = d3.scaleLinear()
                         .domain([1, 2386])
-                        .range([8, 75]); 
+                        .range([8, maxT]); 
         this.networkChart.update();
         this.update();                
 
@@ -107,24 +109,14 @@ class textCloudChart {
     this.updateButton();
     this.gtext.selectAll(".incloud").remove();
                 
-
-    //this.cloud.stop();
-    /*
-    alltext.exit()
-              .style("opacity", 1)
-              .transition()
-              .duration(1500)
-              .style("opacity", 0)
-              .remove();
-              */
                               
     this.cloud
             .words(gdata)
             .rotate(0)
-            .padding(2)
+            .padding(3)
             .spiral('archimedean')
             .text((d)=>{ return d.tag; })
-            .fontSize((d)=> { return this.sizeScale(d.frequency)+7 });
+            .fontSize((d)=> { return this.sizeScale(d.frequency)+10 });
                   
     let self = this;
     let clickstate = 1;        
