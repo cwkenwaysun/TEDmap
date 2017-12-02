@@ -5,7 +5,7 @@
 
 div#table_container {
     height: 600px;
-    border:2px solid #000;
+    border:2px solid #ccc;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -33,9 +33,35 @@ svg circle {
 .table_header {
     font-size: 150%;
 }
+/*
+#myTable2 tbody.scrollContent {
+  display: block;
+  height: 262px;
+  overflow: auto;
+  width: 100%
+}
+*/
+table.tableHeader{
+
+  margin-bottom: 0px;
+  width: 100%;
+  max-width: 100%;
+
+}
+.tableHeader #tablehead{
+  width: 100%;
+  max-width: 100%;
+  border:2px solid #ccc;
+}
+
+#tablehead th {
+    cursor:pointer;
+    background: #eee;
+}
 
 #myTable2 th {
     cursor:pointer;
+    background: #eee;
 }
 #myTable2 tr {
     cursor:pointer;
@@ -60,6 +86,15 @@ div .radarChart2 svg {
 .content {
     display: inline-block;
     width: 50%;
+}
+#header {
+  margin-bottom: 5px;
+}
+#header hr{
+  width: 98%;
+  border: 0;
+  margin-bottom: 0px; 
+  border-top: 5px solid #e8051d;
 }
 
 .links line{
@@ -86,6 +121,7 @@ div .radarChart2 svg {
 
 .nodes .selected{
   stroke: #000;
+  stroke-width: 3px;
 }
 
 .incloud{
@@ -93,8 +129,8 @@ div .radarChart2 svg {
     font-family: "Comic Sans MS";
 }
 
-.incloud .hoverOn{
-    opacity: 0.7;
+.incloud:hover{
+    cursor: pointer;
 }
 
 body {
@@ -214,4 +250,19 @@ h3{
       .btn + .btn {
         margin-top: 1rem;
         margin-left: 0; } }
-#tagCloud           
+
+.col-md-12.footstyle {
+   margin-top: 20px;
+   background: #787878;
+   color: #E0E0E0;
+   padding-right: 0px;
+   padding-left: 0px;
+} 
+.footstyle a{
+   color: #E0E0E0;
+}
+.footstyle .copyright{
+   background: #3c3c3c;
+   text-align: center;
+} 
+

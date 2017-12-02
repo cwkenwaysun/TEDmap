@@ -39,7 +39,7 @@ class networkChart {
         //fetch the svg bounds
         this.svgBounds = divnwChart.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = 500;
+        this.svgHeight = 600;
 
         //add the svg to the div
         this.svg = divnwChart.append("svg")
@@ -67,12 +67,12 @@ class networkChart {
       	
       	this.colorScale = d3.scaleOrdinal() //ten colors
                   .domain(d3.range(0,9))
-                  .range(['#1f77b4','#d448ce','#e7ce16','#21c2ce','#965628','#1a6111','#54107a','#070cc2','#70c32a','#e9272a']);  
-                  //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
+                  .range(['#1f77b4','#d448ce','#edaf6d','#f492a8','#965628','#3e8934','#21c2ce','#070cc2','#70c32a','#e9272a']);  
+                  //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]21c2ce
 
         this.rScale = d3.scaleLinear()
-        .domain([1, 203])
-        .range([5, 30]);
+        .domain([1,203])
+        .range([5, 35]);
 
         this.circletip;
         //this.texthover = false;
@@ -277,7 +277,7 @@ class networkChart {
     update () {
 
       let divnwChart = d3.select("#tagCloud").node();
-      console.log(divnwChart);
+      //console.log(divnwChart);
 
     	function dragstarted(d) {
 		  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -307,8 +307,8 @@ class networkChart {
 
           )
 		    .force("center", d3.forceCenter(this.svgWidth / 2, this.svgHeight / 2))
-        .force('collision', d3.forceCollide().radius(function(d) {
-          return 9;
+        .force('collision', d3.forceCollide().radius((d)=>{
+          return this.rScale(d.value);
         }))
 
     this.gAll.select('.links').selectAll('line').remove();
@@ -465,17 +465,26 @@ class networkChart {
 		//tooltip
 				d3.selectAll('.d3-tip').remove();
 				this.circletip = d3.tip().attr('class', 'd3-tip')
-                .direction('se')
+                .direction((d)=>{
+                  return 'sw'
+                  //if(d['fromcloud']!=undefined) return 'sw'
+                  //return 'se'
+                })
                 
                 .offset((d)=> {
                     if(d['fromcloud']!=undefined){
+                      let uppershift = d3.select("#networkChart").node().getBoundingClientRect();
+                      //console.log('uppershift: ' + uppershift.y)
+                      let cloudW = d3.select("#tagCloud").node().getBoundingClientRect().width;
+                      //console.log('cloudW: ' + cloudW)
                       //console.log('d3.event.pageX: ' + d3.event.pageX);
                       //console.log('d3.event.pageY: ' + d3.event.pageY);
                       let radius = this.forceParam == -15? this.rScale(d.value)*2:16;
 
-                      let offsetx = 10 + d.x + radius- d3.event.pageX - d['xshift'];//d3.event.pageX;
+                      let xshift = 500;
+                      let offsetx = cloudW + d.x - d3.event.pageX + d['xshift'];//d3.event.pageX;
                       let yshift = this.forceParam == -15? 630:630;
-                      let offsety = yshift + d.y - d3.event.pageY - d['yshift'];
+                      let offsety = radius + uppershift.y + d.y - d3.event.pageY - d['yshift'];
                       //console.log('offsetX: ' + offsetx);
                       //console.log('offsety: ' + offsety);
                       return [offsety,offsetx]//[d.x,d.y]
@@ -556,11 +565,17 @@ class networkChart {
         let self = this;
         if(this.forceParam != -15){    
             circles.on('mouseover', function(d){
-                      d3.select(this).classed('selected',true);
+                      d3.select(this).classed('selected',true)
+                      .attr('r',(d)=>{
+                        return 12;
+                      });
                       self.circletip.show(d)
                     })
                     .on('mouseout', function(d){
-                      d3.select(this).classed('selected',false);
+                      d3.select(this).classed('selected',false)
+                      .attr('r',(d)=>{
+                        return 8;
+                      })
                       self.circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
@@ -582,11 +597,20 @@ class networkChart {
         else{
              circles = this.gAll.selectAll('.nodes').selectAll('.visible')
                     .on('mouseover', function(d){
-                      d3.select(this).classed('selected',true);
+                      let rsize = d3.select(this).attr('r');
+                      //console.log('rsize: '+rsize);
+                      d3.select(this).classed('selected',true)
+                      .attr('r',(d)=>{
+                        return +rsize+4;
+                      });
                       self.circletip.show(d)
                     })
                     .on('mouseout', function(d){
-                      d3.select(this).classed('selected',false);
+                      let rsize = d3.select(this).attr('r');
+                      d3.select(this).classed('selected',false)
+                      .attr('r',(d)=>{
+                        return +rsize-4;
+                      });
                       self.circletip.hide(d)
                     })
                     .on('dblclick',(d)=>{
@@ -667,8 +691,12 @@ class networkChart {
 
       let circle = circles[0][0];
       if(circle!=undefined){
-        
-        d3.select(circle).classed('selected',true);
+        let rsize = d3.select(circle).attr('r');
+
+        d3.select(circle).classed('selected',true)
+                      .attr('r',(d)=>{
+                        return +rsize+4;
+                      });
         let data = circle.__data__;
 
         data['fromcloud'] = true;
@@ -684,6 +712,12 @@ class networkChart {
         return d.tag==tagName;
       })._groups[0][0];
       if(circle!=undefined){
+        let rsize = d3.select(circle).attr('r');
+
+        d3.select(circle)
+                      .attr('r',(d)=>{
+                        return +rsize-4;
+                      });
         delete circle.__data__['fromcloud'];
         delete circle.__data__['xshift'];
         delete circle.__data__['yshift'];

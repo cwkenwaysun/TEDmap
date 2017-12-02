@@ -170,8 +170,8 @@ class Table {
     update() {
         let tmp = this;
         let data = this.processData();
-        console.log(data);
-
+        //console.log(data);
+        //d3.select("#tablehead").classed('fixed-header',true);
         // Tooltips.
 
 
@@ -187,15 +187,27 @@ class Table {
             row.append("td").text(element.headline);
             row.append("td").text(element.speaker);
             row.append("td").text(element.views);
+            
             // Mouseover: tooltip
             row.on('mouseover', function (d) {
                     tmp.tip.transition()
                         .duration(200)
                         .style("opacity", .9);
+
+                      let coords = d3.mouse(this);
+                      console.log(coords);
+                      //let targetel = d3.event.target;
+                      //console.log(targetel);
+                      let height  = d3.select(this).node().getBoundingClientRect().height;
+                      //console.log(height);
+                      let yshift = height - coords[1];
+                          
                     tmp.tip.html(tmp.tooltip_render(element))
                         .classed("col-md-6", true)
+                        //.direction('sw')
                         .style("left", (d3.event.pageX - 535) + "px")
-                        .style("top", (d3.event.pageY - 380) + "px");
+                        //.style("top", (d3.event.pageY - 380) + "px");
+                        .style("top", (d3.event.pageY + yshift) + "px");
                     tmp.drawRadar(element);
                 })
                 .on('mouseout', function (d) {
@@ -211,6 +223,17 @@ class Table {
 
         }, this);
 
+        //if(i==0){
+                //let rtd = row.selectAll('td');
+        let firsttr = document.getElementById("myTable2").getElementsByTagName("TR")[0].getElementsByTagName("TD");
+        for (let j = 0; j < 4; j++) {
+                    let afterwidth = firsttr[j].offsetWidth;
+                    console.log(afterwidth);
+                    //console.log(rtd._groups[0][j]);
+                    let thelem = document.getElementById("tablehead").getElementsByTagName("TH")[j];
+                    thelem.style.width=afterwidth+"px";
+        }
+        //    }
         /*let videos = document.getElementById("videos");
         data.forEach(function (element, i) {
             console.log(element.rates);
