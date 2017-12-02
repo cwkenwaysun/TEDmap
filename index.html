@@ -16,6 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="bower_components/d3-tip/index.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/padolsey/jQuery-Plugins/master/sortElements/jquery.sortElements.js"></script>
     <!-- <link rel="stylesheet" href="css/styles.css" /> -->
 </head>
 
@@ -105,10 +106,10 @@
         <table class="tableHeader table table-striped table-hover">
             <thead id="tablehead">
                 <tr class="table-primary" width="100%">
-                    <th  onclick="sortTable(0)">#</th>
-                    <th  onclick="sortTable(1)">Headline</th>
-                    <th  onclick="sortTable(2)">Speaker</th>
-                    <th  onclick="sortTable(3)">Views</th>
+                    <th id="t_number">#</th>
+                    <th id="t_headline">Headline</th>
+                    <th id="t_speaker">Speaker</th>
+                    <th id="t_views">Views</th>    
                     <!-- <th class="col-xs-2" onclick="sortTable(3)">Views</th> -->
                 </tr>
             </thead>

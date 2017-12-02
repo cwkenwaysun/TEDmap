@@ -204,41 +204,5 @@ class LineChart {
                 .classed(tagName2Class(data[i].tagName), true);
 
         }
-
-        /*var xAxis = d3.scaleTime()
-            .rangeRound([0, width])
-            .domain([parseTime("2001"), parseTime("2017")]);
-
-        var yAxis = d3.scaleLinear()
-            .rangeRound([height, 0])
-            .domain([0, d3.max(lines, function (d) {
-                return d3.max(d.values, function (e) {
-                    return e.video;
-                });
-            })]);
-
-        //var z = d3.scaleOrdinal(d3.schemeCategory10);
-
-        g.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(xAxis))
-            .select(".domain")
-        //.remove();
-
-        g.append("g")
-            .call(d3.axisLeft(yAxis))
-            .append("text")
-            .attr("fill", "#000")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .attr("text-anchor", "end")
-            .text("video");*/
-
-        /*let line = g.selectAll(".lineChart")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "lineChart");*/
-
     }
 }
