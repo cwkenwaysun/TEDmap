@@ -87,6 +87,15 @@ div .radarChart2 svg {
     display: inline-block;
     width: 50%;
 }
+#header {
+  margin-bottom: 5px;
+}
+#header hr{
+  width: 98%;
+  border: 0;
+  margin-bottom: 0px; 
+  border-top: 5px solid #e8051d;
+}
 
 .links line{
   stroke: #999;
@@ -241,4 +250,19 @@ h3{
       .btn + .btn {
         margin-top: 1rem;
         margin-left: 0; } }
-#tagCloud           
+
+.col-md-12.footstyle {
+   margin-top: 20px;
+   background: #787878;
+   color: #E0E0E0;
+   padding-right: 0px;
+   padding-left: 0px;
+} 
+.footstyle a{
+   color: #E0E0E0;
+}
+.footstyle .copyright{
+   background: #3c3c3c;
+   text-align: center;
+} 
+

@@ -691,8 +691,12 @@ class networkChart {
 
       let circle = circles[0][0];
       if(circle!=undefined){
-        
-        d3.select(circle).classed('selected',true);
+        let rsize = d3.select(circle).attr('r');
+
+        d3.select(circle).classed('selected',true)
+                      .attr('r',(d)=>{
+                        return +rsize+4;
+                      });
         let data = circle.__data__;
 
         data['fromcloud'] = true;
@@ -708,6 +712,12 @@ class networkChart {
         return d.tag==tagName;
       })._groups[0][0];
       if(circle!=undefined){
+        let rsize = d3.select(circle).attr('r');
+
+        d3.select(circle)
+                      .attr('r',(d)=>{
+                        return +rsize-4;
+                      });
         delete circle.__data__['fromcloud'];
         delete circle.__data__['xshift'];
         delete circle.__data__['yshift'];
