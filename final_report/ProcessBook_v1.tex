@@ -177,7 +177,7 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.4]{networkChartProto}
+\includegraphics[scale=0.5]{networkChartProto}
 \caption{Network chart with link vale bigger than 15}
 \label{fig:networkwithcolor}
 \end{center}
@@ -185,15 +185,11 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 
 \quad Next, we want to observe the relationship between a chosen tag and other co-occurrence tags, so we implement a function that the network chart shows all the links whose edges include a specific tag after double-clicking on one the corresponding node. The image was not easy to understand and hard to find the most relative tag, as shown in Figure~\ref{fig:zoomin1}.
 
-\quad Figure~\ref{fig:zoomin2} is the modified design to solve the above issue. This time, we grouped all the related tags by their categories. Instead of connecting the center with relative node, we connect it to an invisible group center and then link node with the center. This design help user to learn which category has strong co-occurrence within the specific, and also it is obvious to observe the most related tag. We call it \textbf{flower chart}, and this term is used to describe network chart within selected center in the following content.
-
-\quad To show the tag name of each node, we decide to apply tooltip instead of adding text to them. Also, to avoid the situation that the tooltip goes beyond the border, the direction of d3-tip is set to southwest. The information we provided in tooltip depend on whether it is flower chart or not. If network chart is not shown as flower chart, we will paste the tag name and the top five strong related tags and co-occurrence with the node we hover on. Figure~\ref{fig:tt1} is an example when the mouse hover on node which present `biology'. If the chart becomes flower chart, then tooltip shows the tag name and co-occurence while we hover on that node, as you can see in Figure~\ref{fig:tt2}. Stroke width and color are changed to highlight which node we are watching.   
-
-\quad Now this question comes to our mind: what if we want to know the co-occurrence between two tags in one year? To answer this this question, we add an button on the upper-right corner to let users choose which year they want to observe, as displayed in Figure~\ref{fig:yeardropdown}. Example in Figure~\ref{fig:compareyear} demonstrate the comparation between 2003 and 2012.
+\quad Figure~\ref{fig:zoomin2} is the modified design to solve the above issue. This time, we grouped all the related tags by their categories. Instead of connecting the center with relative node, we connect it to an invisible group center and then link node with the center. This design help user to learn which category has strong co-occurrence within the specific, and also it is obvious to observe the most related tag.
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.25]{focusOneTag_d1}
+\includegraphics[scale=0.3]{focusOneTag_d1}
 \caption{Zoom in for one tag}
 \label{fig:zoomin1}
 \end{center}
@@ -207,38 +203,6 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \end{center}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.5]{top5tooltip}
-\caption{Tooltip design when no tag are focused on}
-\label{fig:tt1}
-\end{center}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.5]{zoomintooltip}
-\caption{Tooltip design when we zoom in with center - biology}
-\label{fig:tt2}
-\end{center}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.5]{yeardropdown}
-\caption{Dropdown list design for choosing year}
-\label{fig:yeardropdown}
-\end{center}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.33]{biology2003}
-\includegraphics[scale=0.33]{biology2012}
-\caption{Comparation of flower chart in 2003 and 2012}
-\label{fig:compareyear}
-\end{center}
-\end{figure}
 
 \subsection{Word Cloud Chart}
 \quad After we draw the network chart and color each node according to category, we suddenly find that we did not explain the category and which tags are classified to. Therefore, we decide to add a word cloud chart on the top of page, which provides the information about the members each category includes, and the color of text follow the ordinal color scale we define in network chart. 
@@ -272,7 +236,6 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \subsection{Line Chart}
 \quad  We need to present the video numbers of tags from 2002 to 2017 on our Line Chart design. We originally choose to use color as our channel to discern data, but soon we realize that colors are not enough for our hundreds of tags even if we use a gray scale on each hue. Therefore, we decide to add symbols\cite{d3.symbol} in the d3.js. on our Line Chart. Since symbols and the line on the Line Chart are both made by path element, it is more convenient for our implementation. The final design is show in Figure \ref{fig:linechart}
 
-
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.4]{linechart}
@@ -286,11 +249,9 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \subsection{Button of Line Chart}
 \quad To better manage the interaction between these chart, we present Buttons Object. When users click on the Network or the Text Cloud, the clicked tag will be append into the set object behind the button. Once users click the button, we remove the tag in the set object. We easily and elegantly solve the problem of letting users have to many interface to interact with our components. We show our design flow in Figure \ref{fig:topo}
 
-
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.1]{"topo".jpg}
-
 \caption{Flow Chart of our design.}
 \label{fig:topo}
 \end{center}
@@ -304,6 +265,8 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \quad The requirement in the Table is to show the rest information that we haven't  show  in those components above. Table is the best way for our case. 
 
 We originally try to draw a svg table for the transition purpose. However, it need to much design and it is too hard to put all the information on the drawed svg table. Figure \ref{fig:oldtable} and Figure \ref{fig:newtable} is our different two versions of design in Video List Table.
+
+
 
 \begin{figure}
 \begin{center}
@@ -402,11 +365,89 @@ To assist user to find their result, we also implemented the sorting feature for
 \quad The Radar Chart is something beyond our optional plan in the proposal: We came up with this idea when implementing the code. The Radar Chart has to show the approximated comments to a video from the massive audience perspectives. The precise number of votes is not important, while the big picture, which is the percentage is crucial if a user just browsing through our website. Therefore, we choose to use radar chart to realize this thought. The scale of our radar chart change dependently on the highest percentage.
  In the Radar Chart, we have fourteen X axis and a Y axis. Each X axis means a adjective according to the official website. The Y axis show the value of each adjective by the distance to the origin of the center.
 
+\section{Flow}
 
-\section{Flow-Chart}
+\quad The detail flow of our project can be seen in our demonstration video \url{https://youtu.be/cPfT3kuISxQ} and Figure \ref{fig:topo}.
+
+\subsection{See trend of TED tags}
+\begin{enumerate}
+\item Click the tags you are interesting on Word Cloud, Network Chart, or Flower Chart.
+\item Adjust the Line Chart by removing buttons on the Buttons.
+\item See the result on the Line Chart.
+\end{enumerate}
+
+\subsection{Find interesting TED video}
+\begin{enumerate}
+\item Click the tags you are interesting on Word Cloud, Network Chart, or Flower Chart.
+\item Let your cursor run over elements on the Line Chart and observe the changing on the Table.
+\item Let your cursor run over the rows on the Table and see into the detail information of a video.
+\item Click on the row of the Table and enjoy your video.
+\end{enumerate}
 
 \chapter{Evaluation}
 \section{Solution in our question}
+
+\subsection{•}
+
+\quad We now evaluate our project by looking back the question we should answer in our proposal.
+\begin{itemize}
+\item
+What are the trend of category tags appeared on TED talks?
+\\
+\quad We can easily see the trend on the Line Chart design. Further more, we can compare the trend of one tag with others. Because we let the user to select all tags we have, the user can discover some interesting fact in our design.
+
+\item
+Is there any relationship between the TED talks and the big events happened in the world? 
+\\
+\quad We didn't have an exactly clear corresponding result on this question, because we need more data and effort to answer this question. However, we think we can instead discover many interesting fact based on our own knowledge. For example, After the year AlphaGo become popular news, the topics around data and machine learning grow as time go by. Figure \ref{fig:dataml} show that data tags and machine learning tags might have connection.
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.4]{dataml}
+\caption{We can discover interesting trend based on our knowledge. In this figure, we can see the topic on data and machine learning grow after AlphaGo become popular. We can also see the trend of data and machine learning is positive related in this figure.}
+\label{fig:dataml}
+\end{center}
+\end{figure} 
+
+
+
+\item
+Is there a strong relevence between two topics that in general people will not think they are related?
+\\
+\quad The answer of this question is of course, yes! Figure \ref{fig:healthengineering} and Figure \ref{fig:futurebiology} are very obvious example.
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{healthengineering}
+\caption{We use K-mean to classify the tags into different category. We surprisingly discover that most of the speech in TED that talk about engineering also related to health. After all, engineering is motivated by human need.}
+\label{fig:healthengineering}
+\end{center}
+\end{figure} 
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{futurebiology}
+\caption{What subject is most related to future? The answer is biology!}
+\label{fig:futurebiology}
+\end{center}
+\end{figure} 
+
+\item
+Can we learn the trend of research on a specific field by analyzing the popularity of keywords? Or it shows the topics which people do not put attention on for now but will become important in the future?
+\\
+\quad We can see algorithm and visualization are more popular these years in Figure \ref{fig:vis}. It goes down on 2017 because the list of our data is collected around April 2017.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{vis}
+\caption{In 2016, algorithm and visualization are more popular than before. We believe they will grow even more in 2017.}
+\label{fig:vis}
+\end{center}
+\end{figure} 
+
+\end{itemize}
  
 \bibliographystyle{acm}
 %%\bibliography{nfv.bib}
