@@ -185,7 +185,11 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 
 \quad Next, we want to observe the relationship between a chosen tag and other co-occurrence tags, so we implement a function that the network chart shows all the links whose edges include a specific tag after double-clicking on one the corresponding node. The image was not easy to understand and hard to find the most relative tag, as shown in Figure~\ref{fig:zoomin1}.
 
-\quad Figure~\ref{fig:zoomin2} is the modified design to solve the above issue. This time, we grouped all the related tags by their categories. Instead of connecting the center with relative node, we connect it to an invisible group center and then link node with the center. This design help user to learn which category has strong co-occurrence within the specific, and also it is obvious to observe the most related tag.
+\quad Figure~\ref{fig:zoomin2} is the modified design to solve the above issue. This time, we grouped all the related tags by their categories. Instead of connecting the center with relative node, we connect it to an invisible group center and then link node with the center. This design help user to learn which category has strong co-occurrence within the specific, and also it is obvious to observe the most related tag. We call it \textbf{flower chart}, and this term is used to describe network chart within selected center in the following content.
+
+\quad To show the tag name of each node, we decide to apply tooltip instead of adding text to them. Also, to avoid the situation that the tooltip goes beyond the border, the direction of d3-tip is set to southwest. The information we provided in tooltip depend on whether it is flower chart or not. If network chart is not shown as flower chart, we will paste the tag name and the top five strong related tags and co-occurrence with the node we hover on. Figure~\ref{fig:tt1} is an example when the mouse hover on node which present `biology'. If the chart becomes flower chart, then tooltip shows the tag name and co-occurence while we hover on that node, as you can see in Figure~\ref{fig:tt2}. Stroke width and color are changed to highlight which node we are watching.   
+
+\quad Now this question comes to our mind: what if we want to know the co-occurrence between two tags in one year? To answer this this question, we add an button on the upper-right corner to let users choose which year they want to observe, as displayed in Figure~\ref{fig:yeardropdown}. Example in Figure~\ref{fig:compareyear} demonstrate the comparation between 2003 and 2012.
 
 \begin{figure}
 \begin{center}
@@ -203,6 +207,38 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \end{center}
 \end{figure}
 
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{top5tooltip}
+\caption{Tooltip design when no tag are focused on}
+\label{fig:tt1}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{zoomintooltip}
+\caption{Tooltip design when we zoom in with center - biology}
+\label{fig:tt2}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.32]{yeardropdown}
+\caption{Dropdown list design for choosing year}
+\label{fig:yeardropdown}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.33]{biology2003}
+\includegraphics[scale=0.33]{biology2012}
+\caption{Comparation of flower chart in 2003 and 2012}
+\label{fig:compareyear}
+\end{center}
+\end{figure}
 
 \subsection{Word Cloud Chart}
 \quad After we draw the network chart and color each node according to category, we suddenly find that we did not explain the category and which tags are classified to. Therefore, we decide to add a word cloud chart on the top of page, which provides the information about the members each category includes, and the color of text follow the ordinal color scale we define in network chart. 
@@ -317,7 +353,7 @@ We originally try to draw a svg table for the transition purpose. However, it ne
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.4]{"rateonted1".png}
+\includegraphics[scale=0.5]{"rateonted1".png}
 \caption{The Rate chart show on TED official website.}
 \label{fig:rateonted}
 \end{center}
@@ -325,7 +361,7 @@ We originally try to draw a svg table for the transition purpose. However, it ne
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.3]{radar}
+\includegraphics[scale=0.5]{radar}
 \caption{Radar Chart.}
 \label{fig:radar}
 \end{center}
@@ -355,7 +391,7 @@ Understand the relationship between tags and observe the top 5 strong relative t
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.3]{health}
+\includegraphics[scale=0.6]{health}
 \caption{The overall relationship between tags}
 \label{fig:health}
 \end{center}
@@ -363,7 +399,7 @@ Understand the relationship between tags and observe the top 5 strong relative t
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.3]{healthflower}
+\includegraphics[scale=0.6]{healthflower}
 \caption{Flower chart: the relationship between health and other category.}
 \label{fig:healthflower}
 \end{center}
@@ -371,8 +407,8 @@ Understand the relationship between tags and observe the top 5 strong relative t
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.36]{healthebola}
-\includegraphics[scale=0.3]{healthebola2017}
+\includegraphics[scale=0.6]{healthebola}
+\includegraphics[scale=0.6]{healthebola2017}
 \caption{Co-occurrence of `health' and `ebola' on 2006}
 \label{fig:healthebola}
 \end{center}
