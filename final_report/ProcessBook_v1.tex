@@ -386,13 +386,44 @@ Our Line Chart and Video List Table come to their eyes when the user scroll down
 
 \begin{itemize}
 \item
-Understand the relationship between tags
+Understand the relationship between tags and observe the top 5 strong relative tag of one specific tag:
+\newline
+\quad In the initial network chart, we can find that some tags are pretty popular, like `health' and `culture', because they have lots of links, as you can see in Figure~\ref{fig:health}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{health}
+\caption{The overall relationship between tags}
+\label{fig:health}
+\end{center}
+\end{figure} 
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{healthflower}
+\caption{Flower chart: the relationship between health and other category.}
+\label{fig:healthflower}
+\end{center}
+\end{figure} 
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.36]{healthebola}
+\includegraphics[scale=0.3]{healthebola2017}
+\caption{Co-occurrence of `health' and `ebola' on 2006}
+\label{fig:healthebola}
+\end{center}
+\end{figure} 
+
 \item
-Observe the co-occurrence of one specific tag with other category. 
+Observe the co-occurrence of one specific tag with other category:
+\newline 
+\quad Figure~\ref{fig:healthflower} present that `health' has strong co-occurrence with tags in the `health' category.
+
 \item
-Observe the change of co-occurrence of one specific tag with other tag. 
-\item
-Observe the top 5 strong relative tag of one specific tag. 
+Observe the change of co-occurrence of one specific tag with other tag:
+\newline
+\quad Here is an example about the comparation of tag `health' and `ebola'. Figure~\ref{fig:healthebola} tell us that there is no video whose topic include both of them in 2006.
 
 \end{itemize}
 
@@ -401,13 +432,17 @@ Observe the top 5 strong relative tag of one specific tag.
 \begin{itemize}
 \item
 Click on node:
+\newline \quad Click on node will send the tag name to line chart.
 \item
 Double-Click on node:
+\newline \quad This operation will change the network chart to flower chart so that we can focus on the tag we are interested in, as Figure~\ref{fig:healthflower}. If we double-click on the center of flower chart, the network chart will be set to the inital status.
 \item
 Choose year from drop-down list:
+\newline \quad While flower chart exist, there is a dropdown list on the upper-right corner which contains year from 2001 to 2017 for user to select the year they want to discover.
+
 \item
 Tooltip:
-
+\newline \quad Hover on node will trigger tooltip to show the information of the tag.
 \end{itemize}
 
 %end subsection network chart
@@ -416,13 +451,36 @@ Tooltip:
 
 \quad Here are the information we can find in word cloud chart:
 
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{ccomputers}
+\includegraphics[scale=0.3]{cfuture}
+\includegraphics[scale=0.3]{cexploration}
+\caption{Word cloud of different category}
+\label{fig:category}
+\end{center}
+\end{figure} 
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{hasnode}
+\includegraphics[scale=0.3]{nonode}
+\caption{Interaction between word cloud chart and network chart.}
+\label{fig:tooltipincloud}
+\end{center}
+\end{figure} 
+
 \begin{itemize}
 \item
-Understand the content of the category
+Understand the content of the category:
+\newline \quad Choose the category from tab, you can find which words are included in the category. Figure~\ref{fig:category} shows the content of categories-`computers', `future', and `exploration'. 
 \item
-Relative popularity of tags 
+Relative popularity of tags:
+\newline \quad The size of the word tell us that how popular it is. You can find the demonstration in Figure~\ref{fig:category}. 
+
 \item
-Find tag position in network chart
+Find tag position in network chart:
+\newline \quad It is not straightforward to find a tag we need in network chart, but we can get its position through hovering the word we are interested in in word cloud. If the text is available in the present network or flower chart, then a tooltip shows up to notify user its location. If it is not available, no tooltip appear and we will understand that this word has no relation to the center, these two situation is shown in Figure~\ref{fig:tooltipincloud}
 
 \end{itemize}
 
@@ -431,12 +489,13 @@ Find tag position in network chart
 \begin{itemize}
 \item
 Click on category tab:
+\newline Change the content of word cloud according to the category we choose.
 \item
 Click on word:
+\newline This action send the word/tag to line chart.
 \item
 Double-Click on word:
-\item
-Tooltip and highlight:
+\newline Network chart will respond and turn to flower chart whose center is the word we double-click on.
 
 \end{itemize}
 
