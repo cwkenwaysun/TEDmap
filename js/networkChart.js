@@ -486,8 +486,10 @@ class networkChart {
                                   })
                   .transition().duration(2000)
                   .attr("r", (d)=>{
-                     if(d.value>0)
+                     //if()
+                     if( d.tag!=this.selectedTag && d.value>0){
                       return this.rScale(d.value);
+                     }
                      return 8
                   })
                   .style("opacity", (d)=>{
