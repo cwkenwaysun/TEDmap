@@ -225,7 +225,7 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.32]{yeardropdown}
+\includegraphics[scale=0.5]{yeardropdown}
 \caption{Dropdown list design for choosing year}
 \label{fig:yeardropdown}
 \end{center}
@@ -270,19 +270,89 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \end{figure}
 
 \subsection{Line Chart}
+\quad  We need to present the video numbers of tags from 2012 to 2017 on our Line Chart design. We originally choose to use color as our channel to discern data, but soon we realize that colors are not enough for our hundreds of tags even if we use a gray scale on each hue. Therefore, we decide to add symbols\cite{d3.symbol} in the d3.js. on our Line Chart. Since symbols and the line on the Line Chart are both made by path element, it is more convenient for our implementation. The final design is show in Figure \ref{fig:linechart}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.4]{linechart}
+\caption{Line Chart.}
+\label{fig:linechart}
+\end{center}
+\end{figure}
+
+
 
 \subsection{Button of Line Chart}
+\quad To better manage the interaction between these chart, we present Buttons Object. When users click on the Network or the Text Cloud, the clicked tag will be append into the set object behind the button. Once users click the button, we remove the tag in the set object. We easily and elegantly solve the problem of letting users have to many interface to interact with our components. We show our design topology in Figure \ref{fig:topo}
 
-\subsection{Video List}
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.1]{"topo".jpg}
+\caption{Topology of our design.}
+\label{fig:topo}
+\end{center}
+\end{figure}
+
+
+\quad To increase connection of the Line Chart and the Table, we also need to let the Buttons have some hover event that can connected the Line Chart and the rows in the Table.
+
+\subsection{Video List Table}
+
+\quad The requirement in the Table is to show the rest information that we haven't  show  in those components above. Table is the best way for our case. 
+
+We originally try to draw a svg table for the transition purpose. However, it need to much design and it is too hard to put all the information on the drawed svg table. Figure \ref{fig:oldtable} and Figure \ref{fig:newtable} is our different two versions of design in Video List Table.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.2]{table}
+\caption{Our original Table Design.}
+\label{fig:oldtable}
+\end{center}
+\end{figure} 
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.2]{newtable}
+\caption{Our new Table Design.}
+\label{fig:newtable}
+\end{center}
+\end{figure} 
+
+\subsection{Radar Chart}
+\quad After finish our must-have components, we decide to add an interesting Radar Chart on the tooltips of the Table. Comparing to the line chart on the official of TED(Figure \ref{fig:rateonted}), we believe that our Radar Chart is more likely to catch users eyes and let user understand the meaning of the rates of those videos.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.4]{"rateonted1".png}
+\caption{The Rate chart show on TED official website.}
+\label{fig:rateonted}
+\end{center}
+\end{figure} 
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.3]{radar}
+\caption{Radar Chart.}
+\label{fig:radar}
+\end{center}
+\end{figure} 
+
 %\appendix
 
 \chapter{Implementation}
+\section{Overview}
+\quad Figure \ref{fig:topo} show the topology of our visualization web page. User can run through Word Cloud, Network Chart, Line Chart, Video List Table to either finding their next interested video, or understanding the trends of popular topic in TED in the recent decade. All of the components are interactive and the usage are easy to come up with.
+
+When users connects to our website, they will intuitively see the Word Cloud and The Network Chart. In the Word Cloud, the texts are scattered and sized by their popularity. The bigger text, the more popular topics in TED video. When users cursor go over the text, tooltips will show on the Network Chat. Also, the cursor will turn to a pointer, mean the user can click. After clicking either on the Word Cloud or the Network Chart, the component below will react dependently on the tags they click so the user will see the change and lead to the next two component we have. Besides, the users can double click on the Word Cloud or the Network Chart to turn the Network Chart into Flower Chart. Flower Chart allow users to connect their interested tag with other tags it may have. This help users to find their next tags they may want to add on the Buttons. The number next to the a button is the number of video that has this tag.
+
+Our Line Chart and Video List Table come to their eyes when the user scroll down in the page. As we mention above, all of the components in our design are able to interact intuitively. So the users' next step would be try to hover the things we have here. In the Line Chart, every components is able to interact by the hover events we built and both the Line Chart and Video List Table will react accordingly. This let the user to discover the video in TED website from the topic they are interested in. When the user try to see into the detail on the Video List Table, they can discover the Radar Chart first with the sufficient information along with it. The radar chart can let the users have a first picture of how other people thinks about this video then the user can decide whether to view this video themselves.
+
 \section{Interaction}
 \subsection{Network Chart}
 \subsection{Word Cloud}
 \subsection{Line Chart}
-\subsection{Button of Line Chart}
-\subsection{Video List}
+\subsection{Buttons}
+\subsection{Video List Table}
 
 \section{Flow-Chart}
 
@@ -291,6 +361,6 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
  
 \bibliographystyle{acm}
 %%\bibliography{nfv.bib}
-\bibliography{js6.bib}
+\bibliography{biblio.bib}
 
 \end{document}
