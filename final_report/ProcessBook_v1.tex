@@ -243,7 +243,9 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \subsection{Word Cloud Chart}
 \quad After we draw the network chart and color each node according to category, we suddenly find that we did not explain the category and which tags are classified to. Therefore, we decide to add a word cloud chart on the top of page, which provides the information about the members each category includes, and the color of text follow the ordinal color scale we define in network chart. 
 
-\quad In the beginning, the word cloud use a list of buttons for user to select the category, as Figure~\ref{fig:wcbutton1}
+\quad In the beginning, the word cloud use a list of buttons for user to select the category, as Figure~\ref{fig:wcbutton1}, but the number on that is not meaningful to user, so we change the text according to the most popular word in that category, as you can find in Figure~\ref{fig:wcbutton2}. 
+
+\quad However, after receiving opinion from friends, we decided to withdraw the design that put buttons on the above of word cloud because it is too distractive. We apply the module from bootstrap, as shown in Figure~\ref{fig:wcbutton3}, to let the category selection has less prominence. Figure~\ref{fig:wcbutton4} is our final design, we adjust the size of chart and change the border of tab according to the color we define to present category.   
 
 \begin{figure}
 \begin{center}
@@ -268,6 +270,32 @@ Furthermore, in order to load data easily, we transfer our data from csv file to
 \label{fig:wcbutton3}
 \end{center}
 \end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{wcbutton4}
+\caption{Word Cloud button design, final version}
+\label{fig:wcbutton4}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.4]{wcHover}
+\caption{Hover on text in word cloud highlight the node in network chart}
+\label{fig:wchover}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.4]{wcDLC}
+\caption{Double click on text in word cloud turn network chart into flower chart}
+\label{fig:wcDLC}
+\end{center}
+\end{figure}
+
+\quad Since we do not want to merely convey information in the word cloud chart, we apply a function which can help user to find the node position of the tag that the mouse hover on. Figure~\ref{fig:wchover} demonstrate the interaction. Furthermore, double-click function is also provided so that when user double-click on the text, it trigger the event to turn the network chart into flower chart whose center is the tag we interact on word cloud, as demonstrated in Figure~\ref{fig:wcDLC}.
 
 \subsection{Line Chart}
 \quad  We need to present the video numbers of tags from 2012 to 2017 on our Line Chart design. We originally choose to use color as our channel to discern data, but soon we realize that colors are not enough for our hundreds of tags even if we use a gray scale on each hue. Therefore, we decide to add symbols\cite{d3.symbol} in the d3.js. on our Line Chart. Since symbols and the line on the Line Chart are both made by path element, it is more convenient for our implementation. The final design is show in Figure \ref{fig:linechart}
