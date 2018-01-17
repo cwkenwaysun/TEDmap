@@ -1,7 +1,7 @@
 let tagsInfo;
 let allData;
 let buttons;
-var groupSet = new Set();
+var groupSet;
 
 let lineChart;
 let table;
@@ -9,8 +9,9 @@ var groupIDs;
 
 
 
-function addButton(tag) {
-    buttons.addButton(tag);
+function addButton(e) {
+    console.log(e.tag);
+    buttons.addButton(e.tag);
 }
 
 // read tags information data
@@ -32,7 +33,6 @@ d3.json("data/tags_info.json", function (data1) {
                 lineChart = new LineChart(tagsInfo, allData, groupSet);
                 table = new Table(tagsInfo, allData, groupSet);
                 buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
-                addButton("innovation");
             })
         });
 
@@ -40,27 +40,6 @@ d3.json("data/tags_info.json", function (data1) {
 
 })
 
-// dropdown
-/*$.getJSON("all_tags.json", function (json) {
-    console.log(json["all_tags"]);
-    for (let i = 0; i < json["all_tags"].length; i++) {
-        if (json["all_tags"][i] == "alzheimer's") continue;
-        $(".dropdown-menu").append("<li id='force_" + json["all_tags"][i] + "' ><a href='#'>" + json["all_tags"][i] + "</a></li>");
-        $("#force_" + json["all_tags"][i]).click(function () {
-            groupSet.add(json["all_tags"][i]);
-            lineChart.update();
-            table.update();
-            $("#buttons").append("<button class='btn btn-primary' type='button'>" + json["all_tags"][i] + "<span class='badge'>4</span></button>");
-
-            $("#buttons > button").click(function () {
-                groupSet.delete(this.childNodes[0].textContent);
-                $(this).remove();
-                lineChart.update();
-                table.update();
-            });
-        });
-    }
-});*/
 
 var myTable = $("#myTable2");
 

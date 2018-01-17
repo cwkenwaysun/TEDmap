@@ -1,19 +1,19 @@
 class Buttons {
 
-    /**
-     * Constructor for the Year Chart
-     *
-     * @param groupSet data corresponding to the tag buttons
-     * @param lineChart reference to LineChart object
-     * @param table reference to Table object
-     */
     constructor(lineChartObj, tableObj, tagsInfo, groupSet) {
-
-        this.groupSet = groupSet;
         this.lineChart = lineChartObj;
         this.table = tableObj;
         this.tagsInfo = tagsInfo;
 
+        
+
+        const localGroupSet = JSON.parse(localStorage.getItem('TEDmapButtons'));
+        console.log(localGroupSet);
+        this.groupSet = (localGroupSet && new Set(localGroupSet)) || new Set();
+        console.log("groupSet: " + Array.from(this.groupSet));
+
+        this.clear = d3.select('#clear');
+        this.clear.on('click', this.clearButtons);
     };
 
     /**
@@ -23,7 +23,6 @@ class Buttons {
         this.lineChart.update();
         this.table.update();
     }
-
 
     /**
      * Insert a button to groupSet.
@@ -40,12 +39,16 @@ class Buttons {
         }, this);
         // TODO end
 
+        console.log(this.groupSet);
+
         if (this.groupSet.has(tag)) {
             console.warn(tag + " is already in the set.");
         } else {
             this.groupSet.add(tag);
 
-            tag.fontcolor("green");
+            localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(this.groupSet)]));
+            // console.log(JSON.stringify([...Array.from(this.groupSet)]));
+            // tag.fontcolor("green");
 
 
             let pathColor;
@@ -92,6 +95,16 @@ class Buttons {
         //console.log(tag);
         this.groupSet.delete(tag);
         //console.log(groupSet);
+        
+        
+        localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(this.groupSet)]));
+
         this.update();
+    }
+
+    clearButtons() {
+        console.log('clear all buttons');
+        this.groupSet.clear();
+        localStorage.setItem('TEDmapButtons', JSON.stringify([]));
     }
 }
