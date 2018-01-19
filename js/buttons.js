@@ -12,8 +12,20 @@ class Buttons {
         this.groupSet = (localGroupSet && new Set(localGroupSet)) || new Set();
         console.log("groupSet: " + Array.from(this.groupSet));
 
+        Array.from(this.groupSet).forEach((tag) => {
+            console.log(tag);
+            this.addButton(tag);
+        })
+
+        var groupSet = this.groupSet;
+
         this.clear = d3.select('#clear');
-        this.clear.on('click', this.clearButtons);
+        this.clear.on('click', function() {
+            groupSet.clear();
+            localStorage.setItem('TEDmapButtons', JSON.stringify([]));
+        });
+
+
     };
 
     /**
@@ -22,6 +34,19 @@ class Buttons {
     update() {
         this.lineChart.update();
         this.table.update();
+    }
+
+    
+
+    getColorForTag(tag) {
+        var pathColor;
+            groupIDs.forEach(function (element) {
+                if (tag == element.tag) {
+                    pathColor = pathColorScale(element.groupid);
+                    return true;
+                }
+            }, this);
+        return pathColor;
     }
 
     /**
@@ -39,7 +64,6 @@ class Buttons {
         }, this);
         // TODO end
 
-        console.log(this.groupSet);
 
         if (this.groupSet.has(tag)) {
             console.warn(tag + " is already in the set.");
@@ -51,15 +75,12 @@ class Buttons {
             // tag.fontcolor("green");
 
 
-            let pathColor;
-            groupIDs.forEach(function (element) {
-                if (tag == element.tag) {
-                    pathColor = pathColorScale(element.groupid);
-                    return true;
-                }
-            }, this);
+            const pathColor = this.getColorForTag(tag);
 
-            let button = $("#buttons").append("<button type='button' class='btn btn-primary' style='background:" + pathColor + "'>" + tag + " <span class='badge' style='color:" + pathColor + "'>" + number_tag + "</span></button>");
+            let button = $("#buttons")
+                .append("<button type='button' class='btn btn-primary' style='background:" + 
+                pathColor + "'>" + tag + " <span class='badge' style='color:" + 
+                pathColor + "'>" + number_tag + "</span></button>");
 
             // TODO: may be redundent here.
             let tmp = this;
@@ -84,6 +105,8 @@ class Buttons {
 
             this.update();
         }
+        
+        console.log(this.groupSet);
     }
 
 
@@ -95,8 +118,6 @@ class Buttons {
         //console.log(tag);
         this.groupSet.delete(tag);
         //console.log(groupSet);
-        
-        
         localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(this.groupSet)]));
 
         this.update();
@@ -104,6 +125,7 @@ class Buttons {
 
     clearButtons() {
         console.log('clear all buttons');
+        console.log(this);
         this.groupSet.clear();
         localStorage.setItem('TEDmapButtons', JSON.stringify([]));
     }
