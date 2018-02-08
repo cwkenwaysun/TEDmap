@@ -26,9 +26,9 @@ document.querySelector('#clearButtons').addEventListener('click', function() {
     console.log(localStorage.getItem('TEDmapButtons'));
 })
 
-function addButton(e){
-    console.log(e);
-    groupSet.add(e.tag); 
+function addButton(tag){
+    console.log(tag);
+    groupSet.add(tag); 
     localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(groupSet)]));
         updateButtons();
 }

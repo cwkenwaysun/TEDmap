@@ -625,7 +625,10 @@ class networkChart {
     let clickstate = 1;
     let self = this;
     if (this.forceParam != -15) {
-      circles.on('click', addButton);
+      circles.on('click', (d) => {
+        console.log(d);
+        addButton(d.tag);
+      });
 
 /*       circles.on('mouseover', function (d) {
           d3.select(this).classed('selected', true)
