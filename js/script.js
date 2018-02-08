@@ -64,6 +64,8 @@ function updateButtons() {
     // $("#buttons > button").mouseout(function () {
     //     $(".highlighted").removeClass("highlighted");
     // });
+
+    // TODO: connect with table and lineChart
 }
 
 
