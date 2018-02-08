@@ -19,13 +19,6 @@ class Buttons {
 
         var groupSet = this.groupSet;
 
-        this.clear = d3.select('#clear');
-        this.clear.on('click', function() {
-            groupSet.clear();
-            localStorage.setItem('TEDmapButtons', JSON.stringify([]));
-        });
-
-
     };
 
     /**

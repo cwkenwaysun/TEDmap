@@ -1,18 +1,59 @@
 let tagsInfo;
 let allData;
 let buttons;
-var groupSet;
+let groupSet;
 
 let lineChart;
 let table;
 var groupIDs;
 
+// local to groupset
+const localGroupSet = JSON.parse(localStorage.getItem('TEDmapButtons'));
+console.log(localGroupSet);
+groupSet = (localGroupSet && new Set(localGroupSet)) || new Set();
+console.log("groupSet: " + Array.from(groupSet));
 
+updateButtons();
 
-function addButton(e) {
-    console.log(e.tag);
-    buttons.addButton(e.tag);
+// clear
+document.querySelector('#clearButtons').addEventListener('click', function() {
+    console.log('clear event');
+    // groupSet.clear();
+    localStorage.setItem('TEDmapButtons', JSON.stringify([]));
+    //call update button
+    groupSet.clear();
+    updateButtons();
+    console.log(localStorage.getItem('TEDmapButtons'));
+})
+
+function addButton(e){
+    console.log(e);
+    groupSet.add(e.tag); 
+    localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(groupSet)]));
+        updateButtons();
 }
+
+function updateButtons() {
+    const buttons = document.querySelector('#buttons');
+    buttons.innerHTML = Array.from(groupSet).map((tag, i) => {
+        return `
+            <button type='button' class='btn btn-primary'> ${tag} </button>
+        `;
+      }).join('');
+        // "<button type='button' class='btn btn-primary' style='background:" + 
+        //         pathColor + "'>" + tag + " <span class='badge' style='color:" + 
+        //         pathColor + "'>" + number_tag + "</span></button>"
+    // event
+    document.querySelectorAll('#buttons > button').forEach(button => button.addEventListener('click', function() {
+        // groupset to local
+        console.log(this.innerText);
+        groupSet.delete(this.innerText);
+        localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(groupSet)]));
+        updateButtons();
+    }));
+}
+
+
 
 // read tags information data
 d3.json("data/tags_info.json", function (data1) {
@@ -32,7 +73,7 @@ d3.json("data/tags_info.json", function (data1) {
                 //console.log(data);
                 lineChart = new LineChart(tagsInfo, allData, groupSet);
                 table = new Table(tagsInfo, allData, groupSet);
-                buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
+                //buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
             })
         });
 
