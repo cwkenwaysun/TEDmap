@@ -7,6 +7,9 @@ let lineChart;
 let table;
 var groupIDs;
 
+var tagColorHash = {}; // used in color of buttons
+var tagVideoCount = {}; // used in badges in buttons
+
 // local to groupset
 const localGroupSet = JSON.parse(localStorage.getItem('TEDmapButtons'));
 console.log(localGroupSet);
@@ -37,32 +40,49 @@ function updateButtons() {
     const buttons = document.querySelector('#buttons');
     buttons.innerHTML = Array.from(groupSet).map((tag, i) => {
         return `
-            <button type='button' class='btn btn-primary'> ${tag} </button>
+            <button type='button' class='btn btn-primary' style='background:${tagColorHash[tag]}'> 
+            ${tag} <span class='badge' style='color:${tagColorHash[tag]}'>${tagVideoCount[tag]}</span></button>
         `;
-      }).join('');
-        // "<button type='button' class='btn btn-primary' style='background:" + 
-        //         pathColor + "'>" + tag + " <span class='badge' style='color:" + 
-        //         pathColor + "'>" + number_tag + "</span></button>"
-    // event
+    }).join('');
     document.querySelectorAll('#buttons > button').forEach(button => button.addEventListener('click', function() {
         // groupset to local
-        console.log(this.innerText);
-        groupSet.delete(this.innerText);
+        console.log(this.childNodes[0].textContent.trim());
+        groupSet.delete(this.childNodes[0].textContent.trim());
         localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(groupSet)]));
         updateButtons();
     }));
+
+    // TODO: add mouseover event
+    // $("#buttons > button").mouseover(function () {
+    //     let tag = this.childNodes[0].textContent.trim();
+    //     //console.log(tag);
+    //     $("." + tagName2Class(tag)).addClass("highlighted");
+    //     $("tr > ." + tagName2Class(tag)).addClass("highlighted");
+    //     //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
+    //     //$(this).remove();
+    // });
+    // $("#buttons > button").mouseout(function () {
+    //     $(".highlighted").removeClass("highlighted");
+    // });
 }
+
+
+
 
 
 
 // read tags information data
 d3.json("data/tags_info.json", function (data1) {
     tagsInfo = data1;
+    tagsInfo.map((e) => tagVideoCount[e.tagName] = e.idList.length);
 
     //call fetchJSONFile then build and render 
     //data/network_WO_TEDtag_v5.json
     fetchJSONFile('data/network_per_year.json', function (data2) {
         groupIDs = data2.nodes;
+        //console.log(groupIDs);
+        groupIDs.map((e) => tagColorHash[e.tag] = colorScale(e.groupid));
+        //console.log(tagColorHash);
         fetchJSONFile('data/TEDtag_frequency_v2.json', function (f) {
             let nwChart = new networkChart(data2);
             let tcChart = new textCloudChart(f, nwChart);
@@ -173,7 +193,7 @@ function fetchJSONFile(path, callback) {
 
 
 
-var pathColorScale = d3.scaleOrdinal() //ten colors
+const colorScale = d3.scaleOrdinal() //ten colors
     .domain(d3.range(0, 9))
     .range(['#1f77b4', '#d448ce', '#edaf6d', '#f492a8', '#965628', '#3e8934', '#21c2ce', '#070cc2', '#70c32a', '#e9272a']);
 //[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
