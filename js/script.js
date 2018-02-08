@@ -16,7 +16,6 @@ console.log(localGroupSet);
 groupSet = (localGroupSet && new Set(localGroupSet)) || new Set();
 console.log("groupSet: " + Array.from(groupSet));
 
-updateButtons();
 
 // clear
 document.querySelector('#clearButtons').addEventListener('click', function() {
@@ -66,11 +65,9 @@ function updateButtons() {
     // });
 
     // TODO: connect with table and lineChart
+    lineChart.update();
+    table.update();
 }
-
-
-
-
 
 
 // read tags information data
@@ -101,7 +98,7 @@ d3.json("data/tags_info.json", function (data1) {
                 //console.log(data);
                 lineChart = new LineChart(tagsInfo, allData, groupSet);
                 table = new Table(tagsInfo, allData, groupSet);
-                //buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
+                updateButtons();
             })
         });
     });
