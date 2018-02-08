@@ -76,13 +76,16 @@ function updateButtons() {
 // read tags information data
 d3.json("data/tags_info.json", function (data1) {
     tagsInfo = data1;
+    console.log('tagsInfo:');
+    console.log(tagsInfo);
     tagsInfo.map((e) => tagVideoCount[e.tagName] = e.idList.length);
 
     //call fetchJSONFile then build and render 
     //data/network_WO_TEDtag_v5.json
     fetchJSONFile('data/network_per_year.json', function (data2) {
         groupIDs = data2.nodes;
-        //console.log(groupIDs);
+        console.log('groupIDs');
+        console.log(groupIDs);
         groupIDs.map((e) => tagColorHash[e.tag] = colorScale(e.groupid));
         //console.log(tagColorHash);
         fetchJSONFile('data/TEDtag_frequency_v2.json', function (f) {
@@ -91,6 +94,9 @@ d3.json("data/tags_info.json", function (data1) {
             tcChart.update();
             //nwChart.update();
             d3.json("data/TED_Talks.json", function (data) {
+                console.log('AllData');
+                console.log(data);
+                
                 allData = data;
                 //console.log(data);
                 lineChart = new LineChart(tagsInfo, allData, groupSet);
@@ -98,11 +104,8 @@ d3.json("data/tags_info.json", function (data1) {
                 //buttons = new Buttons(lineChart, table, tagsInfo, groupSet);
             })
         });
-
     });
-
 })
-
 
 var myTable = $("#myTable2");
 
