@@ -40,29 +40,39 @@ function updateButtons() {
     buttons.innerHTML = Array.from(groupSet).map((tag, i) => {
         return `
             <button type='button' class='btn btn-primary' style='background:${tagColorHash[tag]}'> 
-            ${tag} <span class='badge' style='color:${tagColorHash[tag]}'>${tagVideoCount[tag]}</span></button>
+            ${tag} 
+                <span class='badge' style='color:${tagColorHash[tag]}'>
+                    ${tagVideoCount[tag]}
+                </span>
+            </button>
         `;
     }).join('');
     document.querySelectorAll('#buttons > button').forEach(button => button.addEventListener('click', function() {
         // groupset to local
-        console.log(this.childNodes[0].textContent.trim());
         groupSet.delete(this.childNodes[0].textContent.trim());
         localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(groupSet)]));
         updateButtons();
     }));
 
-    // TODO: add mouseover event
-    // $("#buttons > button").mouseover(function () {
+    // document.querySelectorAll('#buttons > button').forEach(button => button.addEventListener('mouseover', function() {
     //     let tag = this.childNodes[0].textContent.trim();
-    //     //console.log(tag);
-    //     $("." + tagName2Class(tag)).addClass("highlighted");
-    //     $("tr > ." + tagName2Class(tag)).addClass("highlighted");
-    //     //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
-    //     //$(this).remove();
-    // });
-    // $("#buttons > button").mouseout(function () {
-    //     $(".highlighted").removeClass("highlighted");
-    // });
+    //     document.querySelector('.'+tagName2Class(tag)).classList.add('highlighted');
+    //     document.querySelectorAll('tr > .'+tagName2Class(tag)).classList.add('highlighted');
+    // }));
+    // document.querySelectorAll('#buttons > button').forEach(button => button.addEventListener('mouseout', function() {
+    //     document.querySelectorAll('highlighted').classList.remove('highlighted');
+    // }));
+    $("#buttons > button").mouseover(function () {
+        let tag = this.childNodes[0].textContent.trim();
+        //console.log(tag);
+        $("." + tagName2Class(tag)).addClass("highlighted");
+        $("tr > ." + tagName2Class(tag)).addClass("highlighted");
+        //tmp.removeButton(this.childNodes[0].childNodes[0].textContent.trim());
+        //$(this).remove();
+    });
+    $("#buttons > button").mouseout(function () {
+        $(".highlighted").removeClass("highlighted");
+    });
 
     // TODO: connect with table and lineChart
     lineChart.update();
