@@ -1,34 +1,13 @@
-let tagsInfo;
-let allData;
-let buttons;
-let groupSet;
-
-let lineChart;
-let table;
-var groupIDs;
-
+let tagsInfo; // contains tag names and their videos list
+let allData; // all data about video, e.g. author, title, tags
+let groupSet; // the set used to control tags chosen by the user
+let lineChart; // The lineChart instance
+let table; // The table instance
+let groupIDs; // includes each belonged group id and its id and the position of the node in network chart
 var tagColorHash = {}; // used in color of buttons
 var tagVideoCount = {}; // used in badges in buttons
 
-// local to groupset
-const localGroupSet = JSON.parse(localStorage.getItem('TEDmapButtons'));
-console.log(localGroupSet);
-groupSet = (localGroupSet && new Set(localGroupSet)) || new Set();
-console.log("groupSet: " + Array.from(groupSet));
-
-
-// clear
-document.querySelector('#clearButtons').addEventListener('click', function() {
-    console.log('clear event');
-    // groupSet.clear();
-    localStorage.setItem('TEDmapButtons', JSON.stringify([]));
-    //call update button
-    groupSet.clear();
-    updateButtons();
-    console.log(localStorage.getItem('TEDmapButtons'));
-})
-
-function addButton(tag){
+function addButton(tag) { // add button to the groupSet
     console.log(tag);
     groupSet.add(tag); 
     localStorage.setItem('TEDmapButtons', JSON.stringify([...Array.from(groupSet)]));
@@ -74,11 +53,55 @@ function updateButtons() {
         $(".highlighted").removeClass("highlighted");
     });
 
-    // TODO: connect with table and lineChart
     lineChart.update();
     table.update();
 }
 
+function tagName2Class(tagName) {
+    return tagName.replaceAll(" ", "").replaceAll("'", "").toLowerCase();
+}
+
+function fetchJSONFile(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let data = JSON.parse(httpRequest.responseText);
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send();
+}
+
+
+
+const colorScale = d3.scaleOrdinal() //ten colors
+    .domain(d3.range(0, 9))
+    .range(['#1f77b4', '#d448ce', '#edaf6d', '#f492a8', '#965628', '#3e8934', '#21c2ce', '#070cc2', '#70c32a', '#e9272a']);
+//[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]
+
+// local to groupset
+const localGroupSet = JSON.parse(localStorage.getItem('TEDmapButtons'));
+// console.log(localGroupSet);
+groupSet = (localGroupSet && new Set(localGroupSet)) || new Set();
+// console.log("groupSet: " + Array.from(groupSet));
+
+String.prototype.replaceAll = function (str1, str2, ignore) {
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
+}
+
+// clear
+document.querySelector('#clearButtons').addEventListener('click', function() {
+    // console.log('clear event');
+    // groupSet.clear();
+    localStorage.setItem('TEDmapButtons', JSON.stringify([]));
+    //call update button
+    groupSet.clear();
+    updateButtons();
+    // console.log(localStorage.getItem('TEDmapButtons'));
+})
 
 // read tags information data
 d3.json("data/tags_info.json", function (data1) {
@@ -181,31 +204,5 @@ $('#t_number, #t_views')
 
     });
 
-String.prototype.replaceAll = function (str1, str2, ignore) {
-    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
-}
-
-function tagName2Class(tagName) {
-    return tagName.replaceAll(" ", "").replaceAll("'", "").toLowerCase();
-}
-
-function fetchJSONFile(path, callback) {
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState === 4) {
-            if (httpRequest.status === 200) {
-                let data = JSON.parse(httpRequest.responseText);
-                if (callback) callback(data);
-            }
-        }
-    };
-    httpRequest.open('GET', path);
-    httpRequest.send();
-}
 
 
-
-const colorScale = d3.scaleOrdinal() //ten colors
-    .domain(d3.range(0, 9))
-    .range(['#1f77b4', '#d448ce', '#edaf6d', '#f492a8', '#965628', '#3e8934', '#21c2ce', '#070cc2', '#70c32a', '#e9272a']);
-//[blue, Magenta, olive, Teal, brown, dark green, purple, Navy, green, Red]

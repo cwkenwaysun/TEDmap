@@ -47,14 +47,6 @@ svg circle {
 .table_header {
     font-size: 150%;
 }
-/*
-#myTable2 tbody.scrollContent {
-  display: block;
-  height: 262px;
-  overflow: auto;
-  width: 100%
-}
-*/
 table.tableHeader{
 
   margin-bottom: 0px;
