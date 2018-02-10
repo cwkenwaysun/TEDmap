@@ -104,14 +104,7 @@ class Table {
         text += "<h4>Has tags: ";
         tooltip_data.tags.split(",").forEach(function (element) {
             if (groupSet.has(element.toLowerCase())) {
-                let pathColor;
-                groupIDs.forEach(function (e) {
-                    if (element.toLowerCase() == e.tag) {
-                        pathColor = pathColorScale(e.groupid);
-                        return true;
-                    }
-                }, this);
-                text += "<font color='" + pathColor + "'>" + element + "  </font> ";
+                text += "<font color='" + tagColorHash[element.toLowerCase()] + "'>" + element + "  </font> ";
             }
         }, this);
         text += "</h4>";
