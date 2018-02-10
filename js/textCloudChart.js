@@ -142,8 +142,10 @@ class textCloudChart {
               .on('click',(d)=>{
                     clickstate=1;
                       setTimeout(()=>{
-                        if(clickstate==1)
+                        if(clickstate==1) {
+                            console.log(d.tag);
                           addButton(d.tag);
+                        }
                         }, 400);
                 })
               .on('dblclick',(d)=>{
